@@ -15,12 +15,14 @@ jobs:
 
       - name: Run Norminette
         run: norminette
-      - name: Run Norminette
+
+      - name: Run Norminette and save output
         run: norminette > norminette_output.txt || true
 
       - name: Upload Norminette output
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: norminette-output
           path: norminette_output.txt
+
 
