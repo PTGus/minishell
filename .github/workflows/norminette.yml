@@ -20,9 +20,7 @@ jobs:
         run: norminette > norminette_output.txt || true
 
       - name: Upload Norminette output
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: norminette-output
           path: norminette_output.txt
-
-
