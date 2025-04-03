@@ -1,0 +1,17 @@
+name: Norminette Check
+
+on:
+  pull_request:
+
+jobs:
+  norm_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Norminette
+        run: pip install norminette
+
+      - name: Run Norminette
+        run: norminette
