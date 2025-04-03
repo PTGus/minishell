@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/04/03 15:41:16 by gumendes         ###   ########.fr        #
+#    Updated: 2025/04/03 16:46:46 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@
 CC			=	cc
 RM			=	rm -rf
 CFLAGS		=	-Wall -Wextra -Werror -pthread -g
+LDFLAGS		=	-lreadline -lncurses
 LEAK		=	-fsanitize=leak
 
 #==============================================================================#
@@ -50,7 +51,7 @@ NAME		=	minishell
 #                                  SOURCE AND OBJECT FILES                     #
 #==============================================================================#
 
-SRC			=	$(SRC_PATH)/main.c
+SRC			=	$(SRC_PATH)/minishell.c
 
 OBJ         =   $(SRC:$(SRC_PATH)/%.c=$(BUILD_PATH)/%.o)
 
@@ -71,7 +72,7 @@ get_libft:
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
 	@echo "$(GRN)[PROJECT BUILT]$(END)"
 
 # Rule to create object files in the .build folder

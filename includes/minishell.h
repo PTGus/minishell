@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/03 15:42:23 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:40:01 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@
 # include <errno.h>
 # include <signal.h>
 # include "../libft/libft.h"
+
+int	main(void);
 
 #endif
