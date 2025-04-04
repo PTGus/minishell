@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/04 16:09:49 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:36:08 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_cd(char **split, char *home_path)
 {
-	if (split[1] == NULL || (split[1][0] == '~' && split[1][1] =='\0'))
+	if (split[1] == NULL || (split[1][0] == '~' && split[1][1] == '\0'))
 	{
 		chdir(home_path);
 		return ;
