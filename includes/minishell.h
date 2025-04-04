@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/03 16:40:01 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:06:08 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-int	main(void);
+int	main(int ac, char **av, char **env);
+
+// utils //
+int	ft_strcmp(char *s1, char *s2);
+
+// BUILT-IN //
+
+// cd //
+void	ft_cd(char **split, char *home_path);
+
+// echo //
+void	ft_echo(char **split);
+
+// pwd //
+void	ft_pwd(void);
 
 #endif
