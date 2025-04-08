@@ -1,0 +1,18 @@
+Signal Name	Number		Description				Default Action
+SIGHUP		1		Hangup (e.g., terminal closed)		Terminate
+SIGINT		2		Interrupt (Ctrl+C)			Terminate
+SIGQUIT		3		Quit (Ctrl+)				Core dump & Terminate
+SIGILL		4		Illegal instruction			Core dump
+SIGABRT		6		Abort					Core dump
+SIGFPE		8		Floating point exception		Core dump
+SIGKILL		9		Kill (cannot catch/ignore)		Terminate
+SIGSEGV		11		Segmentation fault			Core dump
+SIGPIPE		13		Broken pipe (write to closed pipe)	Terminate
+SIGALRM		14		Alarm clock				Terminate
+SIGTERM		15		Terminate				Terminate
+SIGCHLD		17		Child stopped or terminated		Ignore (usually)
+SIGCONT		18		Continue if stopped			Continue
+SIGSTOP		19		Stop (cannot catch/ignore)		Stop
+SIGTSTP		20		Stop (Ctrl+Z)				Stop
+SIGTTIN		21		Background read from tty		Stop
+SIGTTOU		22		Background write to tty			Stop

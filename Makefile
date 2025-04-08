@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/04/04 16:06:08 by gumendes         ###   ########.fr        #
+#    Updated: 2025/04/08 14:34:21 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ NAME		=	minishell
 #                                  SOURCE AND OBJECT FILES                     #
 #==============================================================================#
 
-SRC			=	$(SRC_PATH)/minishell.c $(SRC_PATH)/echo.c $(SRC_PATH)/cd.c $(SRC_PATH)/pwd.c $(SRC_PATH)/utils.c
+SRC			=	$(SRC_PATH)/minishell.c $(SRC_PATH)/echo.c $(SRC_PATH)/cd.c $(SRC_PATH)/pwd.c $(SRC_PATH)/utils.c $(SRC_PATH)/env.c $(SRC_PATH)/signals.c
 
 OBJ         =   $(SRC:$(SRC_PATH)/%.c=$(BUILD_PATH)/%.o)
 
