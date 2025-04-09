@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/04 16:36:08 by gumendes         ###   ########.fr       */
+/*   Created: 2025/04/08 14:23:54 by gumendes          #+#    #+#             */
+/*   Updated: 2025/04/09 12:05:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	ft_cd(char **split, char *home_path)
+static void	ctrl_c(int sig)
 {
-	if (split[1] == NULL || (split[1][0] == '~' && split[1][1] == '\0'))
-	{
-		chdir(home_path);
-		return ;
-	}
-	if (access(split[1], X_OK) < 0)
-		printf("bash: cd: %s: No such file or directory\n", split[1]);
-	else
-		chdir(split[1]);
+	(void)sig;
+	rl_replace_line("", 0);
+	ft_putstr_fd(" \n", 1);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+void	handle_signals(void)
+{
+	signal(SIGINT, ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
 }

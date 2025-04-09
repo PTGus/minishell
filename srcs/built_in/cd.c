@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 15:50:00 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/04 15:51:29 by gumendes         ###   ########.fr       */
+/*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
+/*   Updated: 2025/04/09 11:36:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	ft_pwd(void)
+void	ft_cd(char **split, char *home_path)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	if (split[1] == NULL || (split[1][0] == '~' && split[1][1] == '\0'))
+	{
+		chdir(home_path);
+		return ;
+	}
+	if (access(split[1], X_OK) < 0)
+		printf("bash: cd: %s: No such file or directory\n", split[1]);
+	else
+		chdir(split[1]);
 }

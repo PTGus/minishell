@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 14:23:54 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/08 14:43:40 by gumendes         ###   ########.fr       */
+/*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
+/*   Updated: 2025/04/09 11:36:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-static void	ctrl_c(int sig)
+void	ft_env(char **env)
 {
-	(void)sig;
-	printf("\n");
-}
+	int	i;
 
-static void	ctrl_bslash(int sig)
-{
-	(void)sig;
-	return ;
-}
-
-void	handle_signals(void)
-{
-	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, ctrl_bslash);
+	if (getenv("PATH") == NULL)
+	{
+		printf("bash: env: No such file or directory\n");
+		return ;
+	}
+	else
+	{
+		i = 0;
+		while (env[i + 1] != NULL)
+		{
+			printf("%s\n", env[i]);
+			i++;
+		}
+		printf("_=/usr/bin/env\n");
+	}
 }

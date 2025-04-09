@@ -6,11 +6,11 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/07 16:21:00 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:16:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	ft_free_split(char **str)
 {
@@ -66,4 +66,18 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (s1[i] - s2[i]);
+}
+
+int duplicate_env(t_envp **dupenv, char **envp)
+{
+    int i;
+
+    i = 0;
+    while (envp[i])
+        i++;
+    if (init_env(dupenv, i) == 1)
+        return (1);
+    if (populate_env(dupenv, envp) == 1)
+        return (1);
+    return (0);
 }

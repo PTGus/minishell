@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/08 14:34:04 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:16:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,32 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
+typedef struct s_envp
+{
+	struct s_envp	*next;
+	struct s_envp	*prev;
+	char			*var;
+	char			*value;
+}	t_envp;
+
+//--------------------------------------------------------------//
+
 int		main(int ac, char **av, char **env);
 void	handle_signals(void);
 
-// utils //
+//--------------------------------------------------------------//
+
+// UTILS //
 int		ft_strcmp(char *s1, char *s2);
 void	ft_free_split(char **str);
 char	*pather(char *cmd);
+int 	duplicate_env(t_envp **dupenv, char **envp);
+
+// lst_utils //
+int		init_env(t_envp **dupenv, int count);
+int		populate_env(t_envp **dupenv, char **envp);
+
+//--------------------------------------------------------------//
 
 // BUILT-IN //
 
@@ -50,5 +69,7 @@ void	ft_env(char **env);
 
 // pwd //
 void	ft_pwd(void);
+
+//--------------------------------------------------------------//
 
 #endif

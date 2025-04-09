@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/04/08 14:34:21 by gumendes         ###   ########.fr        #
+#    Updated: 2025/04/09 16:17:56 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,9 @@ NAME		=	minishell
 #                                  SOURCE AND OBJECT FILES                     #
 #==============================================================================#
 
-SRC			=	$(SRC_PATH)/minishell.c $(SRC_PATH)/echo.c $(SRC_PATH)/cd.c $(SRC_PATH)/pwd.c $(SRC_PATH)/utils.c $(SRC_PATH)/env.c $(SRC_PATH)/signals.c
+SRC			=	$(SRC_PATH)/minishell.c $(SRC_PATH)/built_in/echo.c $(SRC_PATH)/built_in/cd.c \
+				$(SRC_PATH)/built_in/pwd.c $(SRC_PATH)/utils/utils.c $(SRC_PATH)/utils/list_utils.c $(SRC_PATH)/built_in/env.c \
+				$(SRC_PATH)/signals/signals.c
 
 OBJ         =   $(SRC:$(SRC_PATH)/%.c=$(BUILD_PATH)/%.o)
 
@@ -77,7 +79,7 @@ $(NAME): $(LIBFT) $(OBJ)
 
 # Rule to create object files in the .build folder
 $(BUILD_PATH)/%.o: $(SRC_PATH)/%.c
-	@mkdir -p $(BUILD_PATH)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean object files
@@ -117,21 +119,17 @@ re: fclean all
 # bash -c 'for c in {0..255}; do tput setaf $c; tput setaf $c | cat -v; echo =$c; done'
 #
 B  		= $(shell tput bold)
-BLA		= $(shell tput setaf 0)
+BLA		= $(shell tput setaf 16)
 RED		= $(shell tput setaf 1)
-GRN		= $(shell tput setaf 2)
+GRN		= $(shell tput setaf 46)
 BRW		= $(shell tput setaf 3)
-BLU		= $(shell tput setaf 4)
-PRP		= $(shell tput setaf 5)
-CYA		= $(shell tput setaf 6)
+BLU		= $(shell tput setaf 27)
+PRP		= $(shell tput setaf 57)
+CYA		= $(shell tput setaf 51)
 WHI		= $(shell tput setaf 15)
 GREY	= $(shell tput setaf 8)
-ORAN 	= $(shell tput setaf 9)
-LIME	= $(shell tput setaf 10)
-YEL		= $(shell tput setaf 11)
-BBLU	= $(shell tput setaf 12)
-BMAG	= $(shell tput setaf 13)
-BCYA	= $(shell tput setaf 14)
+ORAN 	= $(shell tput setaf 202)
+YEL		= $(shell tput setaf 226)
 D 		= $(shell tput sgr0)
 BEL 	= $(shell tput bel)
 CLR 	= $(shell tput el 1)
