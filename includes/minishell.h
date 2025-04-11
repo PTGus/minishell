@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/11 11:24:11 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:38:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_envp
 //--------------------------------------------------------------//
 
 int		main(int ac, char **av, char **env);
+void	do_cmd(char **split, t_envp **dupenv);
 void	handle_signals(void);
 
 //--------------------------------------------------------------//
@@ -48,24 +49,26 @@ void	handle_signals(void);
 int		ft_strcmp(char *s1, char *s2);
 void	ft_free_split(char **str);
 char	*pather(char *cmd);
-int 	duplicate_env(t_envp **dupenv, char **envp);
 
 // lst_utils //
-int		init_env(t_envp **dupenv, char **envp);
-int		populate_env(t_envp **dupenv, char **envp);
+void	ft_lst_back(t_envp **dupenv, t_envp *curr);
+t_envp	*lstlast(t_envp *dupenv);
 
 //--------------------------------------------------------------//
 
 // BUILT-IN //
 
 // cd //
-void	ft_cd(char **split, char *home_path);
+void	ft_cd(char **split, t_envp **dupenv);
 
 // echo //
 void	ft_echo(char **split);
 
 // env //
-void	ft_env(char **env);
+void	ft_env(t_envp **dupenv);
+t_envp	*new_env(char *envp);
+int		init_env(t_envp **dupenv, char **envp);
+int 	duplicate_env(t_envp **dupenv, char **envp);
 
 // pwd //
 void	ft_pwd(void);

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/11 11:54:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:33:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	main(int ac, char **av, char **env)
 	dupenv = ft_calloc(1, sizeof(t_envp));
 	duplicate_env(dupenv, env);
 	handle_signals();
-	dupenv = ft_calloc(1, sizeof(t_envp));
-	duplicate_env(dupenv, env);
 	while (11)
 	{
 		prompt = "sh-5.2$ ";
@@ -36,8 +34,6 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 			return (0);
 		}
-		if (getenv("PATH") == NULL)
-			printf("bash: %s: No such file or directory\n", split[0]);
 		else
 		{
 			split = ft_split(rl, ' ');
@@ -45,17 +41,24 @@ int	main(int ac, char **av, char **env)
 				return (1);
 			if (!split[0])
 				continue ;
-			else if (ft_strcmp(split[0], "echo") == 0)
-				ft_echo(split);
-			else if (ft_strcmp(split[0], "cd") == 0)
-				ft_cd(split, getenv("HOME"));
-			else if (ft_strcmp(split[0], "pwd") == 0)
-				ft_pwd();
-			else if (ft_strcmp(split[0], "env") == 0)
-				ft_env(env);
 			else
-				printf("%s: command not found\n", split[0]);
+				do_cmd(split, dupenv);
+			ft_free_split(split);
 		}
 		free(rl);
 	}
+}
+
+void	do_cmd(char **split, t_envp **dupenv)
+{
+	if (ft_strcmp(split[0], "echo") == 0)
+		ft_echo(split);
+	else if (ft_strcmp(split[0], "cd") == 0)
+		ft_cd(split, dupenv);
+	else if (ft_strcmp(split[0], "pwd") == 0)
+		ft_pwd();
+	else if (ft_strcmp(split[0], "env") == 0)
+		ft_env(dupenv);
+	else
+		printf("%s: command not found\n", split[0]);
 }

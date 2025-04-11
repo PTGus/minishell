@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/11 11:31:52 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:55:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,4 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (s1[i] - s2[i]);
-}
-
-int duplicate_env(t_envp **dupenv, char **envp)
-{
-    if (init_env(dupenv, envp) == 1)
-        return (1);
-    if (populate_env(dupenv, envp) == 1)
-        return (1);
-    return (0);
 }
