@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/09 17:18:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:54:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,21 @@
 
 int	main(int ac, char **av, char **env)
 {
-	// const char	*prompt;
-	// char		*rl;
-	// char		**split;
-	t_envp		*dupenv = NULL;
+	const char	*prompt;
+	char		*rl;
+	char		**split;
+	t_envp		**dupenv;
 
 	(void)ac;
 	(void)av;
-	dupenv = malloc(sizeof(t_envp));
-	duplicate_env(&dupenv, env);
-	while (dupenv != NULL)
-	{
-		printf("%s=%s\n", dupenv->var, dupenv->value);
-		dupenv = dupenv->next;
-	}
-/* 	handle_signals();
+	dupenv = ft_calloc(1, sizeof(t_envp));
+	duplicate_env(dupenv, env);
+	handle_signals();
 	dupenv = ft_calloc(1, sizeof(t_envp));
 	duplicate_env(dupenv, env);
 	while (11)
 	{
-		prompt = ft_strjoin(ft_strjoin("sh-5.2:~/", ft_substr(getcwd(NULL, 0), 15, 999)), "$ ");
+		prompt = "sh-5.2$ ";
 		rl = readline(prompt);
 		add_history(rl);
 		if (rl == NULL)
@@ -49,7 +44,7 @@ int	main(int ac, char **av, char **env)
 			if (!split)
 				return (1);
 			if (!split[0])
-				printf("");
+				continue ;
 			else if (ft_strcmp(split[0], "echo") == 0)
 				ft_echo(split);
 			else if (ft_strcmp(split[0], "cd") == 0)
@@ -62,5 +57,5 @@ int	main(int ac, char **av, char **env)
 				printf("%s: command not found\n", split[0]);
 		}
 		free(rl);
-	} */
+	}
 }

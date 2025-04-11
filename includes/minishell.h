@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/09 17:16:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:24:11 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*pather(char *cmd);
 int 	duplicate_env(t_envp **dupenv, char **envp);
 
 // lst_utils //
-int		init_env(t_envp **dupenv, int count);
+int		init_env(t_envp **dupenv, char **envp);
 int		populate_env(t_envp **dupenv, char **envp);
 
 //--------------------------------------------------------------//

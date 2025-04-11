@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:29:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/09 17:15:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:33:11 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ static void		ft_lst_back(t_envp **dupenv, t_envp *curr);
  *
  * On failure: 1.
  */
-int init_env(t_envp **dupenv, int count)
+int init_env(t_envp **dupenv, char **envp)
 {
     t_envp	*curr;
     int		i;
 
-    *dupenv = NULL;
     i = 0;
-    while (i <= count)
+    while (envp[i])
     {
         curr = new_node();
         if (!curr)
@@ -61,15 +60,12 @@ int	populate_env(t_envp **dupenv, char **envp)
 			if (envp[i][j] == '=')
 			{
 				temp->var = ft_strdup(ft_substr(envp[i], 0, j));
-				if (!temp->var)
-					return (1);
 				break ;
 			}
 		}
 		temp->value = ft_strdup(envp[i] + 1 + j);
-		if (!temp->value)
-			return (1);
 		i++;
+		temp = temp->next;
 	}
 	return (0);
 }
