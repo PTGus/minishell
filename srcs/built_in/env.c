@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/11 15:38:50 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:23:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ void	ft_env(t_envp **dupenv)
 	}
 	else
 	{
-		while (tmp->next != NULL)
+		while (tmp != NULL)
 		{
-			printf("%s%s\n", tmp->var, tmp->value);
+			printf("%s=%s\n", tmp->var, tmp->value);
 			tmp = tmp->next;
 		}
-		printf("_=/usr/bin/env\n");
 	}
 }
 
@@ -54,7 +53,7 @@ t_envp	*new_env(char *envp)
 	i = 0;
 	while (envp[i] != '=')
 		i++;
-	new->var = ft_strdup(ft_substr(envp, 0, i + 1));
+	new->var = ft_strdup(ft_substr(envp, 0, i));
 	new->value = ft_strdup(envp + (1 + i));
 	return (new);
 }
@@ -80,7 +79,10 @@ int init_env(t_envp **dupenv, char **envp)
 		count++;
 	while (i < count)
 	{
-		curr = new_env(envp[i]);
+		if (i + 1 == count)
+			curr = new_env("_=/usr/bin/env");
+		else
+			curr = new_env(envp[i]);
 		if (!curr)
 			return (1);
 		ft_lst_back(dupenv, curr);

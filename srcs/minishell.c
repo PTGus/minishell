@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/11 15:33:34 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:11:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	do_cmd(char **split, t_envp **dupenv)
 		ft_pwd();
 	else if (ft_strcmp(split[0], "env") == 0)
 		ft_env(dupenv);
+	// else if (ft_strcmp(split[0], "export") == 0)
+	// 	ft_export(split, dupenv);
 	else
 		printf("%s: command not found\n", split[0]);
 }

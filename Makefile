@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/04/09 16:17:56 by gumendes         ###   ########.fr        #
+#    Updated: 2025/04/14 10:18:04 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LEAK		=	-fsanitize=leak
 #                                  PATHS       					               #
 #==============================================================================#
 
-SRC_PATH		=	srcs
+SRC_PATH		=	srcs/
 BUILD_PATH		=   .build
 INCLUDE_PATH	=	includes
 
@@ -51,9 +51,9 @@ NAME		=	minishell
 #                                  SOURCE AND OBJECT FILES                     #
 #==============================================================================#
 
-SRC			=	$(SRC_PATH)/minishell.c $(SRC_PATH)/built_in/echo.c $(SRC_PATH)/built_in/cd.c \
-				$(SRC_PATH)/built_in/pwd.c $(SRC_PATH)/utils/utils.c $(SRC_PATH)/utils/list_utils.c $(SRC_PATH)/built_in/env.c \
-				$(SRC_PATH)/signals/signals.c
+SRC			=	$(addprefix $(SRC_PATH), minishell.c built_in/cd.c built_in/echo.c \
+				built_in/env.c built_in/export.c built_in/pwd.c utils/utils.c \
+				utils/list_utils.c signals/signals.c)
 
 OBJ         =   $(SRC:$(SRC_PATH)/%.c=$(BUILD_PATH)/%.o)
 
