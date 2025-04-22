@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/14 17:11:24 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:54:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_envp	*lstlast(t_envp *dupenv);
 void	ft_cd(char **split, t_envp **dupenv);
 void	set_pwd(t_envp **dupenv, char *path);
 void	set_old_pwd(t_envp **dupenv);
+void	set_home(t_envp **dupenv);
 
 // echo //
 void	ft_echo(char **split);

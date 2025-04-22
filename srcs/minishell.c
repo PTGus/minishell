@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/14 17:11:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:18:59 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	prompt = "sh-5.2$ ";
 	dupenv = ft_calloc(1, sizeof(t_envp));
 	duplicate_env(dupenv, env);
 	handle_signals();
 	while (11)
 	{
-		prompt = "sh-5.2$ ";
 		rl = readline(prompt);
 		add_history(rl);
 		if (rl == NULL)

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/14 11:23:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:26:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_env(t_envp **dupenv)
 {
 	t_envp	*tmp;
 
-	tmp = *(dupenv);
+	tmp = *dupenv;
 	if (getenv("PATH") == NULL)
 	{
 		printf("bash: env: No such file or directory\n");

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:12:43 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,47 +19,70 @@
  */
 void	ft_cd(char **split, t_envp **dupenv)
 {
-	char		*home;
 	t_envp		*temp;
 
 	if (split[1] == NULL || (split[1][0] == '~' && split[1][1] == '\0'))
 	{
 		temp = *dupenv;
 		set_old_pwd(dupenv);
+		set_home(dupenv);
 		while (ft_strcmp(temp->var, "HOME") != 0)
 			temp = temp->next;
-		home = ft_strjoin(temp->var, temp->value);
-		chdir(home);
-		free(home);
+		chdir(temp->value);
 		return ;
 	}
-	if (access(split[1], X_OK) < 0)
+	else if (access(split[1], F_OK) < 0)
 		printf("bash: cd: %s: No such file or directory\n", split[1]);
 	else
+	{
+		set_old_pwd(dupenv);
+		set_pwd(dupenv, split[1]);
 		chdir(split[1]);
+	}
 }
 
-void set_pwd(t_envp **dupenv, char *path)
+/**
+ * @brief Sets the current "PWD" variable to home (/home/(username)).
+ * @param dupenv A duplicate of the original envp.
+ */
+void set_home(t_envp **dupenv)
 {
-	t_envp	*tmp;
+    t_envp	*pwd;
+	t_envp	*home;
 
-	tmp = *dupenv;
-	while (ft_strcmp(tmp->var, "OLDPWD") != 0)
-		tmp = tmp->next;
-	
+	pwd = *dupenv;
+	home = *dupenv;
+	while (ft_strcmp(pwd->var, "PWD") != 0)
+		pwd = pwd->next;
+	while (ft_strcmp(home->var, "HOME") != 0)
+		home = home->next;
+	free(pwd->value);
+	pwd->value = ft_strdup(home->value);
 }
+void	set_pwd(t_envp **dupenv, char *path)
+{
+	t_envp	*pwd;
+	char	*tmp;
 
+	pwd = *dupenv;
+	while (ft_strcmp(pwd->var, "PWD") != 0)
+		pwd = pwd->next;
+	tmp = ft_strdup(pwd->value);
+	free(pwd->value);
+	pwd->value = NULL;
+	path = ft_strjoin("/", path);
+	pwd->value = ft_strjoin(tmp, path);
+	free(tmp);
+	free(path);
+}
 
 void	set_old_pwd(t_envp **dupenv)
 {
-	t_envp	*tmp;
-	char	*cwd;
+	t_envp		*old_pwd;
 
-	tmp = *dupenv;
-	while (ft_strcmp(tmp->var, "OLDPWD") != 0)
-		tmp = tmp->next;
-	free(tmp->value);
-	cwd = getcwd(NULL, 0);
-	tmp->value = cwd;
-	free(cwd);
+	old_pwd = *dupenv;
+	while (ft_strcmp(old_pwd->var, "OLDPWD") != 0)
+		old_pwd = old_pwd->next;
+	free(old_pwd->value);
+	old_pwd->value = ft_strdup(getcwd(NULL, 0));
 }
