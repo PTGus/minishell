@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/04/14 10:18:04 by gumendes         ###   ########.fr        #
+#    Updated: 2025/04/23 17:19:37 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,11 +51,15 @@ NAME		=	minishell
 #                                  SOURCE AND OBJECT FILES                     #
 #==============================================================================#
 
-SRC			=	$(addprefix $(SRC_PATH), minishell.c built_in/cd.c built_in/echo.c \
-				built_in/env.c built_in/export.c built_in/pwd.c utils/utils.c \
-				utils/list_utils.c signals/signals.c)
+SRC_BUILTIN	=	$(addprefix built_in/, cd.c echo.c env.c exit.c export.c pwd.c)
+SRC_CLEANUP	=	$(addprefix clean_up/, free.c)
+SRC_MAIN	=	$(addprefix main/, minishell.c)
+SRC_SIGNALS	=	$(addprefix signals/, signals.c)
+SRC_UTILS	=	$(addprefix utils/, env_utils.c list_utils.c utils.c)
 
-OBJ         =   $(SRC:$(SRC_PATH)/%.c=$(BUILD_PATH)/%.o)
+SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS))
+
+OBJ         =   $(SRC:$(SRC_PATH)%.c=$(BUILD_PATH)/%.o)
 
 #==============================================================================#
 #                                  RULES                                       #
