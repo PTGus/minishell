@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/22 15:26:47 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:44:11 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ t_envp	*new_env(char *envp)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
+	if (envp[0] == '_')
+		new->index = -2;
+	else
+		new->index = -1;
 	i = 0;
 	while (envp[i] != '=')
 		i++;
@@ -95,5 +99,6 @@ int duplicate_env(t_envp **dupenv, char **envp)
 {
 	if (init_env(dupenv, envp) == 1)
 		return (1);
+	organise_env(dupenv);
 	return (0);
 }

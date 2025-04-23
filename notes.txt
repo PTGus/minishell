@@ -1,21 +1,23 @@
-Signal Name	Number		Description				Default Action
-SIGHUP		1		Hangup (e.g., terminal closed)		Terminate
-SIGINT		2		Interrupt (Ctrl+C)			Terminate
-SIGQUIT		3		Quit (Ctrl+)				Core dump & Terminate
-SIGILL		4		Illegal instruction			Core dump
-SIGABRT		6		Abort					Core dump
-SIGFPE		8		Floating point exception		Core dump
-SIGKILL		9		Kill (cannot catch/ignore)		Terminate
-SIGSEGV		11		Segmentation fault			Core dump
-SIGPIPE		13		Broken pipe (write to closed pipe)	Terminate
-SIGALRM		14		Alarm clock				Terminate
-SIGTERM		15		Terminate				Terminate
-SIGCHLD		17		Child stopped or terminated		Ignore (usually)
-SIGCONT		18		Continue if stopped			Continue
-SIGSTOP		19		Stop (cannot catch/ignore)		Stop
-SIGTSTP		20		Stop (Ctrl+Z)				Stop
-SIGTTIN		21		Background read from tty		Stop
-SIGTTOU		22		Background write to tty			Stop
+
+Signals
+Name		|	Number	|	Description							|	Default Action
+SIGHUP		|	1		|	Hangup (e.g., terminal closed)		|	Terminate
+SIGINT		|	2		|	Interrupt (Ctrl+C)					|	Terminate
+SIGQUIT		|	3		|	Quit (Ctrl+)						|	Core dump & Terminate
+SIGILL		|	4		|	Illegal instruction					|	Core dump
+SIGABRT		|	6		|	Abort								|	Core dump
+SIGFPE		|	8		|	Floating point exception			|	Core dump
+SIGKILL		|	9		|	Kill (cannot catch/ignore)			|	Terminate
+SIGSEGV		|	11		|	Segmentation fault					|	Core dump
+SIGPIPE		|	13		|	Broken pipe (write to closed pipe)	|	Terminate
+SIGALRM		|	14		|	Alarm clock							|	Terminate
+SIGTERM		|	15		|	Terminate							|	Terminate
+SIGCHLD		|	17		|	Child stopped or terminated			|	Ignore (usually)
+SIGCONT		|	18		|	Continue if stopped					|	Continue
+SIGSTOP		|	19		|	Stop (cannot catch/ignore)			|	Stop
+SIGTSTP		|	20		|	Stop (Ctrl+Z)						|	Stop
+SIGTTIN		|	21		|	Background read from tty			|	Stop
+SIGTTOU		|	22		|	Background write to tty				|	Stop
 
 An environment variable's name must start with either an uppercase or lowercase letter (i.e., A–Z or a–z) or an underscore (_). If you try to assign a value to a name that starts with any other character—such as a digit or a special character—the bash will reject it as an invalid identifier. However, this restriction applies only to the name—not the value. However after the first character, you can also include digits (0–9) alongside letters and underscores but still no other characters other thatn these are allowed.
 

@@ -6,11 +6,11 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/22 15:18:59 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:10:45 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	main(int ac, char **av, char **env)
 {
@@ -59,8 +59,10 @@ void	do_cmd(char **split, t_envp **dupenv)
 		ft_pwd();
 	else if (ft_strcmp(split[0], "env") == 0)
 		ft_env(dupenv);
-	// else if (ft_strcmp(split[0], "export") == 0)
-	// 	ft_export(split, dupenv);
+	else if (ft_strcmp(split[0], "export") == 0)
+		ft_export(split, dupenv);
+	else if (ft_strcmp(split[0], "exit") == 0)
+		ft_exit(dupenv);
 	else
 		printf("%s: command not found\n", split[0]);
 }
