@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/22 17:12:43 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:18:20 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /**
  * @brief Built-in command that behaves exactly like the command "cd".
  * @param split The command arguments (where to go).
- * @param home_path The path to the home directory in case the is called to travel to home.
+ * @param home_path The path to the home directory in case the
+ *  is called to travel to home.
  */
 void	ft_cd(char **split, t_envp **dupenv)
 {
@@ -42,12 +43,12 @@ void	ft_cd(char **split, t_envp **dupenv)
 }
 
 /**
- * @brief Sets the current "PWD" variable to home (/home/(username)).
+ * @brief Sets the "PWD" variable's value to home (/home/(username)).
  * @param dupenv A duplicate of the original envp.
  */
-void set_home(t_envp **dupenv)
+void	set_home(t_envp **dupenv)
 {
-    t_envp	*pwd;
+	t_envp	*pwd;
 	t_envp	*home;
 
 	pwd = *dupenv;
@@ -59,6 +60,12 @@ void set_home(t_envp **dupenv)
 	free(pwd->value);
 	pwd->value = ft_strdup(home->value);
 }
+
+/**
+ * @brief Sets the "PWD" variable's value
+ *  to the currently working directory (CWD).
+ * @param dupenv A duplicate of the original envp.
+ */
 void	set_pwd(t_envp **dupenv, char *path)
 {
 	t_envp	*pwd;
@@ -76,6 +83,11 @@ void	set_pwd(t_envp **dupenv, char *path)
 	free(path);
 }
 
+/**
+ * @brief Sets the "OLDPWD" variable's value to the
+ *  previous currently working directory (CWD).
+ * @param dupenv A duplicate of the original envp.
+ */
 void	set_old_pwd(t_envp **dupenv)
 {
 	t_envp		*old_pwd;

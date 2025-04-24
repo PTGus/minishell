@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/23 17:09:57 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:21:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_echo(char **split);
 void	ft_env(t_envp **dupenv);
 t_envp	*new_env(char *envp);
 int		init_env(t_envp **dupenv, char **envp);
-int 	duplicate_env(t_envp **dupenv, char **envp);
+int		duplicate_env(t_envp **dupenv, char **envp);
 
 // exit //
 void	ft_exit(t_envp **dupenv);
@@ -74,19 +74,39 @@ void	insert_before_last(t_envp **dupenv, t_envp *curr);
 // pwd //
 void	ft_pwd(void);
 
+// unset //
+void	ft_unset(t_envp **dupenv, char *to_unset);
+
 //--------------------------------------------------------------//
 
 // CLEAN_UP //
 
 // free //
-void	ft_envdelone(t_envp *dupenv);
+void	ft_envfreeone(t_envp *dupenv);
 void	free_env(t_envp **dupenv);
+void	ft_freesplit(char **split);
+
+//--------------------------------------------------------------//
+
+// COMMANDS //
+
+// executer //
+int		commander(t_envp **dupenv, char **split);
+void	executer(char *exec, char **split, t_envp **dupenv);
+char	*pather(t_envp *path, char *cmd);
+
+//--------------------------------------------------------------//
 
 // UTILS //
 
 // env_utils //
 void	organise_env(t_envp **dupenv);
 void	reorder_dupenv(t_envp **dupenv);
+void	env_delone(t_envp *to_del);
+
+// exec_utils //
+char	*get_line(t_envp *dupenv);
+char	**get_exec_env(t_envp **dupenv);
 
 // lst_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
@@ -94,10 +114,8 @@ t_envp	*lstlast(t_envp *dupenv);
 
 // utils //
 int		ft_strcmp(char *s1, char *s2);
-void	ft_free_split(char **str);
 char	*pather(char *cmd);
 
 //--------------------------------------------------------------//
-
 
 #endif

@@ -6,14 +6,15 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/23 15:44:11 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:17:01 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief Built-in function that behaves just like the env command, prints all the current environmental variables.
+ * @brief Built-in function that behaves just like
+ *  the env command, prints all the current environmental variables.
  */
 void	ft_env(t_envp **dupenv)
 {
@@ -66,12 +67,12 @@ t_envp	*new_env(char *envp)
  * @brief Creates all necessary nodes to populate the
  *  t_envp list with all the environmental variables.
  * @param dupenv The main stack and head.
- * @param count The ammount of nodes to create.
+ * @param envp The environmental variables received through the main.
  * @return On success: 0.
  *
  * On failure: 1.
  */
-int init_env(t_envp **dupenv, char **envp)
+int	init_env(t_envp **dupenv, char **envp)
 {
 	t_envp	*curr;
 	int		count;
@@ -95,7 +96,16 @@ int init_env(t_envp **dupenv, char **envp)
 	return (0);
 }
 
-int duplicate_env(t_envp **dupenv, char **envp)
+/**
+ * @brief Initializes and the dupenv list's nodes and then
+ *  assigns them a number according to ascending ASCII order.
+ * @param dupenv The main stack and head.
+ * @param envp The environmental variables received through the main.
+ * @return On success: 0.
+ *
+ * On failure: 1.
+ */
+int	duplicate_env(t_envp **dupenv, char **envp)
 {
 	if (init_env(dupenv, envp) == 1)
 		return (1);

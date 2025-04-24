@@ -6,24 +6,27 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/23 15:43:32 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:19:06 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief Adds a node to the to a position before the end of the list, updates the head if necessary.
+ * @brief Adds a node to the to a position before
+ *  the end of the list, updates the head if necessary.
+ * @param dupenv The main list and head.
+ * @param curr The node to be inserted.
  */
 void	insert_before_last(t_envp **dupenv, t_envp *curr)
 {
-	t_envp *last;
-	t_envp *b_last;
+	t_envp	*last;
+	t_envp	*b_last;
 
 	if (!*dupenv)
 	{
 		*dupenv = curr;
-		return;
+		return ;
 	}
 	last = lstlast(*dupenv);
 	b_last = last->prev;
@@ -33,6 +36,16 @@ void	insert_before_last(t_envp **dupenv, t_envp *curr)
 	last->prev = curr;
 }
 
+/**
+ * @brief Checks whether an env already exists, if so revalues
+ *  it, if not tells the calling function to create it.
+ * @param dupenv The main list and head.
+ * @param split The array where the information about the soon
+ *  to be created/revalued variable is stored.
+ * @return Returns 0 when the specified variable doesn't exist
+ *  and should be created,
+ * and 1 when the variable already exists and was revalued.
+ */
 int	should_revalue(t_envp **dupenv, char**split)
 {
 	char	**var;
@@ -46,15 +59,20 @@ int	should_revalue(t_envp **dupenv, char**split)
 		{
 			new->value = NULL;
 			new->value = ft_strdup(var[1]);
-			ft_free_split(var);
+			ft_freesplit(var);
 			return (1);
 		}
 		new = new->next;
 	}
-	ft_free_split(var);
+	ft_freesplit(var);
 	return (0);
 }
 
+/**
+ * @brief Mimics the behaviour of the export function without
+ *  any additional paramters.
+ * @param dupenv The main list and head.
+ */
 void	declarex(t_envp **dupenv)
 {
 	t_envp	*tmp;
@@ -79,6 +97,13 @@ void	declarex(t_envp **dupenv)
 	}
 }
 
+/**
+ * @brief Built-in function that behaves just like
+ *  the export command.
+ * @param split THe array with the command to follow
+ *  and variable to create.
+ * @param dupenv The main list and head.
+ */
 void	ft_export(char **split, t_envp **dupenv)
 {
 	t_envp	*new;

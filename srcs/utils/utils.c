@@ -6,26 +6,11 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/11 14:55:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:36:01 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_free_split(char **str)
-{
-	int	i;
-
-	if (!str)
-		return ;
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
 
 char	*pather(char *cmd)
 {
@@ -45,14 +30,14 @@ char	*pather(char *cmd)
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			ft_free_split(split_cmds);
-			ft_free_split(all_paths);
+			ft_freesplit(split_cmds);
+			ft_freesplit(all_paths);
 			return (exec);
 		}
 		free(exec);
 	}
-	ft_free_split(split_cmds);
-	ft_free_split(all_paths);
+	ft_freesplit(split_cmds);
+	ft_freesplit(all_paths);
 	return (cmd);
 }
 

@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/04/23 17:19:37 by gumendes         ###   ########.fr        #
+#    Updated: 2025/04/24 16:20:00 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,11 +51,12 @@ NAME		=	minishell
 #                                  SOURCE AND OBJECT FILES                     #
 #==============================================================================#
 
-SRC_BUILTIN	=	$(addprefix built_in/, cd.c echo.c env.c exit.c export.c pwd.c)
+SRC_BUILTIN	=	$(addprefix built_in/, cd.c echo.c env.c exit.c export.c pwd.c unset.c)
 SRC_CLEANUP	=	$(addprefix clean_up/, free.c)
+SRC_COMMAND	=	$(addprefix commands/, executer.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
-SRC_UTILS	=	$(addprefix utils/, env_utils.c list_utils.c utils.c)
+SRC_UTILS	=	$(addprefix utils/, env_utils.c exec_utils.c list_utils.c utils.c)
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS))
 
