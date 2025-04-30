@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/24 17:17:01 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:31:18 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_env(t_envp **dupenv)
 t_envp	*new_env(char *envp)
 {
 	t_envp	*new;
+	char	*tmp;
 	int		i;
 
 	new = ft_calloc(1, sizeof(t_envp));
@@ -58,7 +59,9 @@ t_envp	*new_env(char *envp)
 	i = 0;
 	while (envp[i] != '=')
 		i++;
-	new->var = ft_strdup(ft_substr(envp, 0, i));
+	tmp = ft_substr(envp, 0, i);
+	new->var = ft_strdup(tmp);
+	free(tmp);
 	new->value = ft_strdup(envp + (1 + i));
 	return (new);
 }
