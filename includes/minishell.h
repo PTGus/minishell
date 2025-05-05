@@ -30,6 +30,11 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
+typedef struct s_central
+{
+	struct t_envp **dupenv;
+}	t_central;
+
 typedef struct s_envp
 {
 	struct s_envp	*next;
