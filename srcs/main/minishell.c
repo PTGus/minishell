@@ -6,40 +6,45 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/30 16:09:22 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/05 13:57:27 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	rl_loop(t_envp **dupenv)
-{
-	const char	*prompt;
-	char		*rl;
-	char		**split;
+// void	rl_loop(t_envp **dupenv)
+// {
+// 	const char	*prompt;
+// 	char		*rl;
+// 	char		**split;
 
-	prompt = "minishell$ ";
-	while (11)
-	{
-		rl = readline(prompt);
-		add_history(rl);
-		if (rl == NULL)
-		{
-			printf("exit\n");
-			return ;
-		}
-		else
-		{
-			split = ft_split(rl, ' ');
-			if (!split[0])
-				continue ;
-			else
-				do_cmd(split, dupenv);
-			ft_freesplit(split);
-		}
-		free(rl);
-	}
-}
+// 	prompt = "minishell$ ";
+// 	while (11)
+// 	{
+// 		rl = readline(prompt);
+// 		add_history(rl);
+// 		if (rl == NULL)
+// 		{
+// 			printf("exit\n");
+// 			rl_clear_history();
+// 			free(rl);
+// 			return ;
+// 		}
+// 		else
+// 		{
+// 			split = ft_split(rl, ' ');
+// 			if (!split[0])
+// 			{
+// 				free(split);
+// 				continue ;
+// 			}
+// 			else
+// 				do_cmd(split, dupenv);
+// 			ft_freesplit(split);
+// 		}
+// 		free(rl);
+// 	}
+// }
 
 int	main(int ac, char **av, char **env)
 {
