@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/24 15:48:07 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:34:57 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,6 @@ void	free_env(t_envp **dupenv)
 		ft_envfreeone(*dupenv);
 		*dupenv = tmp;
 	}
+	free(*dupenv);
+	free(dupenv);
 }

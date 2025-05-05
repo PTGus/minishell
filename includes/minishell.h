@@ -6,22 +6,23 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/24 17:21:37 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:09:22 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <unistd.h>
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/ioctl.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include <stdio.h>
 # include <dirent.h>
 # include <string.h>
-# include <sys/ioctl.h>
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
@@ -64,7 +65,7 @@ int		init_env(t_envp **dupenv, char **envp);
 int		duplicate_env(t_envp **dupenv, char **envp);
 
 // exit //
-void	ft_exit(t_envp **dupenv);
+void	ft_exit(t_envp **dupenv, char *exit_val);
 
 // export //
 void	ft_export(char **split, t_envp **dupenv);
@@ -114,7 +115,6 @@ t_envp	*lstlast(t_envp *dupenv);
 
 // utils //
 int		ft_strcmp(char *s1, char *s2);
-char	*pather(char *cmd);
 
 //--------------------------------------------------------------//
 

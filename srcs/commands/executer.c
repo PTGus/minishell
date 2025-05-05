@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/24 17:20:48 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:04:16 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,44 @@ int	commander(t_envp **dupenv, char **split)
 	char	*exec;
 
 	path = *dupenv;
-	while (ft_strcmp(path->var, "PATH") != 0)
+	while (ft_strcmp(path->var, "PATH") != 0 && path != NULL)
 		path = path->next;
 	if (!path)
-		return (printf("bash: %s: No such file or directory\n", split[0]));
+		return (printf("bash: %s: No such file or directory\n", split[0]), 1);
 	else
 		exec = pather(path, split[0]);
+	if (!exec)
+	{
+		printf("bash: %s: command not found\n", exec);
+		return (free(exec), 1);
+	}
 	executer(exec, split, dupenv);
+	free(exec);
+	return (0);
 }
 
 void	executer(char *exec, char **split, t_envp **dupenv)
 {
+	char	**envp;
+	int		status;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("pid");
+		exit (1);
+	}
+	if (pid == 0)
+	{
+		envp = get_exec_env(dupenv);
+		execve(exec, split, envp);
+		perror("execve");
+        ft_freesplit(envp);
+        exit(EXIT_FAILURE);
+	}
+	else
+		waitpid(pid, &status, 0);
 }
 
 /**

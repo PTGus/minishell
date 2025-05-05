@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/04/24 16:20:00 by gumendes         ###   ########.fr        #
+#    Updated: 2025/05/05 13:55:03 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LEAK		=	-fsanitize=leak
 #                                  PATHS       					               #
 #==============================================================================#
 
-SRC_PATH		=	srcs/
+SRC_PATH		=	srcs
 BUILD_PATH		=   .build
 INCLUDE_PATH	=	includes
 
@@ -58,7 +58,7 @@ SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, env_utils.c exec_utils.c list_utils.c utils.c)
 
-SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS))
+SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS))
 
 OBJ         =   $(SRC:$(SRC_PATH)%.c=$(BUILD_PATH)/%.o)
 
@@ -79,7 +79,7 @@ get_libft:
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(LEAK) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
 	@echo "$(GRN)[PROJECT BUILT]$(END)"
 
 # Rule to create object files in the .build folder
