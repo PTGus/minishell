@@ -12,41 +12,42 @@
 
 #include "../../includes/minishell.h"
 
-// void	rl_loop(t_envp **dupenv)
-// {
-// 	const char	*prompt;
-// 	char		*rl;
-// 	char		**split;
+void	rl_loop(t_envp **dupenv)// need to change layout of rl loop to reduce size and adapt to ft_parse result
+{
+	const char	*prompt;
+ 	char		*rl;
+ 	char		**split;
 
-// 	prompt = "minishell$ ";
-// 	while (11)
-// 	{
-// 		rl = readline(prompt);
-// 		add_history(rl);
-// 		if (rl == NULL)
-// 		{
-// 			printf("exit\n");
-// 			rl_clear_history();
-// 			free(rl);
-// 			return ;
-// 		}
-// 		else
-// 		{
-// 			split = ft_split(rl, ' ');
-// 			if (!split[0])
-// 			{
-// 				free(split);
-// 				continue ;
-// 			}
-// 			else
-// 				do_cmd(split, dupenv);
-// 			ft_freesplit(split);
-// 		}
-// 		free(rl);
-// 	}
-// }
+	prompt = "minishell$ ";
+	while (11)
+ 	{
+ 		rl = readline(prompt);
+ 		add_history(rl);
+		ft_parse(rl); 
+ 		if (rl == NULL)
+ 		{
+ 			printf("exit\n");
+ 			rl_clear_history();
+			free(rl);
+ 			return ;
+ 		}
+ 		else
+ 		{
+ 			split = ft_split(rl, ' ');
+ 			if (!split[0])
+ 			{
+ 				free(split);
+ 				continue ;
+ 			}
+ 			else
+ 				do_cmd(split, dupenv);
+ 			ft_freesplit(split);
+ 		}
+ 		free(rl);
+ 	}
+}
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)//
 {
 	t_envp		**dupenv;
 

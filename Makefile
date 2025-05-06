@@ -57,8 +57,9 @@ SRC_COMMAND	=	$(addprefix commands/, executer.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, env_utils.c exec_utils.c list_utils.c utils.c)
+SRC_PARSE	= 	$(addprefix parsing/, parsing.c)
 
-SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS))
+SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS) $(SRC_PARSE))
 
 OBJ         =   $(SRC:$(SRC_PATH)%.c=$(BUILD_PATH)/%.o)
 
