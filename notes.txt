@@ -29,3 +29,16 @@ Bash doesn’t modify or reject a value based on its content (aside from the nul
 
 Summary:
 Bash will not reject an environment variable value (regardless of its content) as long as we follow proper syntax for the assignment and do not attempt to include a null character. Any string we provide is acceptable; however, if the value’s format is critical for some applications, we might need to ensure it meets those programs’ expectations.
+
+EXIT CODES
+Number		|	Meaning								|	Description
+0			|	Success								|	Command completed without errors
+1			|	General error						|	Catch-all for generic errors (e.g., cd to nonexistent dir)
+2			|	Misuse of shell builtins			|	Incorrect usage of builtins (e.g., exit abc)
+126			|	Command found but not executable	|	File exists but cannot be executed (e.g., permission denied, it's a directory)
+127			|	Command not found					|	Command does not exist or not found in PATH
+128			|	Invalid exit argument				|	Using exit 256 or similar invalid exit value
+
+Edge cases
+Ctrl+\-> defines code to 0
+Ctrl+C-> defines code to 130
