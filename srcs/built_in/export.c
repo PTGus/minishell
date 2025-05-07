@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/24 17:19:06 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:25:56 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	insert_before_last(t_envp **dupenv, t_envp *curr)
 	t_envp	*last;
 	t_envp	*b_last;
 
-	if (!*dupenv)
+	if (!dupenv)
 	{
 		*dupenv = curr;
 		return ;
 	}
-	last = lstlast(*dupenv);
+	last = lstlast(dupenv);
 	b_last = last->prev;
 	b_last->next = curr;
 	curr->prev = b_last;
@@ -104,30 +104,31 @@ void	declarex(t_envp **dupenv)
  *  and variable to create.
  * @param dupenv The main list and head.
  */
-void	ft_export(char **split, t_envp **dupenv)
+void	ft_export(char **split, t_central *central)
 {
 	t_envp	*new;
 	int		i;
 
-	new = *dupenv;
-	i = 0;
+	new = central->dupenv;
+	i = -1;
 	if (!split[1])
 	{
-		declarex(dupenv);
+		declarex(&central->dupenv);
+		central->exit_val = 0;
 		return ;
 	}
-	while (split[1][i])
+	while (split[1][++i])
 	{
 		if (split[1][i] == '=')
 			break ;
-		i++;
 	}
 	if (split[1][i] != '=')
 		return ;
-	if (should_revalue(dupenv, split) == 0)
+	if (should_revalue(&central->dupenv, split) == 0)
 	{
 		new = new_env(split[1]);
-		insert_before_last(dupenv, new);
+		insert_before_last(&central->dupenv, new);
 	}
-	reorder_dupenv(dupenv);
+	reorder_dupenv(&central->dupenv);
+	central->exit_val = 0;
 }

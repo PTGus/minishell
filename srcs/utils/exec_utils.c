@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/30 11:58:08 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:33:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,25 @@ char	*get_line(t_envp *dupenv)
 char	**get_exec_env(t_envp **dupenv)
 {
 	t_envp	*tmp;
+	int		i;
 	char	**vars;
 
-	vars = ft_calloc(6, sizeof(char *));
 	tmp = *dupenv;
+	i = 0;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->var, "PATH") == 0 && vars[0] == NULL)
-			vars[0] = get_line(tmp);
-		else if (ft_strcmp(tmp->var, "HOME") == 0 && vars[1] == NULL)
-			vars[1] = get_line(tmp);
-		else if (ft_strcmp(tmp->var, "USER") == 0 && vars[2] == NULL)
-			vars[2] = get_line(tmp);
-		else if (ft_strcmp(tmp->var, "SHELL") == 0 && vars[3] == NULL)
-			vars[3] = get_line(tmp);
-		else if (ft_strcmp(tmp->var, "TERM") == 0 && vars[4] == NULL)
-			vars[4] = get_line(tmp);
 		tmp = tmp->next;
+		i++;
 	}
-	vars[5] = NULL;
+	vars = ft_calloc(i + 1, sizeof(char *));
+	tmp = *dupenv;
+	i = 0;
+	while (tmp)
+	{
+		vars[i] = get_line(tmp);
+		tmp = tmp->next;
+		i++;
+	}
+	vars[i] = NULL;
 	return (vars);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/30 13:31:18 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:40:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,23 @@
  * @brief Built-in function that behaves just like
  *  the env command, prints all the current environmental variables.
  */
-void	ft_env(t_envp **dupenv)
+void	ft_env(char **split, t_central *central)
 {
 	t_envp	*tmp;
 
-	tmp = *dupenv;
-	if (getenv("PATH") == NULL)
+	if (split[1] != NULL)
 	{
-		printf("bash: env: No such file or directory\n");
+		ft_putstr_fd("invalid arguments\n", 2);
+		central->exit_val = 1;
 		return ;
 	}
-	else
+	tmp = central->dupenv;
+	while (tmp != NULL)
 	{
-		while (tmp != NULL)
-		{
-			printf("%s=%s\n", tmp->var, tmp->value);
-			tmp = tmp->next;
-		}
+		printf("%s=%s\n", tmp->var, tmp->value);
+		tmp = tmp->next;
 	}
+	central->exit_val = 0;
 }
 
 /**
@@ -62,7 +61,10 @@ t_envp	*new_env(char *envp)
 	tmp = ft_substr(envp, 0, i);
 	new->var = ft_strdup(tmp);
 	free(tmp);
-	new->value = ft_strdup(envp + (1 + i));
+	if (envp[i + 1] >= 33 && envp[i + 1] <= 126)
+		new->value = ft_strdup(envp + (1 + i));
+	else
+		new->value = ft_strdup("");
 	return (new);
 }
 

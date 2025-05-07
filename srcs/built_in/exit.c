@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/30 16:58:46 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:18:28 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
  * @brief Built-in function that behaves just like
  *  the "exit" command.
  */
-void	ft_exit(t_envp **dupenv, char *exit_val)
+void	ft_exit(t_central *central, char *exit_val)
 {
 	int i;
 
-	if (*dupenv || dupenv)
-		free_env(dupenv);
+	clean_all(central);
 	i = 0;
 	if (exit_val != NULL)
 	{

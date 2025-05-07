@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/24 17:18:20 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:07:50 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,33 @@
  * @param home_path The path to the home directory in case the
  *  is called to travel to home.
  */
-void	ft_cd(char **split, t_envp **dupenv)
+void	ft_cd(char **split, t_central *central)
 {
 	t_envp		*temp;
 
-	if (split[1] == NULL || (split[1][0] == '~' && split[1][1] == '\0'))
+	if ((split[1] != NULL && access(split[1], F_OK) == 0) \
+		|| (split[1][0] == '~' && split[1][1] == '\0'))
 	{
-		temp = *dupenv;
-		set_old_pwd(dupenv);
-		set_home(dupenv);
+		temp = central->dupenv;
+		set_old_pwd(&central->dupenv);
+		set_home(&central->dupenv);
 		while (ft_strcmp(temp->var, "HOME") != 0)
 			temp = temp->next;
 		chdir(temp->value);
-		return ;
 	}
 	else if (access(split[1], F_OK) < 0)
+	{
 		printf("bash: cd: %s: No such file or directory\n", split[1]);
+		central->exit_val = 1;
+		return ;
+	}
 	else
 	{
-		set_old_pwd(dupenv);
-		set_pwd(dupenv, split[1]);
+		set_old_pwd(&central->dupenv);
+		set_pwd(&central->dupenv, split[1]);
 		chdir(split[1]);
 	}
+	central->exit_val = 0;
 }
 
 /**

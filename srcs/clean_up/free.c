@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/30 13:34:57 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:51:58 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	clean_all(t_central *central)
+{
+	free_env(&central->dupenv);
+	free(central);
+}
 
 /**
  * @brief Frees all the memory allocated to an array of arrays.
@@ -54,12 +60,13 @@ void	free_env(t_envp **dupenv)
 {
 	t_envp	*tmp;
 
-	while (*dupenv != NULL)
+	if (!dupenv || !*dupenv)
+		return;
+	while (*dupenv)
 	{
 		tmp = (*dupenv)->next;
 		ft_envfreeone(*dupenv);
 		*dupenv = tmp;
 	}
-	free(*dupenv);
-	free(dupenv);
+	*dupenv = NULL;
 }

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gumendes <gumendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/04/30 13:04:16 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:26:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	commander(t_envp **dupenv, char **split)
+int	commander(t_central *central, char **split)
 {
 	t_envp	*path;
 	char	*exec;
 
-	path = *dupenv;
+	path = central->dupenv;
 	while (ft_strcmp(path->var, "PATH") != 0 && path != NULL)
 		path = path->next;
 	if (!path)
@@ -27,14 +27,15 @@ int	commander(t_envp **dupenv, char **split)
 	if (!exec)
 	{
 		printf("bash: %s: command not found\n", exec);
+		central->exit_val = 127;
 		return (free(exec), 1);
 	}
-	executer(exec, split, dupenv);
+	executer(exec, split, central);
 	free(exec);
 	return (0);
 }
 
-void	executer(char *exec, char **split, t_envp **dupenv)
+void	executer(char *exec, char **split, t_central *central)
 {
 	char	**envp;
 	int		status;
@@ -48,14 +49,17 @@ void	executer(char *exec, char **split, t_envp **dupenv)
 	}
 	if (pid == 0)
 	{
-		envp = get_exec_env(dupenv);
+		envp = get_exec_env(central->dupenv);
 		execve(exec, split, envp);
 		perror("execve");
         ft_freesplit(envp);
         exit(EXIT_FAILURE);
 	}
 	else
+	{
 		waitpid(pid, &status, 0);
+		central->exit_val = status;
+	}
 }
 
 /**
