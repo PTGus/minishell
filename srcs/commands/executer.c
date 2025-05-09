@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 15:26:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:38:07 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	executer(char *exec, char **split, t_central *central)
 	}
 	if (pid == 0)
 	{
-		envp = get_exec_env(central->dupenv);
+		envp = get_exec_env(&central->dupenv);
 		execve(exec, split, envp);
 		perror("execve");
-        ft_freesplit(envp);
-        exit(EXIT_FAILURE);
+		ft_freesplit(envp);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

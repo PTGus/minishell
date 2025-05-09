@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 17:45:58 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:36:08 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ void	rl_loop(t_central *central)
 	{
 		rl = readline(prompt);
 		if (rl == NULL)
-		{
-			printf("exit\n");
-			rl_clear_history();
-			return ;
-		}
+			ctrl_d(central);
 		if (rl[0] == '\0')
 			continue ;
 		add_history(rl);

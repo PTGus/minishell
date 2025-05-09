@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 16:51:58 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:36:57 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	free_env(t_envp **dupenv)
 	t_envp	*tmp;
 
 	if (!dupenv || !*dupenv)
-		return;
+		return ;
 	while (*dupenv)
 	{
 		tmp = (*dupenv)->next;

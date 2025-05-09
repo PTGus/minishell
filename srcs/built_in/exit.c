@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 15:18:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:37:13 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  */
 void	ft_exit(t_central *central, char *exit_val)
 {
-	int i;
+	int	i;
 
 	clean_all(central);
 	i = 0;
