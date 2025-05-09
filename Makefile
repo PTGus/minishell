@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/05/07 17:47:35 by gumendes         ###   ########.fr        #
+#    Updated: 2025/05/09 11:59:03 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,11 +54,12 @@ NAME		=	minishell
 SRC_BUILTIN	=	$(addprefix built_in/, cd.c echo.c env.c exit.c export.c pwd.c unset.c)
 SRC_CLEANUP	=	$(addprefix clean_up/, free.c)
 SRC_COMMAND	=	$(addprefix commands/, executer.c)
+SRC_ERRORS	=	$(addprefix err_handling/, errors.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
-SRC_UTILS	=	$(addprefix utils/, central_utils.c env_utils.c exec_utils.c list_utils.c utils.c)
+SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c list_utils.c utils.c)
 
-SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS))
+SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_ERRORS) $(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS))
 
 OBJ         =   $(SRC:$(SRC_PATH)%.c=$(BUILD_PATH)/%.o)
 
