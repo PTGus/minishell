@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 16:25:56 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:15:56 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief Adds a node to the to a position before
  *  the end of the list, updates the head if necessary.
- * @param dupenv The main list and head.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  * @param curr The node to be inserted.
  */
 void	insert_before_last(t_envp **dupenv, t_envp *curr)
@@ -39,9 +39,8 @@ void	insert_before_last(t_envp **dupenv, t_envp *curr)
 /**
  * @brief Checks whether an env already exists, if so revalues
  *  it, if not tells the calling function to create it.
- * @param dupenv The main list and head.
- * @param split The array where the information about the soon
- *  to be created/revalued variable is stored.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
+ * @param split An array of arrays with the prompt received from read line.
  * @return Returns 0 when the specified variable doesn't exist
  *  and should be created,
  * and 1 when the variable already exists and was revalued.
@@ -71,7 +70,7 @@ int	should_revalue(t_envp **dupenv, char**split)
 /**
  * @brief Mimics the behaviour of the export function without
  *  any additional paramters.
- * @param dupenv The main list and head.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
 void	declarex(t_envp **dupenv)
 {
@@ -100,9 +99,8 @@ void	declarex(t_envp **dupenv)
 /**
  * @brief Built-in function that behaves just like
  *  the export command.
- * @param split THe array with the command to follow
- *  and variable to create.
- * @param dupenv The main list and head.
+ * @param split An array of arrays with the prompt received from read line.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
 void	ft_export(char **split, t_central *central)
 {

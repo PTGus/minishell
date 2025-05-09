@@ -6,12 +6,18 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 10:36:08 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:32:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief An infinte loop that receives a string
+ *  passed though the terminal and utilizes it as paramters.
+ * @param central A struct that contains pointers to
+ *  all the neccessary variables and lists.
+ */
 void	rl_loop(t_central *central)
 {
 	const char	*prompt;
@@ -50,8 +56,7 @@ int	main(int ac, char **av, char **env)
 		dupenv = ft_calloc(1, sizeof(t_envp *));
 		central = ft_calloc(1, sizeof(t_central));
 		duplicate_env(dupenv, env);
-		init_central(central);
-		central->dupenv = *dupenv;
+		init_central(central, dupenv);
 		handle_signals();
 		rl_loop(central);
 		clean_all(central);
@@ -64,6 +69,13 @@ int	main(int ac, char **av, char **env)
 	}
 }
 
+/**
+ * @brief Checks if a command passed through realine
+ *  is one of the built_in functions or not.
+ * @param central A struct that contains pointers to
+ *  all the neccessary variables and lists.
+ * @param split An array of arrays with the prompt received from read line.
+ */
 int	is_built_in(t_central *central, char **split)
 {
 	if (ft_strcmp(split[0], "echo") == 0)
@@ -84,6 +96,12 @@ int	is_built_in(t_central *central, char **split)
 		return (1);
 }
 
+/**
+ * @brief Checks if PATH exists if it does it executes the command.
+ * @param split An array of arrays with the prompt received from read line.
+ * @param central A struct that contains pointers to
+ *  all the neccessary variables and lists.
+ */
 void	do_cmd(char **split, t_central *central)
 {
 	t_envp	*tmp;
@@ -93,7 +111,7 @@ void	do_cmd(char **split, t_central *central)
 		tmp = tmp->next;
 	if (!tmp)
 	{
-		printf("bash: %s: No such file or directory\n", split[0]);
+		not_dir(split[0]);
 		central->exit_val = 127;
 		return ;
 	}

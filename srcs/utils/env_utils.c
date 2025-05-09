@@ -6,12 +6,16 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:28:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 16:34:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:38:17 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Sets a index for all the members of dupenv in ascending ascii order.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
+ */
 void	organise_env(t_envp **dupenv)
 {
 	t_envp	*tmp;
@@ -37,6 +41,11 @@ void	organise_env(t_envp **dupenv)
 	}
 }
 
+/**
+ * @brief Reorders the index of the members of the dupenv
+ *  linked list whenever one is deleted or a new one is created.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
+ */
 void	reorder_dupenv(t_envp **dupenv)
 {
 	t_envp	*tmp;
@@ -51,6 +60,11 @@ void	reorder_dupenv(t_envp **dupenv)
 	organise_env(dupenv);
 }
 
+/**
+ * @brief Deletes a node of the dupenv linked list and sets the
+ *  pointers of the previous and next nodes to point to the correct nodes.
+ * @param to_del The node of the dupenv linked list to delete.
+ */
 void	env_delone(t_envp *to_del)
 {
 	t_envp	*tmp1;

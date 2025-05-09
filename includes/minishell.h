@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 10:35:45 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:32:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_envp
 
 // cd //
 void	ft_cd(char **split, t_central *central);
+void	set_cd_values(t_envp **dupenv, char **split);
 void	set_pwd(t_envp **dupenv, char *path);
 void	set_old_pwd(t_envp **dupenv);
 void	set_home(t_envp **dupenv);
@@ -99,6 +100,14 @@ char	*pather(t_envp *path, char *cmd);
 
 //--------------------------------------------------------------//
 
+// ERR_HANDLING //
+
+// errors //
+void	comm_not_foud(char *str);
+void	not_dir(char *str);
+
+//--------------------------------------------------------------//
+
 // MAIN //
 
 // minishell //
@@ -119,8 +128,11 @@ void	handle_signals(void);
 //--------------------------------------------------------------//
 // UTILS //
 
+// cd_utils //
+void	set_back(t_envp **pwd);
+
 // central_utils //
-void	init_central(t_central *central);
+void	init_central(t_central *central, t_envp **dupenv);
 
 // env_utils //
 void	organise_env(t_envp **dupenv);

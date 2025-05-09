@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 15:31:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:14:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief Built-in command that behaves like echo, can work without
  *  flags or with the -n flag (no new line).
- * @param split The command flag (if available) and what to write.
+ * @param split An array of arrays with the prompt received from read line.
  */
 void	ft_echo(char **split, t_central *central)
 {

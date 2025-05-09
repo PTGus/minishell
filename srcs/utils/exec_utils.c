@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 16:33:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:16:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief Transforms into a string, the dupenv node's variable and value.
- * @param dupenv The node with the needed information.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  * @return The created string.
  */
 char	*get_line(t_envp *dupenv)
@@ -38,7 +38,7 @@ char	*get_line(t_envp *dupenv)
 /**
  * @brief Gets all the necessary variables from the
  *  dupenv list to ensure that execve is successful.
- * @param dupenv The main list and head that contains a dupliate of envp.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  * @return A NULL terminated array of arrays with the desired variables.
  */
 char	**get_exec_env(t_envp **dupenv)

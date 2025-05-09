@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 16:40:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:15:29 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_envp	*new_env(char *envp)
 /**
  * @brief Creates all necessary nodes to populate the
  *  t_envp list with all the environmental variables.
- * @param dupenv The main stack and head.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  * @param envp The environmental variables received through the main.
  * @return On success: 0.
  *
@@ -104,7 +104,7 @@ int	init_env(t_envp **dupenv, char **envp)
 /**
  * @brief Initializes and the dupenv list's nodes and then
  *  assigns them a number according to ascending ASCII order.
- * @param dupenv The main stack and head.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  * @param envp The environmental variables received through the main.
  * @return On success: 0.
  *

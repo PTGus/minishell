@@ -6,12 +6,19 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 10:38:07 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:43:51 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Finds out whether the command exists
+ *  or not, if it exists it executes it.
+ * @param central A struct that contains pointers to
+ *  all the neccessary variables and lists.
+ * @param split An array of arrays with the prompt received from read line.
+ */
 int	commander(t_central *central, char **split)
 {
 	t_envp	*path;
@@ -21,12 +28,15 @@ int	commander(t_central *central, char **split)
 	while (ft_strcmp(path->var, "PATH") != 0 && path != NULL)
 		path = path->next;
 	if (!path)
-		return (printf("bash: %s: No such file or directory\n", split[0]), 1);
+	{
+		central->exit_val = 127;
+		return (not_dir(split[0]), 1);
+	}
 	else
 		exec = pather(path, split[0]);
 	if (!exec)
 	{
-		printf("bash: %s: command not found\n", exec);
+		comm_not_foud(split[0]);
 		central->exit_val = 127;
 		return (free(exec), 1);
 	}
@@ -35,6 +45,13 @@ int	commander(t_central *central, char **split)
 	return (0);
 }
 
+/**
+ * @brief Executes a command through execve.
+ * @param exec The command to execute.
+ * @param split An array of arrays with the prompt received from read line.
+ * @param central A struct that contains pointers to
+ *  all the neccessary variables and lists.
+ */
 void	executer(char *exec, char **split, t_central *central)
 {
 	char	**envp;
@@ -52,7 +69,7 @@ void	executer(char *exec, char **split, t_central *central)
 		envp = get_exec_env(&central->dupenv);
 		execve(exec, split, envp);
 		perror("execve");
-		ft_freesplit(envp);
+		clean_all(central);
 		exit(EXIT_FAILURE);
 	}
 	else
