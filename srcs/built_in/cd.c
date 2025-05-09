@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 16:07:50 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 15:43:29 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 /**
  * @brief Built-in command that behaves exactly like the command "cd".
- * @param split The command arguments (where to go).
+  * @param split An array of arrays with the prompt received from read line.
  * @param home_path The path to the home directory in case the
  *  is called to travel to home.
  */
 void	ft_cd(char **split, t_central *central)
 {
-	t_envp		*temp;
+	t_envp	*temp;
 
-	if ((split[1] != NULL && access(split[1], F_OK) == 0) \
+	if ((split[1] == NULL && access(split[1], F_OK) != 0) \
 		|| (split[1][0] == '~' && split[1][1] == '\0'))
 	{
 		temp = central->dupenv;
@@ -32,24 +32,42 @@ void	ft_cd(char **split, t_central *central)
 			temp = temp->next;
 		chdir(temp->value);
 	}
-	else if (access(split[1], F_OK) < 0)
-	{
-		printf("bash: cd: %s: No such file or directory\n", split[1]);
-		central->exit_val = 1;
-		return ;
-	}
+	else if (access(split[1], F_OK) == 0)
+		set_cd_values(&central->dupenv, split);
 	else
 	{
-		set_old_pwd(&central->dupenv);
-		set_pwd(&central->dupenv, split[1]);
-		chdir(split[1]);
+		not_dir(split[1]);
+		central->exit_val = 1;
+		return ;
 	}
 	central->exit_val = 0;
 }
 
 /**
+ * @brief Finds out whether the command is prompting the prompting
+ *  the process to go to a defined directory or to the previous directory.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
+ * @param split An array of arrays with the prompt received from read line.
+ */
+void	set_cd_values(t_envp **dupenv, char **split)
+{
+	if (ft_strcmp("..", split[1]) == 0)
+	{
+		set_old_pwd(dupenv);
+		set_back(dupenv);
+		chdir(split[1]);
+	}
+	else
+	{
+		set_old_pwd(dupenv);
+		set_pwd(dupenv, split[1]);
+		chdir(split[1]);
+	}
+}
+
+/**
  * @brief Sets the "PWD" variable's value to home (/home/(username)).
- * @param dupenv A duplicate of the original envp.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
 void	set_home(t_envp **dupenv)
 {
@@ -69,19 +87,31 @@ void	set_home(t_envp **dupenv)
 /**
  * @brief Sets the "PWD" variable's value
  *  to the currently working directory (CWD).
- * @param dupenv A duplicate of the original envp.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
 void	set_pwd(t_envp **dupenv, char *path)
 {
 	t_envp	*pwd;
 	char	*tmp;
+	int		i;
 
 	pwd = *dupenv;
 	while (ft_strcmp(pwd->var, "PWD") != 0)
 		pwd = pwd->next;
 	tmp = ft_strdup(pwd->value);
 	free(pwd->value);
-	pwd->value = NULL;
+	if (strcmp(path, "..") == 0)
+	{
+		set_back(dupenv);
+		return ;
+	}
+	i = -1;
+	while (path[++i])
+	{
+		if (path[i] == '/')
+			break ;
+	}
+	path[i] = '\0';
 	path = ft_strjoin("/", path);
 	pwd->value = ft_strjoin(tmp, path);
 	free(tmp);
@@ -91,7 +121,7 @@ void	set_pwd(t_envp **dupenv, char *path)
 /**
  * @brief Sets the "OLDPWD" variable's value to the
  *  previous currently working directory (CWD).
- * @param dupenv A duplicate of the original envp.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
 void	set_old_pwd(t_envp **dupenv)
 {
