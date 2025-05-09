@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 17:36:18 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:35:45 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,6 @@ typedef struct s_envp
 	char			*value;
 	int				index;
 }	t_envp;
-
-//--------------------------------------------------------------//
-
-int		main(int ac, char **av, char **env);
-void	do_cmd(char **split, t_central *central);
-void	handle_signals(void);
 
 //--------------------------------------------------------------//
 
@@ -105,6 +99,24 @@ char	*pather(t_envp *path, char *cmd);
 
 //--------------------------------------------------------------//
 
+// MAIN //
+
+// minishell //
+int		main(int ac, char **av, char **env);
+void	do_cmd(char **split, t_central *central);
+void	rl_loop(t_central *central);
+int		is_built_in(t_central *central, char **split);
+
+//--------------------------------------------------------------//
+
+// SIGNALS //
+
+// signals //
+void	ctrl_c(int sig);
+void	ctrl_d(t_central *central);
+void	handle_signals(void);
+
+//--------------------------------------------------------------//
 // UTILS //
 
 // central_utils //
