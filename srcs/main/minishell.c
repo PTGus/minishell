@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:32:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:43:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,13 @@ void	rl_loop(t_central *central)
 		if (rl == NULL)
 			ctrl_d(central);
 		if (rl[0] == '\0')
-			continue ;
-		add_history(rl);
-		split = ft_split(rl, ' ');
-		if (!split[0])
 		{
-			free(split);
+			free(rl);
 			continue ;
 		}
-		else
-			do_cmd(split, central);
+		add_history(rl);
+		split = ft_split(rl, ' ');
+		do_cmd(split, central);
 		ft_freesplit(split);
 		free(rl);
 	}
@@ -106,6 +103,8 @@ void	do_cmd(char **split, t_central *central)
 {
 	t_envp	*tmp;
 
+	if (!split || split[0] == NULL)
+		return ;
 	tmp = central->dupenv;
 	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
 		tmp = tmp->next;
