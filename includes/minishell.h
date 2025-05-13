@@ -36,11 +36,12 @@
 # define REDIR_OUT	3
 # define APPEND_IN	4
 # define APPEND_OUT	5
+# define STRING		6;
 
 typedef struct s_central
 {
-	struct t_envp **dupenv;
-
+	struct s_envp	**dupenv;
+	struct s_input	**command_list;
 }	t_central;
 
 typedef struct s_envp
@@ -52,13 +53,13 @@ typedef struct s_envp
 	int				index;
 }	t_envp;
 
-
-
-typedef struct s_command
+typedef struct s_input
 {
-	char	**commands;
-	t_envp	envp;
-}	t_command;
+	struct s_input	*next;
+	struct s_input	*prev;
+	char			*value;
+	int				token_type;
+}	t_input;
 
 //--------------------------------------------------------------//
 
@@ -145,6 +146,6 @@ int		ft_strcmp(char *s1, char *s2);
 //char	*ft_spaced_prompt(char *prompt);
 int		ft_odd_quotes(char *prompt);
 //void	ft_tokenize(char *prompt);
-void	ft_parse(char *prompt);
+int		ft_parse(char *prompt);
 
 #endif
