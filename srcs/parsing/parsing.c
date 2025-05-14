@@ -42,46 +42,58 @@ int	ft_pipe_count(char *prompt)
 
 	i = 0;
 	pipe_num = 0;
-	if (prompt[0] == '|' || prompt[ft_strlen(prompt) - 1] == '|')
-	{
-		return(-1); //LEAKS, IN THE FUNCTIONS THAT SHOULD NOT HAPPEN AFTER!!!
-	}
 	while(prompt[i])
 	{
 		if (prompt[i] == '|' && ft_is_quoted(prompt, i) == 0)
 			pipe_num++;
 		i++;
 	}
+	printf("pnum %i\n", pipe_num);
 	return(pipe_num);
+}
+
+char	**ft_handle_split(char *prompt, char **split)
+{
+	int		i;
+	int		j;
+	int		str_num;
+
+	i = 0;
+	j = 0;
+	str_num = 0;
+	while(prompt && prompt[i])
+	{
+		if (prompt[i] == '|'  && ft_is_quoted(prompt, i) == 0)
+		{
+			split[str_num++] = ft_substr(prompt, j, (i - j));
+			j = i + 1;
+		}
+		else if (prompt[i + 1] == '\0' && ft_is_quoted(prompt, i) == 0)
+		{
+			split[str_num++] = ft_substr(prompt, j, (i - j + 1));
+			j = i + 1;
+		}
+		i++;
+	}
+	return (split);
 }
 
 char	**ft_split_pipes(char *prompt)
 {
-	int		i;
-	int		j;
 	char	**split;
 	int		pipe_num;
-	int		str_num;
 
-	str_num = 0;
-	i = 0;
-	j = 0;
+	if (prompt[0] == '|' || prompt[ft_strlen(prompt) - 1] == '|') // LEAKS, IN THE FUNCTIONS THAT SHOULD NOT HAPPEN AFTER!!!
+		return(NULL); 
 	pipe_num = ft_pipe_count(prompt);
-	if (pipe_num == -1)
-		return (NULL);
-	split = malloc((pipe_num + 1) * sizeof(char *));
+	split = malloc((pipe_num + 2) * sizeof(char *));
+	if (!split)
+		return(NULL);
 	if (pipe_num == 0)
-		*split = ft_strdup(prompt);
+		split[0] = ft_strdup(prompt);
 	else
-		while(prompt && prompt[i])
-		{
-			if ((prompt[i] == '|' && ft_is_quoted(prompt, i) == 0))
-			{
-				split[str_num++] = ft_substr(prompt, j, (i - j + 1));
-				j = i + 1;
-			}
-			i++;
-		}
+		ft_handle_split(prompt, split);
+	split[pipe_num + 1] = NULL;
 	return (split);
 }
 
@@ -110,6 +122,18 @@ void	ft_print_arr(char **str_arr)
 	}
 }
 
+void	ft_free_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	if (split)
+		while (split[i])
+			free(split[i++]);
+	if (split)
+		free(split);
+}
+
 int	ft_parse(char *prompt)
 {
 	//t_input	input;
@@ -123,6 +147,7 @@ int	ft_parse(char *prompt)
 	if (pipe_split == NULL)
 		ft_error("pipes");
 	ft_print_arr(pipe_split);
+	ft_free_split(pipe_split);
 	/*
 	prompt = ft_spaced_prompt(prompt);
 	ft_tokenize(prompt);

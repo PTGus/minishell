@@ -36,7 +36,7 @@
 # define REDIR_OUT	3
 # define APPEND_IN	4
 # define APPEND_OUT	5
-# define STRING		6;
+# define ARGUMENT	6
 
 typedef struct s_central
 {
@@ -58,6 +58,7 @@ typedef struct s_input
 	struct s_input	*next;
 	struct s_input	*prev;
 	char			*value;
+	int				index;
 	int				token_type;
 }	t_input;
 

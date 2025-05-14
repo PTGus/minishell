@@ -80,7 +80,7 @@ get_libft:
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) $(LEAK) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
 	@echo "$(GRN)[PROJECT BUILT]$(END)"
 
 # Rule to create object files in the .build folder
