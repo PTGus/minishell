@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:15:56 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:01:09 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	declarex(t_envp **dupenv)
  * @param split An array of arrays with the prompt received from read line.
  * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
-void	ft_export(char **split, t_central *central)
+void	ft_export(t_central *central, char **split)
 {
 	t_envp	*new;
 	int		i;

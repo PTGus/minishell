@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:32:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:04:24 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <term.h>
 # include <errno.h>
 # include <signal.h>
+#include <fcntl.h>
 # include "../libft/libft.h"
 
 typedef struct s_central
@@ -50,17 +51,17 @@ typedef struct s_envp
 // BUILT-IN //
 
 // cd //
-void	ft_cd(char **split, t_central *central);
+void	ft_cd(t_central *central, char **split);
 void	set_cd_values(t_envp **dupenv, char **split);
 void	set_pwd(t_envp **dupenv, char *path);
 void	set_old_pwd(t_envp **dupenv);
 void	set_home(t_envp **dupenv);
 
 // echo //
-void	ft_echo(char **split, t_central *central);
+void	ft_echo(t_central *central, char **split);
 
 // env //
-void	ft_env(char **split, t_central *central);
+void	ft_env(t_central *central, char **split);
 t_envp	*new_env(char *envp);
 int		init_env(t_envp **dupenv, char **envp);
 int		duplicate_env(t_envp **dupenv, char **envp);
@@ -69,7 +70,7 @@ int		duplicate_env(t_envp **dupenv, char **envp);
 void	ft_exit(t_central *central, char *exit_val);
 
 // export //
-void	ft_export(char **split, t_central *central);
+void	ft_export(t_central *central, char **split);
 int		should_revalue(t_envp **dupenv, char**split);
 void	insert_before_last(t_envp **dupenv, t_envp *curr);
 
@@ -95,7 +96,7 @@ void	ft_freesplit(char **split);
 
 // executer //
 int		commander(t_central *central, char **split);
-void	executer(char *exec, char **split, t_central *central);
+void	executer(char *exec, t_central *central, char **split);
 char	*pather(t_envp *path, char *cmd);
 
 //--------------------------------------------------------------//
@@ -112,9 +113,24 @@ void	not_dir(char *str);
 
 // minishell //
 int		main(int ac, char **av, char **env);
-void	do_cmd(char **split, t_central *central);
+void	do_cmd(t_central *central, char **split);
 void	rl_loop(t_central *central);
 int		is_built_in(t_central *central, char **split);
+
+//--------------------------------------------------------------//
+
+// REDIRECTIONS //
+
+// input_redir //
+void	redirect_input(t_central *central, char **split);
+void	set_input(char **split);
+
+// output_redir //
+void	set_output(char **split);
+void	redirect_output(t_central *central, char **split);
+
+// redirect //
+void	set_redirections(t_central *central, char **split);
 
 //--------------------------------------------------------------//
 
@@ -146,6 +162,9 @@ char	**get_exec_env(t_envp **dupenv);
 // lst_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
 t_envp	*lstlast(t_envp **dupenv);
+
+// redir_utils //
+void	reset_fds(int status);
 
 // utils //
 int		ft_strcmp(char *s1, char *s2);

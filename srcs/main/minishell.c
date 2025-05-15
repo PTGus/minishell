@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/12 11:43:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:03:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	rl_loop(t_central *central)
 	char		**split;
 
 	prompt = "minishell$ ";
+	reset_fds(0);
 	while (1)
 	{
 		rl = readline(prompt);
@@ -37,9 +38,10 @@ void	rl_loop(t_central *central)
 		}
 		add_history(rl);
 		split = ft_split(rl, ' ');
-		do_cmd(split, central);
+		do_cmd(central, split);
 		ft_freesplit(split);
 		free(rl);
+		reset_fds(1);
 	}
 }
 
@@ -57,6 +59,7 @@ int	main(int ac, char **av, char **env)
 		handle_signals();
 		rl_loop(central);
 		clean_all(central);
+		reset_fds(2);
 		return (0);
 	}
 	else
@@ -76,15 +79,15 @@ int	main(int ac, char **av, char **env)
 int	is_built_in(t_central *central, char **split)
 {
 	if (ft_strcmp(split[0], "echo") == 0)
-		return (ft_echo(split, central), 0);
+		return (ft_echo(central, split), 0);
 	else if (ft_strcmp(split[0], "cd") == 0)
-		return (ft_cd(split, central), 0);
+		return (ft_cd(central, split), 0);
 	else if (ft_strcmp(split[0], "pwd") == 0)
 		return (ft_pwd(central), 0);
 	else if (ft_strcmp(split[0], "env") == 0)
-		return (ft_env(split, central), 0);
+		return (ft_env(central, split), 0);
 	else if (ft_strcmp(split[0], "export") == 0)
-		return (ft_export(split, central), 0);
+		return (ft_export(central, split), 0);
 	else if (ft_strcmp(split[0], "exit") == 0)
 		return (ft_exit(central, split[1]), 0);
 	else if (ft_strcmp(split[0], "unset") == 0)
@@ -99,7 +102,7 @@ int	is_built_in(t_central *central, char **split)
  * @param central A struct that contains pointers to
  *  all the neccessary variables and lists.
  */
-void	do_cmd(char **split, t_central *central)
+void	do_cmd(t_central *central, char **split)
 {
 	t_envp	*tmp;
 
@@ -108,6 +111,7 @@ void	do_cmd(char **split, t_central *central)
 	tmp = central->dupenv;
 	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
 		tmp = tmp->next;
+	set_redirections(central, split);
 	if (!tmp)
 	{
 		not_dir(split[0]);

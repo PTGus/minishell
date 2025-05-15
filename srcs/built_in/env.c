@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:15:29 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:01:09 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief Built-in function that behaves just like
  *  the env command, prints all the current environmental variables.
  */
-void	ft_env(char **split, t_central *central)
+void	ft_env(t_central *central, char **split)
 {
 	t_envp	*tmp;
 
