@@ -30,10 +30,19 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
+# define COMMAND	0
+# define CMD_FLAGS	1
+# define REDIR_IN	2
+# define REDIR_OUT	3
+# define APPEND_IN	4
+# define APPEND_OUT	5
+# define ARGUMENT	6
+
 typedef struct s_central
 {
 	struct s_envp	*dupenv;
 	int				exit_val;
+	struct s_input	**command_list;
 }	t_central;
 
 typedef struct s_envp
@@ -44,6 +53,15 @@ typedef struct s_envp
 	char			*value;
 	int				index;
 }	t_envp;
+
+typedef struct s_input
+{
+	struct s_input	*next;
+	struct s_input	*prev;
+	char			*value;
+	int				index;
+	int				token_type;
+}	t_input;
 
 //--------------------------------------------------------------//
 
@@ -151,5 +169,13 @@ t_envp	*lstlast(t_envp **dupenv);
 int		ft_strcmp(char *s1, char *s2);
 
 //--------------------------------------------------------------//
+
+// PARSE //
+
+// parsing //
+//char	*ft_spaced_prompt(char *prompt);
+int		ft_odd_quotes(char *prompt);
+//void	ft_tokenize(char *prompt);
+int		ft_parse(char *prompt);
 
 #endif
