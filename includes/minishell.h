@@ -173,9 +173,21 @@ int		ft_strcmp(char *s1, char *s2);
 // PARSE //
 
 // parsing //
-//char	*ft_spaced_prompt(char *prompt);
-int		ft_odd_quotes(char *prompt);
-//void	ft_tokenize(char *prompt);
 int		ft_parse(char *prompt);
+int		ft_is_quoted(char *prompt, int end_pos);
+void	ft_error(char *message);
+void	ft_tokenize(char *prompt);
+
+// split //
+char	**ft_split_pipes(char *prompt);
+int		ft_pipe_count(char *prompt);
+char	**ft_handle_split(char *prompt, char **split);
+void	ft_print_arr(char **str_arr);
+void	ft_free_split(char **split);
+
+// spacing //
+char	**ft_remove_extra_spaces(char **split);
+int		ft_spaced_len(char *command);
+int		ft_is_space(int c);
 
 #endif
