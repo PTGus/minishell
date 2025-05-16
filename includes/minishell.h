@@ -42,7 +42,9 @@ typedef struct s_central
 {
 	struct s_envp	*dupenv;
 	int				exit_val;
-	struct s_input	**command_list;
+	struct s_input	***command_list;
+	char			**pipe_matrix;
+	int				matrix_len;
 }	t_central;
 
 typedef struct s_envp
@@ -62,6 +64,12 @@ typedef struct s_input
 	int				index;
 	int				token_type;
 }	t_input;
+
+//typedef struct s_split
+//{
+//	char			**str_matrix;
+//	int				matrix_len;
+//}	t_split;
 
 //--------------------------------------------------------------//
 
@@ -173,7 +181,7 @@ int		ft_strcmp(char *s1, char *s2);
 // PARSE //
 
 // parsing //
-int		ft_parse(char *prompt);
+int		ft_parse(char *prompt, t_central *central);
 int		ft_is_quoted(char *prompt, int end_pos);
 void	ft_error(char *message);
 void	ft_tokenize(char *prompt);

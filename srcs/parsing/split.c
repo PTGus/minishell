@@ -12,6 +12,37 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Splits user input by pipes to parse commands separately
+ * checks for pipes on the ends, error if found
+ * allocs, assigns w/ handle_split if pipes are found, and null-terminates
+ * @param prompt Full input from readline
+ * @return split Array of strings of different commands
+ */
+char	**ft_split_pipes(char *prompt)//check for leaks in 1st if
+{
+	char	**split;
+	int		pipe_num;
+
+	if (prompt[0] == '|' || prompt[ft_strlen(prompt) - 1] == '|')
+		return (NULL);
+	pipe_num = ft_pipe_count(prompt);
+	split = malloc((pipe_num + 2) * sizeof(char *));
+	if (!split)
+		return (NULL);
+	if (pipe_num == 0)
+		split[0] = ft_strdup(prompt);
+	else
+		ft_handle_split(prompt, split);
+	split[pipe_num + 1] = NULL;
+	return (split);
+}
+
+/**
+ * @brief Counts number of pipes for allocation in split_pipes
+ * @param prompt Full input from readline
+ * @return pipe_num Number of unquoted pipes found
+ */
 int	ft_pipe_count(char *prompt)
 {
 	int	i;
@@ -29,6 +60,12 @@ int	ft_pipe_count(char *prompt)
 	return (pipe_num);
 }
 
+/**
+ * @brief Handles assignment of each string, pipe-pipe or pipe-end
+ * @param prompt Full input from readline
+ * @param split Allocation for array of strings to return
+ * @return split Fully assigned array
+ */
 char	**ft_handle_split(char *prompt, char **split)
 {
 	int		i;
@@ -55,6 +92,10 @@ char	**ft_handle_split(char *prompt, char **split)
 	return (split);
 }
 
+/**
+ * @brief Prints an array of strings for debugging
+ * @param str_arr Array of strings to print
+ */
 void	ft_print_arr(char **str_arr)
 {
 	int	i;
@@ -67,6 +108,10 @@ void	ft_print_arr(char **str_arr)
 	}
 }
 
+/**
+ * @brief Frees an array of strings
+ * @param split Array of strings to free
+ */
 void	ft_free_split(char **split)
 {
 	int	i;
@@ -77,23 +122,4 @@ void	ft_free_split(char **split)
 			free(split[i++]);
 	if (split)
 		free(split);
-}
-
-char	**ft_split_pipes(char *prompt)//check for leaks in 1st if
-{
-	char	**split;
-	int		pipe_num;
-
-	if (prompt[0] == '|' || prompt[ft_strlen(prompt) - 1] == '|')
-		return (NULL);
-	pipe_num = ft_pipe_count(prompt);
-	split = malloc((pipe_num + 2) * sizeof(char *));
-	if (!split)
-		return (NULL);
-	if (pipe_num == 0)
-		split[0] = ft_strdup(prompt);
-	else
-		ft_handle_split(prompt, split);
-	split[pipe_num + 1] = NULL;
-	return (split);
 }

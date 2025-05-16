@@ -12,6 +12,13 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief Returns quoted status of an element 
+ * 0 = unquoted, 1 = inside '', 2 = inside ""
+ * @param prompt Full input from readline
+ * @param end_pos Last element to be checked
+ * if end_pos -1 examines whole string
+ */
 int	ft_is_quoted(char *prompt, int end_pos)
 {
 	int	i;
@@ -47,19 +54,36 @@ void	ft_tokenize(char *prompt)
 	return ;
 }
 
-int	ft_parse(char *prompt)
+/**
+ * @brief Initializes all parse related elements in central
+ * @param Central struct
+ */
+void	ft_init_parse(t_central *central)
 {
-	char	**pipe_split;
+	central->command_list = NULL;
+	central->pipe_matrix = NULL;
+	central->matrix_len = 0;
+}
 
+/**
+ * @brief Central parsing function - inits, checks for open quotes
+ * splits by pipes for further parsing, normalizes spacing, 
+ * tranforms input into list of tokens
+ * @param prompt Full input from readline
+ * @param central Struct with pointers to all relevant structs/data
+ */
+int	ft_parse(char *prompt, t_central *central)
+{
+	ft_init_parse(central);
 	if (!prompt)
 		return (0);
 	if (ft_is_quoted(prompt, -1) != 0)
 		ft_error("quotes");
-	pipe_split = ft_split_pipes(prompt);
-	if (pipe_split == NULL)
+	central->pipe_matrix = ft_split_pipes(prompt);
+	if (central->pipe_matrix == NULL)
 		ft_error("pipes");
-	ft_print_arr(pipe_split);
-	ft_remove_extra_spaces(pipe_split);
-	ft_free_split(pipe_split);
+	ft_print_arr(central->pipe_matrix);
+	ft_remove_extra_spaces(central->pipe_matrix);
+	ft_free_split(central->pipe_matrix);
 	return (0);
 }
