@@ -42,7 +42,7 @@ int	ft_spaced_len(char *command)
 	return (len);
 }
 
-void	ft_assign_new_split(t_central *central) //TO DOOOOOOOOOOOOOOOO (copy pasta)
+void	ft_assign_new_split(t_central *central, int i) //TO DOOOOOOOOOOOOOOOO (copy pasta)
 {
 	while (central->pipe_matrix[i][++j])
 	{	
