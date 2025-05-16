@@ -220,14 +220,14 @@ void	ft_error(char *message);
 void	ft_tokenize(char *prompt);
 
 // split //
-char	**ft_split_pipes(char *prompt);
+char	**ft_split_pipes(char *prompt, t_central *central);
 int		ft_pipe_count(char *prompt);
 char	**ft_handle_split(char *prompt, char **split);
 void	ft_print_arr(char **str_arr);
 void	ft_free_split(char **split);
 
 // spacing //
-char	**ft_remove_extra_spaces(char **split);
+char	**ft_remove_extra_spaces(t_central *central);
 int		ft_spaced_len(char *command);
 int		ft_is_space(int c);
 

@@ -42,28 +42,38 @@ int	ft_spaced_len(char *command)
 	return (len);
 }
 
-char	**ft_remove_extra_spaces(char **split)
+void	ft_assign_new_split(t_central *central) //TO DOOOOOOOOOOOOOOOO (copy pasta)
+{
+	while (central->pipe_matrix[i][++j])
+	{	
+		if (!ft_is_space(central->pipe_matrix[j]))
+		{
+			len++;
+			flag = 1; 
+		}
+		else if (flag == 1 && ft_is_space(command[j]) == 1) // needs to be space
+			flag = 0;
+	}
+}
+
+char	**ft_remove_extra_spaces(t_central *central)
 {
 	int		i;
-	int		j;
 	int		flag;
 	char	**new_split;
-
+	
 	i = -1;
-	j = -1;
 	flag = 0;
-	new_split = malloc(sizeof(char *));
-	while (split && split[++i])
-		new_split[i] = malloc((ft_spaced_len(split[i]) + 1) * sizeof(char *));
+	new_split = malloc(central->matrix_len * sizeof(char *));
+	while (central->pipe_matrix && central->pipe_matrix[++i])
+		new_split[i] = malloc((ft_spaced_len(central->pipe_matrix[i]) + 1)
+						* sizeof(char *));
 	i = -1;
-	while (split && split[++i])
+	while (central->pipe_matrix && central->pipe_matrix[++i])
 	{
-		while (split[i][++j])
-		{
-			printf("placeholder");
-		}
+		ft_assign_new_split(central, i);
 	}
-	new_split = NULL;
+	new_split[i] = NULL;
 	return (new_split);
 }
 // NEED TO KNOW SPLIT LEN for new_split malloc

@@ -19,7 +19,7 @@
  * @param prompt Full input from readline
  * @return split Array of strings of different commands
  */
-char	**ft_split_pipes(char *prompt)//check for leaks in 1st if
+char	**ft_split_pipes(char *prompt, t_central *central)//check for leaks in 1st if
 {
 	char	**split;
 	int		pipe_num;
@@ -27,6 +27,7 @@ char	**ft_split_pipes(char *prompt)//check for leaks in 1st if
 	if (prompt[0] == '|' || prompt[ft_strlen(prompt) - 1] == '|')
 		return (NULL);
 	pipe_num = ft_pipe_count(prompt);
+	central->matrix_len = 1 + pipe_num;
 	split = malloc((pipe_num + 2) * sizeof(char *));
 	if (!split)
 		return (NULL);
