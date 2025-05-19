@@ -21,16 +21,15 @@ void	ft_echo(char **split, t_central *central)
 {
 	int	i;
 
-	if (ft_strncmp(split[1], "-n", 2) == 0)
+	if (split[1] == NULL)
+		printf("\n");
+	else if ((ft_strcmp(split[1], "-n") == 0) && (split[2] == NULL))
 	{
-		i = 1;
-		while (split[++i])
-		{
-			printf("%s", split[i]);
-			if (split[i + 1] != NULL)
-				write(1, " ", 1);
-		}
+		central->exit_val = 0;
+		return ;
 	}
+	else if (ft_strncmp(split[1], "-n", 2) == 0)
+		echo_n(split);
 	else
 	{
 		i = 0;
@@ -43,4 +42,17 @@ void	ft_echo(char **split, t_central *central)
 		printf("\n");
 	}
 	central->exit_val = 0;
+}
+
+void	echo_n(char **split)
+{
+	int	i;
+
+	i = 1;
+	while (split[++i])
+	{
+		printf("%s", split[i]);
+		if (split[i + 1] != NULL)
+			write(1, " ", 1);
+	}
 }
