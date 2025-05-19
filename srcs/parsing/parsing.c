@@ -85,7 +85,8 @@ int	ft_parse(char *prompt, t_central *central)
 	ft_print_arr(central->pipe_matrix);
 	if (ft_remove_extra_spaces(central) != 0)
 		ft_error("spacing");
+	printf("spaced:\n");
 	ft_print_arr(central->pipe_matrix);
-	ft_free_split(central->pipe_matrix);
+	//ft_free_split(central->pipe_matrix);
 	return (0);
 }

@@ -14,7 +14,7 @@
 
 void	rl_loop(t_central *central);
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)//
 {
 	t_envp		**dupenv;
 	t_central	*central;
