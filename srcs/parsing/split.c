@@ -19,7 +19,7 @@
  * @param prompt Full input from readline
  * @return split Array of strings of different commands
  */
-char	**ft_split_pipes(char *prompt, t_central *central)//check for leaks in 1st if
+char	**ft_split_pipes(char *prompt, t_central *central)
 {
 	char	**split;
 	int		pipe_num;

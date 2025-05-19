@@ -227,8 +227,8 @@ void	ft_print_arr(char **str_arr);
 void	ft_free_split(char **split);
 
 // spacing //
-char	**ft_remove_extra_spaces(t_central *central);
-int		ft_spaced_len(char *command);
-int		ft_is_space(int c);
+int		ft_remove_extra_spaces(t_central *central);
+int		ft_new_spaced_len(char *command);
+void	ft_assign_new_split(char **new_split, t_central *central, int i);
 
 #endif

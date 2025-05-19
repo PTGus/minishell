@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+/*
 int	ft_is_space(int c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
@@ -19,8 +19,8 @@ int	ft_is_space(int c)
 	else
 		return (0);
 }
-
-int	ft_spaced_len(char *command)
+*/
+int	ft_new_spaced_len(char *command)
 {
 	int	j;
 	int	flag;
@@ -31,49 +31,72 @@ int	ft_spaced_len(char *command)
 	flag = 0;
 	while (command && command[++j])
 	{
-		if (!ft_is_space(command[j]))
+		if (command[j] != ' '
+			|| (ft_is_quoted(command, j) != 0 && command[j] == ' '))
 		{
 			len++;
 			flag = 1;
 		}
-		else if (flag == 1 && ft_is_space(command[j]) == 1)
+		else if (flag == 1 && command[j] == ' ')
 			flag = 0;
 	}
 	return (len);
 }
 
-void	ft_assign_new_split(t_central *central, int i) //TO DOOOOOOOOOOOOOOOO (copy pasta)
+void	ft_assign_new_split(char **new_split, t_central *central, int i)
 {
+	int	j;
+	int	k;
+	int	flag;
+
+	j = -1;
+	k = 0;
+	flag = 0;
 	while (central->pipe_matrix[i][++j])
-	{	
-		if (!ft_is_space(central->pipe_matrix[j]))
+	{
+		if (central->pipe_matrix[i][j] != ' ' ||
+			(ft_is_quoted(central->pipe_matrix[i], j) != 0 &&
+			central->pipe_matrix[i][j] == ' '))
 		{
-			len++;
-			flag = 1; 
+			new_split[i][k] = central->pipe_matrix[i][j];
+			k++;
+			flag = 1;
 		}
-		else if (flag == 1 && ft_is_space(command[j]) == 1) // needs to be space
+		else if (flag == 1 && central->pipe_matrix[i][j] == ' ')
+		{
+			new_split[i][k] = ' ';
+			k++;
 			flag = 0;
+		}
 	}
 }
 
-char	**ft_remove_extra_spaces(t_central *central)
+int	ft_remove_extra_spaces(t_central *central)
 {
 	int		i;
 	int		flag;
 	char	**new_split;
-	
+	char	**temp;
+
 	i = -1;
 	flag = 0;
 	new_split = malloc(central->matrix_len * sizeof(char *));
-	while (central->pipe_matrix && central->pipe_matrix[++i])
-		new_split[i] = malloc((ft_spaced_len(central->pipe_matrix[i]) + 1)
-						* sizeof(char *));
-	i = -1;
+	if (!new_split)
+		return (1);
 	while (central->pipe_matrix && central->pipe_matrix[++i])
 	{
-		ft_assign_new_split(central, i);
+		new_split[i] = malloc((ft_new_spaced_len(central->pipe_matrix[i]) + 1)
+				* sizeof(char *));
+		if (!new_split[i])
+			return (2);
 	}
+	i = -1;
+	while (central->pipe_matrix && central->pipe_matrix[++i])
+		ft_assign_new_split(new_split, central, i);
 	new_split[i] = NULL;
-	return (new_split);
+	temp = central->pipe_matrix;
+	central->pipe_matrix = new_split;
+	ft_free_split(temp);
+	return (0);
 }
 // NEED TO KNOW SPLIT LEN for new_split malloc
