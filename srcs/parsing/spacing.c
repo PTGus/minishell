@@ -69,6 +69,7 @@ void	ft_assign_new_split(char **new_split, t_central *central, int i)
 			flag = 0;
 		}
 	}
+	new_split[i][k] = '\0';
 }
 
 int	ft_remove_extra_spaces(t_central *central)
@@ -80,23 +81,22 @@ int	ft_remove_extra_spaces(t_central *central)
 
 	i = -1;
 	flag = 0;
-	new_split = malloc(central->matrix_len * sizeof(char *));
+	new_split = malloc((central->matrix_len + 1) * sizeof(char *));
 	if (!new_split)
 		return (1);
 	while (central->pipe_matrix && central->pipe_matrix[++i])
 	{
 		new_split[i] = malloc((ft_new_spaced_len(central->pipe_matrix[i]) + 1)
-				* sizeof(char *));
+				* sizeof(char));
 		if (!new_split[i])
-			return (2);
+			return (ft_free_split(new_split), 2);
 	}
-	i = -1;
-	while (central->pipe_matrix && central->pipe_matrix[++i])
-		ft_assign_new_split(new_split, central, i);
-	new_split[i] = NULL;
+	i = 0;
+	while (central->pipe_matrix && central->pipe_matrix[i])
+		ft_assign_new_split(new_split, central, i++);
+	new_split[central->matrix_len] = NULL;
 	temp = central->pipe_matrix;
 	central->pipe_matrix = new_split;
 	ft_free_split(temp);
 	return (0);
 }
-// NEED TO KNOW SPLIT LEN for new_split malloc

@@ -57,7 +57,7 @@ int	ft_pipe_count(char *prompt)
 			pipe_num++;
 		i++;
 	}
-	printf("pnum %i\n", pipe_num);
+	printf("pipes: %i\n", pipe_num);
 	return (pipe_num);
 }
 

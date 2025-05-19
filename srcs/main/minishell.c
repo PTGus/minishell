@@ -38,7 +38,7 @@ void	rl_loop(t_central *central)
 		add_history(rl);
 		ft_parse(rl, central);
 		split = ft_split(rl, ' ');
-		do_cmd(split, central);
+		do_cmd(split, central); //SEGFAULT echo no params
 		ft_freesplit(split);
 		free(rl);
 	}
