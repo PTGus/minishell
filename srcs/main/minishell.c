@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/12 11:43:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:53:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	rl_loop(t_central *central)
 	char		**split;
 
 	prompt = "minishell$ ";
+	reset_fds(0);
 	while (1)
 	{
 		rl = readline(prompt);
@@ -40,7 +41,9 @@ void	rl_loop(t_central *central)
 		do_cmd(split, central);
 		ft_freesplit(split);
 		free(rl);
+		reset_fds(1);
 	}
+	reset_fds(2);
 }
 
 int	main(int ac, char **av, char **env)
@@ -102,12 +105,14 @@ int	is_built_in(t_central *central, char **split)
 void	do_cmd(char **split, t_central *central)
 {
 	t_envp	*tmp;
+	int	i;
 
-	if (!split || split[0] == NULL)
-		return ;
 	tmp = central->dupenv;
 	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
 		tmp = tmp->next;
+	i = 0;
+	if (to_pipe(central, split) == 0)
+		return ;
 	if (!tmp)
 	{
 		not_dir(split[0]);

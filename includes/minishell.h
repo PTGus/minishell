@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:32:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:56:19 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/types.h>
 # include <sys/ioctl.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <dirent.h>
@@ -58,6 +59,7 @@ void	set_home(t_envp **dupenv);
 
 // echo //
 void	ft_echo(char **split, t_central *central);
+void	echo_n(char **split);
 
 // env //
 void	ft_env(char **split, t_central *central);
@@ -118,6 +120,14 @@ int		is_built_in(t_central *central, char **split);
 
 //--------------------------------------------------------------//
 
+// PIPES //
+
+// pipe //
+void	piper(t_central *central, char **split, int pl);
+int		should_pipe(t_central *central, char **split);
+
+//--------------------------------------------------------------//
+
 // SIGNALS //
 
 // signals //
@@ -146,6 +156,12 @@ char	**get_exec_env(t_envp **dupenv);
 // lst_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
 t_envp	*lstlast(t_envp **dupenv);
+
+// pipe_utils //
+int		to_pipe(t_central *central, char **split);
+
+// redir_utils //
+void	reset_fds(int status);
 
 // utils //
 int		ft_strcmp(char *s1, char *s2);
