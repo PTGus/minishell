@@ -79,11 +79,13 @@ int	ft_parse(char *prompt, t_central *central)
 		return (0);
 	if (ft_is_quoted(prompt, -1) != 0)
 		ft_error("quotes");
-	central->pipe_matrix = ft_split_pipes(prompt);
+	central->pipe_matrix = ft_split_pipes(prompt, central);
 	if (central->pipe_matrix == NULL)
 		ft_error("pipes");
 	ft_print_arr(central->pipe_matrix);
-	ft_remove_extra_spaces(central->pipe_matrix);
+	if (ft_remove_extra_spaces(central) != 0)
+		ft_error("spacing");
+	ft_print_arr(central->pipe_matrix);
 	ft_free_split(central->pipe_matrix);
 	return (0);
 }
