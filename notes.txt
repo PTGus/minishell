@@ -42,3 +42,6 @@ Number		|	Meaning								|	Description
 Edge cases
 Ctrl+\-> defines code to 0
 Ctrl+C-> defines code to 130
+
+Pipe_fd[0] = Read end of the pipe.
+Pipe_fd[1] = Write end of the pipe.
