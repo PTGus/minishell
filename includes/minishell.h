@@ -84,6 +84,7 @@ void	set_home(t_envp **dupenv);
 
 // echo //
 void	ft_echo(char **split, t_central *central);
+void	echo_n(char **split);
 
 // env //
 void	ft_env(char **split, t_central *central);
