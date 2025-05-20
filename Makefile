@@ -58,7 +58,7 @@ SRC_ERRORS	=	$(addprefix err_handling/, errors.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c list_utils.c utils.c)
-SRC_PARSE	= 	$(addprefix parsing/, parsing.c split.c spacing.c)
+SRC_PARSE	= 	$(addprefix parsing/, parsing.c split.c spacing.c redirects.c)
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_ERRORS) \
 				$(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS) $(SRC_PARSE))
@@ -82,7 +82,7 @@ get_libft:
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LEAK) $(LDFLAGS)
 	@echo "$(GRN)[PROJECT BUILT]$(END)"
 
 # Rule to create object files in the .build folder

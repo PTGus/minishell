@@ -74,6 +74,8 @@ void	ft_init_parse(t_central *central)
  */
 int	ft_parse(char *prompt, t_central *central)
 {
+	if (prompt[0] == 'x')
+		exit(0);
 	ft_init_parse(central);
 	if (!prompt)
 		return (0);
@@ -82,11 +84,11 @@ int	ft_parse(char *prompt, t_central *central)
 	central->pipe_matrix = ft_split_pipes(prompt, central);
 	if (central->pipe_matrix == NULL)
 		ft_error("pipes");
-	ft_print_arr(central->pipe_matrix);
 	if (ft_remove_extra_spaces(central) != 0)
 		ft_error("spacing");
-	printf("spaced:\n");
 	ft_print_arr(central->pipe_matrix);
-	//ft_free_split(central->pipe_matrix);
+	if (ft_parse_redirects(central) != 0)
+		ft_error("redirect");
+	ft_free_split(central->pipe_matrix);
 	return (0);
 }

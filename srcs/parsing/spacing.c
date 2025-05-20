@@ -11,66 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
-int	ft_is_space(int c)
-{
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (1);
-	else
-		return (0);
-}
-*/
-int	ft_new_spaced_len(char *command)
-{
-	int	j;
-	int	flag;
-	int	len;
-
-	j = -1;
-	len = 0;
-	flag = 0;
-	while (command && command[++j])
-	{
-		if (command[j] != ' '
-			|| (ft_is_quoted(command, j) != 0 && command[j] == ' '))
-		{
-			len++;
-			flag = 1;
-		}
-		else if (flag == 1 && command[j] == ' ')
-			flag = 0;
-	}
-	return (len);
-}
-
-void	ft_assign_new_split(char **new_split, t_central *central, int i)
-{
-	int	j;
-	int	k;
-	int	flag;
-
-	j = -1;
-	k = 0;
-	flag = 0;
-	while (central->pipe_matrix[i][++j])
-	{
-		if (central->pipe_matrix[i][j] != ' ' ||
-			(ft_is_quoted(central->pipe_matrix[i], j) != 0 &&
-			central->pipe_matrix[i][j] == ' '))
-		{
-			new_split[i][k] = central->pipe_matrix[i][j];
-			k++;
-			flag = 1;
-		}
-		else if (flag == 1 && central->pipe_matrix[i][j] == ' ')
-		{
-			new_split[i][k] = ' ';
-			k++;
-			flag = 0;
-		}
-	}
-	new_split[i][k] = '\0';
-}
 
 int	ft_remove_extra_spaces(t_central *central)
 {
@@ -93,10 +33,76 @@ int	ft_remove_extra_spaces(t_central *central)
 	}
 	i = 0;
 	while (central->pipe_matrix && central->pipe_matrix[i])
-		ft_assign_new_split(new_split, central, i++);
+		ft_assign_new_split(new_split, central->pipe_matrix, i++);
 	new_split[central->matrix_len] = NULL;
 	temp = central->pipe_matrix;
 	central->pipe_matrix = new_split;
 	ft_free_split(temp);
 	return (0);
+}
+
+int	ft_new_spaced_len(char *command)
+{
+	int	j;
+	int	flag;
+	int	len;
+
+	j = -1;
+	len = 0;
+	flag = 0;
+	while (command && command[++j] && ft_rest_is_space(command, j) == 0)
+	{
+		if (command[j] != ' '
+			|| (ft_is_quoted(command, j) != 0 && command[j] == ' '))
+		{
+			len++;
+			flag = 1;
+		}
+		else if (flag == 1 && command[j] == ' ')
+		{
+			len++;
+			flag = 0;
+		}
+	}
+	return (len);
+}
+
+void	ft_assign_new_split(char **new_split, char **matrix, int i)
+{
+	int	j;
+	int	k;
+	int	flag;
+
+	j = -1;
+	k = 0;
+	flag = 0;
+	while (matrix[i][++j] && ft_rest_is_space(matrix[i], j) == 0)
+	{
+		if (matrix[i][j] != ' ' ||
+			(ft_is_quoted(matrix[i], j) != 0 &&
+			matrix[i][j] == ' '))
+		{
+			new_split[i][k] = matrix[i][j];
+			k++;
+			flag = 1;
+		}
+		else if (flag == 1 && matrix[i][j] == ' ')
+		{
+			new_split[i][k] = ' ';
+			k++;
+			flag = 0;
+		}
+	}
+	new_split[i][k] = '\0';
+}
+
+int	ft_rest_is_space(char *str, int j)
+{
+	while (str && str[j])
+	{
+		if (str[j] != ' ')
+			return (0);
+		j++;
+	}
+	return (1);
 }
