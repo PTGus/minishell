@@ -49,6 +49,17 @@ int	ft_are_redirects_invalid(t_central *central)
 	return (0);
 }
 
+int	ft_unspaced_redirect(char *str, int j)
+{
+	if(str[j + 1] && !ft_is_quoted(str, j) && !ft_is_quoted(str, j + 1))
+	{
+		if((ft_strchr("<>", str[j]) && !ft_strchr("<>", str[j + 1]))
+			|| (ft_strchr("<>", str[j]) && !ft_strchr("<>", str[j + 1]))) 
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_spaced_redirects(t_central *central)
 {
 	int	i;
@@ -60,10 +71,8 @@ int	ft_spaced_redirects(t_central *central)
 	{
 		while (central->pipe_matrix[i][++j])
 		{
-			if (ft_strchr("<>", central->pipe_matrix[i][j])
-				&& (central->pipe_matrix[i][j + 1]
-				&& !ft_strchr("<>", central->pipe_matrix[i][j + 1])))
-				printf("PINGUS");
+			if (ft_unspaced_redirect(central->pipe_matrix, j) == 1)
+				printf("found unspaced redirect\n"); //TO-DOOOOOOOOOOOOOOO
 		}
 	}
 	return (0);
