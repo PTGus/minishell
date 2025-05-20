@@ -14,7 +14,7 @@
 
 void	rl_loop(t_central *central);
 
-int	main(int ac, char **av, char **env)//
+int	main(int ac, char **av, char **env)
 {
 	t_envp		**dupenv;
 	t_central	*central;
@@ -62,6 +62,7 @@ void	rl_loop(t_central *central)
 			continue ;
 		}
 		add_history(rl);
+		ft_parse(rl, central);
 		split = ft_split(rl, ' ');
 		has_shell_operator(central, split);
 		ft_freesplit(split);

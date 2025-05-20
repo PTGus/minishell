@@ -12,4 +12,67 @@
 
 #include "../../includes/minishell.h"
 
+int	ft_redirect_check(char *str, int j)
+{
+	if (!str[j + 1])
+		return (1);
+	else if (str[j] == '>' && str[j + 1] == '<')
+		return (1);
+	else if (str[j] == str[j + 1] || (str[j] == '<' && str[j + 1] == '>'))
+	{
+		if (!str[j + 2] || str[j + 2] == '<' || str [j + 2] == '>')
+			return (1);
+	}
+	return (0);
+}
 
+int	ft_are_redirects_invalid(t_central *central)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (central->pipe_matrix && central->pipe_matrix[++i])
+	{
+		while (central->pipe_matrix[i][++j])
+		{
+			if (ft_is_quoted(central->pipe_matrix[i], j) == 0
+				&& ft_strchr("<>", central->pipe_matrix[i][j]))
+			{
+				if (ft_redirect_check(central->pipe_matrix[i], j) == 1)
+					return (1);
+			}
+		}
+		j = 0;
+	}
+	return (0);
+}
+
+int	ft_spaced_redirects(t_central *central)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (central->pipe_matrix && central->pipe_matrix[++i])
+	{
+		while (central->pipe_matrix[i][++j])
+		{
+			if (ft_strchr("<>", central->pipe_matrix[i][j])
+				&& (central->pipe_matrix[i][j + 1]
+				&& !ft_strchr("<>", central->pipe_matrix[i][j + 1])))
+				printf("PINGUS");
+		}
+	}
+	return (0);
+}
+
+int	ft_parse_redirects(t_central *central)
+{
+	if (ft_are_redirects_invalid(central) == 1)
+		return (1);
+	ft_spaced_redirects(central);
+	return (0);
+}

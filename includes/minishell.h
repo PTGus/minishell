@@ -229,6 +229,10 @@ void	ft_free_split(char **split);
 // spacing //
 int		ft_remove_extra_spaces(t_central *central);
 int		ft_new_spaced_len(char *command);
-void	ft_assign_new_split(char **new_split, t_central *central, int i);
+void	ft_assign_new_split(char **new_split, char **matrix, int i);
+int		ft_rest_is_space(char *str, int j);
+
+// redirects //
+int		ft_parse_redirects(t_central *central);
 
 #endif
