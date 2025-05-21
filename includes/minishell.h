@@ -234,5 +234,11 @@ int		ft_rest_is_space(char *str, int j);
 
 // redirects //
 int		ft_parse_redirects(t_central *central);
+int		ft_are_redirects_invalid(t_central *central);
+int		ft_redirect_check(char *str, int j);
+
+// redirect_spacing // 
+int		ft_space_redirects(t_central *central);
+int		ft_count_unspaced_redirects(char *str, int j, int extra_space);
 
 #endif
