@@ -6,61 +6,69 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/19 14:31:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:12:48 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**separate_split(char **split, int i)
+char	**separate_split(char **split)
 {
-	char	**new;
-	int		j;
+	static int	start;
+	char		**new;
+	int			i;
+	int			j;
 
-	j = i;
-	while(split[j])
-		j++;
-	new = ft_calloc(sizeof(char *), j - i + 1);
-	j = 0;
-	while (split[i])
-	{
-		new[j] = ft_strdup(split[i]);
+	if (!split || !split[start])
+		return (NULL);
+	i = start;
+	while (split[i] && split[i][0] != '|')
 		i++;
+	new = ft_calloc(sizeof(char *), i - start + 1);
+	if (!new)
+		return (NULL);
+	j = 0;
+	while (start < i)
+	{
+		new[j] = ft_strdup(split[start]);
+		start++;
 		j++;
 	}
 	new[j] = NULL;
+	if (split[start] && split[start][0] == '|')
+		start++;
 	return (new);
 }
 
-void	piper(t_central *central, char **split, int pl)
+void	execute_pipes(t_central *central, char **split, int pipe_fd[][2], int curr_index, int pipe_amm)
 {
-	char	**pipe_split;
-	int		pipe_fd[2];
+	char	**new_split;
+
+	close_unused_pipes(pipe_fd, pipe_amm, curr_index);
+	set_pipe_fds(pipe_fd, pipe_amm, curr_index);
+	do_cmd(separate_split(split), central);
+}
+
+void	piper(t_central *central, char **split, int pipe_amm)
+{
+	int		i;
+	int		pipe_fd[pipe_amm][2];
+	int		status;
 	pid_t	pid;
 
-	pipe_split = separate_split(split, pl + 1);
-	while (split[pl])
+	i = 0;
+	status = 0;
+	init_pipes(pipe_fd, pipe_amm);
+	while (i < pipe_amm)
 	{
-		free(split[pl]);
-		split[pl] = NULL;
-		pl++;
-
-	}
-	pipe(pipe_fd);
-	pid = fork();
-	if (pid == 0) // Child: executes left side of pipe
-	{
-		dup2(pipe_fd[1], STDOUT_FILENO); // stdout → pipe write
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
-		commander(central, split);
-		exit(1); // exit if exec fails
-	}
-	else // Parent: executes right side of pipe
-	{
-		dup2(pipe_fd[0], STDIN_FILENO); // stdin ← pipe read
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
-		commander(central, pipe_split);
+		pid = fork();
+		if (pid == 0)
+			execute_pipes(central, split, pipe_fd, i, pipe_amm);
+		else if (pid < 0)
+		{
+			perror("fork");
+			return;
+		}
+		i++;
 	}
 }

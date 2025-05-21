@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/19 16:56:19 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:55:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ int		is_built_in(t_central *central, char **split);
 // PIPES //
 
 // pipe //
-void	piper(t_central *central, char **split, int pl);
-int		should_pipe(t_central *central, char **split);
+void	execute_pipes(t_central *central, char **split, int pipe_fd[][2][2], int pipe_amm);
+void	piper(t_central *central, char **split, int pipe_amm);
 
 //--------------------------------------------------------------//
 
@@ -158,6 +158,8 @@ void	ft_lst_back(t_envp **dupenv, t_envp *curr);
 t_envp	*lstlast(t_envp **dupenv);
 
 // pipe_utils //
+void	close_unused_pipes(int pipe_fd[][2][2], int pipe_amm, int current_index);
+void	init_pipes(int pipe_fd[][2][2], int pipe_amm);
 int		to_pipe(t_central *central, char **split);
 
 // redir_utils //
