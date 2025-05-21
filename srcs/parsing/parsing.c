@@ -89,6 +89,9 @@ int	ft_parse(char *prompt, t_central *central)
 	ft_print_arr(central->pipe_matrix);
 	if (ft_parse_redirects(central) != 0)
 		ft_error("redirect");
+	printf("redir\n");
+	ft_print_arr(central->pipe_matrix);
 	ft_free_split(central->pipe_matrix);
+	printf("\nEOP\n");
 	return (0);
 }
