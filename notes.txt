@@ -45,3 +45,15 @@ Ctrl+C-> defines code to 130
 
 Pipe_fd[0] = Read end of the pipe.
 Pipe_fd[1] = Write end of the pipe.
+
+Pid == 0 Is the CHILD process.
+Pid > 0 Is the PARENT process.
+
+| Command | "stdin" comes from...   | "stdout" goes to...      |
+| ------- | ----------------------- | ------------------------ |
+| "cmd1"  | default ("stdin")       | "pipe[0][1]" (write end) |
+| "cmd2"  | "pipe[0][0]" (read end) | "pipe[1][1]" (write end) |
+| "cmd3"  | "pipe[1][0]"            | "pipe[2][1]"             |
+| "..."   | ...                     | ...                      |
+| "cmdN"  | "pipe[N-2][0]"          | default ("stdout")       |
+
