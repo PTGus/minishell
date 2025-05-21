@@ -6,11 +6,36 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/19 15:53:37 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:26:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	rl_loop(t_central *central);
+
+int	main(int ac, char **av, char **env)
+{
+	t_envp		**dupenv;
+	t_central	*central;
+
+	if (ac == 1)
+	{
+		dupenv = ft_calloc(1, sizeof(t_envp *));
+		central = ft_calloc(1, sizeof(t_central));
+		duplicate_env(dupenv, env);
+		init_central(central, dupenv);
+		handle_signals();
+		rl_loop(central);
+		clean_all(central);
+		return (0);
+	}
+	else
+	{
+		printf("bash: %s: No such file or directory\n", av[1]);
+		return (127);
+	}
+}
 
 /**
  * @brief An infinte loop that receives a string
@@ -38,35 +63,12 @@ void	rl_loop(t_central *central)
 		}
 		add_history(rl);
 		split = ft_split(rl, ' ');
-		do_cmd(split, central);
+		has_shell_operator(split, central);
 		ft_freesplit(split);
 		free(rl);
 		reset_fds(1);
 	}
 	reset_fds(2);
-}
-
-int	main(int ac, char **av, char **env)
-{
-	t_envp		**dupenv;
-	t_central	*central;
-
-	if (ac == 1)
-	{
-		dupenv = ft_calloc(1, sizeof(t_envp *));
-		central = ft_calloc(1, sizeof(t_central));
-		duplicate_env(dupenv, env);
-		init_central(central, dupenv);
-		handle_signals();
-		rl_loop(central);
-		clean_all(central);
-		return (0);
-	}
-	else
-	{
-		printf("bash: %s: No such file or directory\n", av[1]);
-		return (127);
-	}
 }
 
 /**
@@ -105,14 +107,10 @@ int	is_built_in(t_central *central, char **split)
 void	do_cmd(char **split, t_central *central)
 {
 	t_envp	*tmp;
-	int	i;
 
 	tmp = central->dupenv;
 	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
 		tmp = tmp->next;
-	i = 0;
-	if (to_pipe(central, split) == 0)
-		return ;
 	if (!tmp)
 	{
 		not_dir(split[0]);
