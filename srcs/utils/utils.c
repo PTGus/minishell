@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/21 16:23:56 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:33:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 void	has_shell_operator(t_central *central, char **split)
 {
-	int	i;
-
-	i = 0;
-	while (split[i])
-	{
-		if (to_pipe(central, split) == 0)
-			return ;
-	}
+	if (to_pipe(central, split) == 0)
+		return ;
+	else
+		do_cmd(central, split);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:43:29 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:32:58 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param home_path The path to the home directory in case the
  *  is called to travel to home.
  */
-void	ft_cd(char **split, t_central *central)
+void	ft_cd(t_central *central, char **split)
 {
 	t_envp	*temp;
 

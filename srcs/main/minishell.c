@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/21 16:26:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:33:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	rl_loop(t_central *central)
 		}
 		add_history(rl);
 		split = ft_split(rl, ' ');
-		has_shell_operator(split, central);
+		has_shell_operator(central, split);
 		ft_freesplit(split);
 		free(rl);
 		reset_fds(1);
@@ -81,15 +81,15 @@ void	rl_loop(t_central *central)
 int	is_built_in(t_central *central, char **split)
 {
 	if (ft_strcmp(split[0], "echo") == 0)
-		return (ft_echo(split, central), 0);
+		return (ft_echo(central, split), 0);
 	else if (ft_strcmp(split[0], "cd") == 0)
-		return (ft_cd(split, central), 0);
+		return (ft_cd(central, split), 0);
 	else if (ft_strcmp(split[0], "pwd") == 0)
 		return (ft_pwd(central), 0);
 	else if (ft_strcmp(split[0], "env") == 0)
-		return (ft_env(split, central), 0);
+		return (ft_env(central, split), 0);
 	else if (ft_strcmp(split[0], "export") == 0)
-		return (ft_export(split, central), 0);
+		return (ft_export(central, split), 0);
 	else if (ft_strcmp(split[0], "exit") == 0)
 		return (ft_exit(central, split[1]), 0);
 	else if (ft_strcmp(split[0], "unset") == 0)
@@ -104,7 +104,7 @@ int	is_built_in(t_central *central, char **split)
  * @param central A struct that contains pointers to
  *  all the neccessary variables and lists.
  */
-void	do_cmd(char **split, t_central *central)
+void	do_cmd(t_central *central, char **split)
 {
 	t_envp	*tmp;
 

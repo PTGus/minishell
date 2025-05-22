@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:43:51 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:33:28 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	commander(t_central *central, char **split)
 		central->exit_val = 127;
 		return (free(exec), 1);
 	}
-	executer(exec, split, central);
+	executer(exec, central, split);
 	free(exec);
 	return (0);
 }
@@ -52,7 +52,7 @@ int	commander(t_central *central, char **split)
  * @param central A struct that contains pointers to
  *  all the neccessary variables and lists.
  */
-void	executer(char *exec, char **split, t_central *central)
+void	executer(char *exec, t_central *central, char **split)
 {
 	char	**envp;
 	int		status;
@@ -74,10 +74,12 @@ void	executer(char *exec, char **split, t_central *central)
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		waitpid(-1, &status, 0);
 		central->exit_val = status;
 	}
 }
+
+
 
 /**
  * @brief Iterates through all the "PATH" variable paths in order
