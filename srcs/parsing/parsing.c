@@ -48,19 +48,13 @@ void	ft_error(char *message)
 }
 	//exit(0);
 
-void	ft_tokenize(char *prompt)
-{
-	(void)prompt;
-	return ;
-}
-
 /**
  * @brief Initializes all parse related elements in central
  * @param Central struct
  */
 void	ft_init_parse(t_central *central)
 {
-	central->command_list = NULL;
+	central->cmd = NULL;
 	central->pipe_matrix = NULL;
 	central->matrix_len = 0;
 }
@@ -86,11 +80,10 @@ int	ft_parse(char *prompt, t_central *central)
 		ft_error("pipes");
 	if (ft_remove_extra_spaces(central) != 0)
 		ft_error("spacing");
-	ft_print_arr(central->pipe_matrix);
-	if (ft_parse_redirects(central) != 0)
+	if (ft_space_redirects(central) != 0)
 		ft_error("redirect");
-	printf("redir\n");
 	ft_print_arr(central->pipe_matrix);
+	ft_tokenizer(central);
 	ft_free_split(central->pipe_matrix);
 	printf("\nEOP\n");
 	return (0);

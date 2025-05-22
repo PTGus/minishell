@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <readline/readline.h>
-# include <readline/history.h>
+#include <readline/history.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
@@ -32,18 +32,27 @@
 # include "../libft/libft.h"
 
 # define COMMAND	0
-# define CMD_FLAGS	1
-# define REDIR_IN	2
-# define REDIR_OUT	3
-# define APPEND_IN	4
-# define APPEND_OUT	5
-# define ARGUMENT	6
+# define CMD_FLAG	1
+# define ARGUMENT	2
+# define REDIR_IN	3
+# define REDIR_OUT	4
+# define APPEND_IN	5
+# define APPEND_OUT	6
+
+typedef struct s_input
+{
+	struct s_input	*next;
+	struct s_input	*prev;
+	int				index;
+	char			*value;
+	int				token;
+}	t_input;
 
 typedef struct s_central
 {
 	struct s_envp	*dupenv;
 	int				exit_val;
-	struct s_input	***command_list;
+	struct s_input	**cmd;
 	char			**pipe_matrix;
 	int				matrix_len;
 }	t_central;
@@ -58,21 +67,6 @@ typedef struct s_envp
 	int				visible_env;
 	int				has_equal;
 }	t_envp;
-
-typedef struct s_input
-{
-	struct s_input	*next;
-	struct s_input	*prev;
-	char			*value;
-	int				index;
-	int				token_type;
-}	t_input;
-
-//typedef struct s_split
-//{
-//	char			**str_matrix;
-//	int				matrix_len;
-//}	t_split;
 
 //--------------------------------------------------------------//
 
@@ -233,12 +227,20 @@ void	ft_assign_new_split(char **new_split, char **matrix, int i);
 int		ft_rest_is_space(char *str, int j);
 
 // redirects //
-int		ft_parse_redirects(t_central *central);
+int		ft_space_redirects(t_central *central);
 int		ft_are_redirects_invalid(t_central *central);
 int		ft_redirect_check(char *str, int j);
-
-// redirect_spacing // 
-int		ft_space_redirects(t_central *central);
 int		ft_count_unspaced_redirects(char *str, int j, int extra_space);
+char	*ft_realloc_redir_str(char *str, int to_space);
+
+// tokenizer //
+void	ft_tokenizer(t_central *central);
+
+// input_utils //
+t_input	*ft_input_new(void *value, int index);
+t_input	*ft_input_last(t_input *lst);
+void	ft_input_add_back(t_input **lst, t_input *new_node);
+int		ft_input_size(t_input *lst);
+void	ft_input_iter(t_input *lst, void (*f)(void *));
 
 #endif

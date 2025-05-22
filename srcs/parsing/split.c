@@ -118,12 +118,14 @@ void	ft_free_split(char **split)
 
 	i = 0;
 	if (split)
+	{
 		while (split[i])
 		{
 			free(split[i]);
 			split[i] = NULL;
 			i++;
 		}
+	}
 	if (split)
 	{
 		free(split);
