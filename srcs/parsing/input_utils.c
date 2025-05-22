@@ -27,6 +27,7 @@ t_input	*ft_input_new(void *value, int index)
 	new_node->index = index;
 	new_node->token = -1;
 	new_node->next = NULL;
+	new_node->prev = NULL;
 	return (new_node);
 }
 
@@ -47,7 +48,7 @@ t_input	*ft_input_last(t_input *lst)
  *  @param lst - list
  * 	@param new - new element to add
 */
-void	ft_input_add_back(t_input **lst, t_input *new_node)
+void	ft_input_add_back(t_input **lst, t_input *new_node) //LACKING PREV
 {
 	t_input	*last;
 

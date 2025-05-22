@@ -18,7 +18,10 @@ void	ft_tokenizer(t_central *central)
 	int		j;
 	int		k;
 	char	*str;
+	int		index;
 
+	//central->cmd = 
+	index = 0;
 	i = -1;
 	str = NULL;
 	while (central->pipe_matrix && central->pipe_matrix[++i])
