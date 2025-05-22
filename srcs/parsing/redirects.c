@@ -12,20 +12,44 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_redirect_check(char *str, int j)
+/**
+ * @brief 
+ * @param
+ * @return
+ */
+int	ft_space_redirects(t_central *central)
 {
-	if (!str[j + 1])
+	int	i;
+	int	j;
+	int	to_space;
+
+	if (ft_are_redirects_invalid(central) == 1)
 		return (1);
-	else if (str[j] == '>' && str[j + 1] == '<')
-		return (1);
-	else if (str[j] == str[j + 1] || (str[j] == '<' && str[j + 1] == '>'))
+	i = -1;
+	j = -1;
+	while (central->pipe_matrix && central->pipe_matrix[++i])
 	{
-		if (!str[j + 2] || str[j + 2] == '<' || str [j + 2] == '>')
-			return (1);
+		to_space = 0;
+		while (central->pipe_matrix[i][++j])
+			to_space = ft_count_unspaced_redirects(
+					central->pipe_matrix[i], j, to_space);
+		if (to_space > 0)
+		{
+			central->pipe_matrix[i] = ft_realloc_redir_str(
+					central->pipe_matrix[i], to_space);
+			if (!central->pipe_matrix[i])
+				return (1);
+		}
+		j = -1;
 	}
 	return (0);
 }
 
+/**
+ * @brief 
+ * @param
+ * @return
+ */
 int	ft_are_redirects_invalid(t_central *central)
 {
 	int	i;
@@ -49,10 +73,72 @@ int	ft_are_redirects_invalid(t_central *central)
 	return (0);
 }
 
-int	ft_parse_redirects(t_central *central)
+/**
+ * @brief 
+ * @param
+ * @return
+ */
+int	ft_redirect_check(char *str, int j)
 {
-	if (ft_are_redirects_invalid(central) == 1)
+	if (!str[j + 1])
 		return (1);
-	ft_space_redirects(central);
+	else if (str[j] == '>' && str[j + 1] == '<')
+		return (1);
+	else if (str[j] == str[j + 1] || (str[j] == '<' && str[j + 1] == '>'))
+	{
+		if (!str[j + 2] || str[j + 2] == '<' || str [j + 2] == '>')
+			return (1);
+	}
 	return (0);
+}
+
+/**
+ * @brief 
+ * @param
+ * @return
+ */
+int	ft_count_unspaced_redirects(char *str, int j, int extra_space)
+{
+	if (str[j + 1])
+	{
+		if (((ft_strchr("<>", str[j]) && !ft_is_quoted(str, j))
+				&& !ft_strchr("< >", str[j + 1])) || (!ft_strchr("< >", str[j])
+				&& (ft_strchr("<>", str[j + 1]) && !ft_is_quoted(str, j + 1))))
+			extra_space++;
+	}
+	return (extra_space);
+}
+
+/**
+ * @brief 
+ * @param
+ * @return
+ */
+char	*ft_realloc_redir_str(char *str, int to_space)
+{
+	char	*new_str;
+	int		new_len;
+	int		j;
+	int		k;
+
+	j = -1;
+	k = -1;
+	new_len = ft_strlen(str) + to_space;
+	new_str = malloc((new_len + 1) * sizeof(char));
+	if (!new_str)
+		return (NULL);
+	while (str[++k])
+	{
+		if (ft_count_unspaced_redirects(str, k, 0) == 1)
+		{
+			new_str[++j] = str[k];
+			new_str[++j] = ' ';
+		}
+		else
+			new_str[++j] = str[k];
+	}
+	new_str[++j] = '\0';
+	free(str);
+	str = NULL;
+	return (new_str);
 }

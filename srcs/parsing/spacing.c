@@ -12,6 +12,11 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief 
+ * @param
+ * @return
+ */
 int	ft_remove_extra_spaces(t_central *central)
 {
 	int		i;
@@ -41,6 +46,11 @@ int	ft_remove_extra_spaces(t_central *central)
 	return (0);
 }
 
+/**
+ * @brief 
+ * @param
+ * @return
+ */
 int	ft_new_spaced_len(char *command)
 {
 	int	j;
@@ -67,6 +77,11 @@ int	ft_new_spaced_len(char *command)
 	return (len);
 }
 
+/**
+ * @brief 
+ * @param
+ * @return
+ */
 void	ft_assign_new_split(char **new_split, char **matrix, int i)
 {
 	int	j;
@@ -96,6 +111,11 @@ void	ft_assign_new_split(char **new_split, char **matrix, int i)
 	new_split[i][k] = '\0';
 }
 
+/**
+ * @brief 
+ * @param
+ * @return
+ */
 int	ft_rest_is_space(char *str, int j)
 {
 	while (str && str[j])
