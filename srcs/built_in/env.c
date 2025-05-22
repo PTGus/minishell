@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 15:54:06 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:02:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ void	ft_env(t_central *central, char **split)
 	tmp = central->dupenv;
 	while (tmp != NULL)
 	{
-		printf("%s=%s\n", tmp->var, tmp->value);
+		if (tmp->visible_env == TRUE)
+		{
+			if (tmp->value == NULL)
+				printf("%s=\n", tmp->var);
+			else
+				printf("%s=%s\n", tmp->var, tmp->value);
+		}
 		tmp = tmp->next;
 	}
 	central->exit_val = 0;

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 15:41:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:11:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int		duplicate_env(t_envp **dupenv, char **envp);
 void	ft_exit(t_central *central, char *exit_val);
 
 // export //
-void	insert_before_last(t_envp **dupenv, t_envp *curr);
 int		should_revalue(t_envp **dupenv, char**split);
 void	declarex(t_envp **dupenv);
 void	ft_export(t_central *central, char **split);
@@ -151,12 +150,17 @@ void	init_central(t_central *central, t_envp **dupenv);
 void	organise_env(t_envp **dupenv);
 void	reorder_dupenv(t_envp **dupenv);
 void	env_delone(t_envp *to_del);
+void	insert_before_last(t_envp **dupenv, t_envp *curr);
 
 // exec_utils //
 char	*get_line(t_envp *dupenv);
 char	**get_exec_env(t_envp **dupenv);
 
-// lst_utils //
+// export utils //
+void	print_declaration(t_envp *curr);
+void	hidden_export(t_central *central, char **split);
+
+// list_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
 t_envp	*lstlast(t_envp **dupenv);
 
