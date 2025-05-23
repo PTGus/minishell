@@ -12,36 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-/**
- * @brief Returns quoted status of an element 
- * 0 = unquoted, 1 = inside '', 2 = inside ""
- * @param prompt Full input from readline
- * @param end_pos Last element to be checked
- * if end_pos -1 examines whole string
- */
-int	ft_is_quoted(char *prompt, int end_pos)
-{
-	int	i;
-	int	quote_flag;
-
-	i = -1;
-	quote_flag = 0;
-	if (end_pos == -1)
-		end_pos = ft_strlen(prompt) - 1;
-	while (prompt[++i] && i <= end_pos)
-	{
-		if (prompt[i] == '\'' && quote_flag == 0)
-			quote_flag = 1;
-		else if (prompt[i] == '\'' && quote_flag == 1)
-			quote_flag = 0;
-		else if (prompt[i] == '\"' && quote_flag == 0)
-			quote_flag = 2;
-		else if (prompt[i] == '\"' && quote_flag == 2)
-			quote_flag = 0;
-	}
-	return (quote_flag);
-}
-
 void	ft_error(char *message)
 {
 	printf("%s ERROR! (no exit)\n", message);
@@ -83,8 +53,8 @@ int	ft_parse(char *prompt, t_central *central)
 	if (ft_space_redirects(central) != 0)
 		ft_error("redirect");
 	ft_print_arr(central->pipe_matrix);
-	ft_tokenizer(central);
-	ft_free_split(central->pipe_matrix);
+	printf("\n");
+	ft_make_list(central);
 	printf("\nEOP\n");
 	return (0);
 }

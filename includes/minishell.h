@@ -31,13 +31,11 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-# define COMMAND	0
-# define CMD_FLAG	1
-# define ARGUMENT	2
-# define REDIR_IN	3
-# define REDIR_OUT	4
-# define APPEND_IN	5
-# define APPEND_OUT	6
+# define ARGUMENT	0
+# define REDIR_IN	1
+# define REDIR_OUT	2
+# define APPEND_IN	3
+# define APPEND_OUT	4
 
 typedef struct s_input
 {
@@ -209,9 +207,11 @@ int		ft_strcmp(char *s1, char *s2);
 
 // parsing //
 int		ft_parse(char *prompt, t_central *central);
-int		ft_is_quoted(char *prompt, int end_pos);
 void	ft_error(char *message);
 void	ft_tokenize(char *prompt);
+
+// quotes //
+int		ft_is_quoted(char *prompt, int end_pos);
 
 // split //
 char	**ft_split_pipes(char *prompt, t_central *central);
@@ -242,5 +242,10 @@ t_input	*ft_input_last(t_input *lst);
 void	ft_input_add_back(t_input **lst, t_input *new_node);
 int		ft_input_size(t_input *lst);
 void	ft_input_iter(t_input *lst, void (*f)(void *));
+
+// tokenizer //
+int		ft_make_list(t_central *central);
+int		ft_assign_list(t_central *central, int i, int l);
+void	ft_print_list_array(t_input **array);
 
 #endif

@@ -60,7 +60,7 @@ SRC_PIPES	=	$(addprefix pipes/, pipe.c)
 SRC_REDIR	=	$(addprefix redirections/, input_redir.c output_redir.c redirect.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c export_utils.c list_utils.c pipe_utils.c redir_utils.c utils.c)
-SRC_PARSE	= 	$(addprefix parsing/, parsing.c split.c spacing.c redirects.c tokenizer.c input_utils.c)
+SRC_PARSE	= 	$(addprefix parsing/, parsing.c quotes.c split.c spacing.c redirects.c tokenizer.c input_utils.c)
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_ERRORS) \
 				$(SRC_MAIN) $(SRC_PIPES) $(SRC_REDIR) $(SRC_SIGNALS) $(SRC_UTILS) $(SRC_PARSE))
