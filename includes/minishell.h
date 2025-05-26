@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 17:11:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:46:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_envp
 	char			*value;
 	int				index;
 	int				visible_env;
+	int				has_equal;
 }	t_envp;
 
 //--------------------------------------------------------------//
@@ -75,7 +76,6 @@ void	ft_exit(t_central *central, char *exit_val);
 int		should_revalue(t_envp **dupenv, char**split);
 void	declarex(t_envp **dupenv);
 void	ft_export(t_central *central, char **split);
-void	hidden_export(t_central *central, char **split);
 
 // pwd //
 void	ft_pwd(t_central *central);
@@ -92,6 +92,7 @@ void	clean_all(t_central *central);
 void	ft_envfreeone(t_envp *dupenv);
 void	free_env(t_envp **dupenv);
 void	ft_freesplit(char **split);
+void	free_int_arr(int (*pipe_fd)[2], int elems);
 
 //--------------------------------------------------------------//
 
@@ -125,7 +126,8 @@ int		is_built_in(t_central *central, char **split);
 // PIPES //
 
 // pipe //
-void	execute_pipes(t_central *central, char **split, int pipe_fd[][2], int curr_index, int pipe_amm);
+void	execute_pipes(t_central *central, char **split,
+			int (*pipe_fd)[2], int curr_index, int pipe_amm);
 void	piper(t_central *central, char **split, int pipe_amm);
 
 //--------------------------------------------------------------//
@@ -157,8 +159,10 @@ char	*get_line(t_envp *dupenv);
 char	**get_exec_env(t_envp **dupenv);
 
 // export utils //
+int		is_special_exportion(t_central *central, char **split);
 void	print_declaration(t_envp *curr);
-void	hidden_export(t_central *central, char **split);
+void	hidden_export(t_central *central, char **split, int has_equal);
+t_envp	*new_valuesless_env(char *envp);
 
 // list_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
@@ -166,10 +170,10 @@ t_envp	*lstlast(t_envp **dupenv);
 
 // pipe_utils //
 int		to_pipe(t_central *central, char **split);
-void	init_pipes(int pipe_fd[][2], int pipe_amm);
-void	close_unused_pipes(int pipe_fd[][2], int pipe_amm, int current_index);
-void	set_pipe_fds(int pipe_fd[][2], int pipe_amm, int current_index);
-void	close_all_pipes(int pipe_fd[][2], int pipe_amm);
+void	init_pipes(int (*pipe_fd)[2], int pipe_amm);
+void	close_unused_pipes(int (*pipe_fd)[2], int pipe_amm, int current_index);
+void	set_pipe_fds(int (*pipe_fd)[2], int pipe_amm, int current_index);
+void	close_all_pipes(int (*pipe_fd)[2], int pipe_amm);
 
 // redir_utils //
 void	reset_fds(int status);

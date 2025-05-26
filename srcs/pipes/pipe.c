@@ -6,20 +6,20 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 15:58:24 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:57:58 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char    **segment_between_pipes(char **tok, int segment_idx)
+char	**segment_between_pipes(char **tok, int segment_idx)
 {
-	int i;
-	int j;
-	int seg;
-	int beg;
-	int end;
-	char **out;
+	int		i;
+	int		j;
+	int		seg;
+	int		beg;
+	int		end;
+	char	**out;
 
 	i = 0;
 	seg = 0;
@@ -38,10 +38,11 @@ char    **segment_between_pipes(char **tok, int segment_idx)
 	while (beg < end)
 		out[j++] = ft_strdup(tok[beg++]);
 	out[j] = NULL;
-	return (out);
+	 return (out);
 }
 
-void	execute_pipes(t_central *central, char **split, int pipe_fd[][2], int curr_index, int pipe_amm)
+void	execute_pipes(t_central *central, char **split,\
+			int (*pipe_fd)[2], int curr_index, int pipe_amm)
 {
 	close_unused_pipes(pipe_fd, pipe_amm, curr_index);
 	set_pipe_fds(pipe_fd, pipe_amm, curr_index);
@@ -51,11 +52,12 @@ void	execute_pipes(t_central *central, char **split, int pipe_fd[][2], int curr_
 
 void	piper(t_central *central, char **split, int cmd_count)
 {
-	int		pipe_fd[cmd_count - 1][2];
+	int		(*pipe_fd)[2];
 	pid_t	pid;
 	int		status;
 	int		i;
 
+	pipe_fd = malloc(sizeof(int [2]) * cmd_count - 1);
 	init_pipes(pipe_fd, cmd_count - 1);
 	i = 0;
 	while (i < cmd_count)
@@ -73,4 +75,5 @@ void	piper(t_central *central, char **split, int cmd_count)
 		i++;
 	}
 	central->exit_val = status;
+	free(pipe_fd);
 }

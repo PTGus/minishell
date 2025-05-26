@@ -6,13 +6,13 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:49:56 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 15:02:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:49:52 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	close_all_pipes(int pipe_fd[][2], int pipe_amm)
+void	close_all_pipes(int (*pipe_fd)[2], int pipe_amm)
 {
 	int	i;
 
@@ -25,18 +25,19 @@ void	close_all_pipes(int pipe_fd[][2], int pipe_amm)
 	}
 }
 
-void	set_pipe_fds(int pipe_fd[][2], int pipe_count, int idx)
+void	set_pipe_fds(int (*pipe_fd)[2], int pipe_count, int idx)
 {
-	if (idx > 0)                         /* every cmd but the first reads */
+	if (idx > 0)
 		dup2(pipe_fd[idx - 1][0], STDIN_FILENO);
-	if (idx < pipe_count)                /* every cmd but the last writes */
+	if (idx < pipe_count)
 		dup2(pipe_fd[idx][1], STDOUT_FILENO);
 }
 
-void	close_unused_pipes(int pipe_fd[][2], int pipe_count, int idx)
+void	close_unused_pipes(int (*pipe_fd)[2], int pipe_count, int idx)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	while (i < pipe_count)
 	{
 		if (i != idx - 1)
@@ -47,17 +48,17 @@ void	close_unused_pipes(int pipe_fd[][2], int pipe_count, int idx)
 	}
 }
 
-
-void	init_pipes(int pipe_fd[][2], int pipe_count)
+void	init_pipes(int (*pipe_fd)[2], int pipe_count)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < pipe_count)
 	{
 		if (pipe(pipe_fd[i]) == -1)
 		{
 			perror("pipe");
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 		i++;
 	}
@@ -65,9 +66,11 @@ void	init_pipes(int pipe_fd[][2], int pipe_count)
 
 int	to_pipe(t_central *central, char **split)
 {
-	int	i = 0;
-	int	pipe_count = 0;
+	int	i;
+	int	pipe_count;
 
+	i = 0;
+	pipe_count = 0;
 	while (split[i])
 		if (ft_strcmp(split[i++], "|") == 0)
 			pipe_count++;

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 17:12:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:28:45 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	should_revalue(t_envp **dupenv, char**split)
 	var = ft_split(split[1], '=');
 	while (new)
 	{
-		if (ft_strcmp(new->var, var[0]) == 0)
+		if ((ft_strcmp(new->var, var[0]) == 0) && (new->has_equal == TRUE))
 		{
 			free(new->value);
 			new->value = NULL;
@@ -94,17 +94,13 @@ void	ft_export(t_central *central, char **split)
 		central->exit_val = 0;
 		return ;
 	}
-	while (split[1][++i])
+	if (is_special_exportion(central, split) == 0)
 	{
-		if (split[1][i] == '=')
-			break ;
-	}
-	if (split[1][i] != '=')
-		hidden_export(central, split);
-	if (should_revalue(&central->dupenv, split) == 0)
-	{
-		new = new_env(split[1]);
-		insert_before_last(&central->dupenv, new);
+		if (should_revalue(&central->dupenv, split) == 0)
+		{
+			new = new_env(split[1]);
+			insert_before_last(&central->dupenv, new);
+		}
 	}
 	reorder_dupenv(&central->dupenv);
 	central->exit_val = 0;

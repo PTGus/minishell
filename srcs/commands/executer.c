@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 15:33:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:29:16 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void	executer(char *exec, t_central *central, char **split)
 		central->exit_val = status;
 	}
 }
-
-
 
 /**
  * @brief Iterates through all the "PATH" variable paths in order
