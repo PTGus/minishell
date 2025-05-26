@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:32:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:42:56 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ARGUMENT	0
 # define REDIR_IN	1
 # define REDIR_OUT	2
-# define APPEND_IN	3
+# define HERE_DOC	3
 # define APPEND_OUT	4
 
 typedef struct s_input
@@ -143,7 +143,7 @@ void	ctrl_c(int sig);
 void	ctrl_d(t_central *central);
 void	handle_signals(void);
 
-//--------------------------------------------------------------//
+//-------------------------------------------------Body language-------------//
 // UTILS //
 
 // cd_utils //
@@ -151,7 +151,6 @@ void	set_back(t_envp **pwd);
 
 // central_utils //
 void	init_central(t_central *central, t_envp **dupenv);
-
 // env_utils //
 void	organise_env(t_envp **dupenv);
 void	reorder_dupenv(t_envp **dupenv);
@@ -185,7 +184,6 @@ char	**ft_split_pipes(char *prompt, t_central *central);
 int		ft_pipe_count(char *prompt);
 char	**ft_handle_split(char *prompt, char **split);
 void	ft_print_arr(char **str_arr);
-void	ft_free_split(char **split);
 
 // spacing //
 int		ft_remove_extra_spaces(t_central *central);
@@ -200,9 +198,6 @@ int		ft_redirect_check(char *str, int j);
 int		ft_count_unspaced_redirects(char *str, int j, int extra_space);
 char	*ft_realloc_redir_str(char *str, int to_space);
 
-// tokenizer //
-void	ft_tokenizer(t_central *central);
-
 // input_utils //
 t_input	*ft_input_new(void *value, int index);
 t_input	*ft_input_last(t_input *lst);
@@ -214,5 +209,13 @@ void	ft_input_iter(t_input *lst, void (*f)(void *));
 int		ft_make_list(t_central *central);
 int		ft_assign_list(t_central *central, int i, int l);
 void	ft_print_list_array(t_input **array);
+int		ft_tokenizer(t_central *central);
+
+// frees //
+void	ft_free_split(char **split);
+void	ft_free_list_err(t_central *central, char *str, t_input *current);
+
+// expander //
+int		ft_expander(t_central *central);
 
 #endif
