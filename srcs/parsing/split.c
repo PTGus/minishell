@@ -6,7 +6,7 @@
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:08:51 by david-fe          #+#    #+#             */
-/*   Updated: 2025/05/15 17:09:40 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:45:00 by david-fe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,30 +105,5 @@ void	ft_print_arr(char **str_arr)
 	{
 		printf("%d: '%s'\n", i, str_arr[i]);
 		i++;
-	}
-}
-
-/**
- * @brief Frees an array of strings
- * @param split Array of strings to free
- */
-void	ft_free_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	if (split)
-	{
-		while (split[i])
-		{
-			free(split[i]);
-			split[i] = NULL;
-			i++;
-		}
-	}
-	if (split)
-	{
-		free(split);
-		split = NULL;
 	}
 }

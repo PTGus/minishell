@@ -41,4 +41,3 @@ int	ft_is_quoted(char *prompt, int end_pos)
 	}
 	return (quote_flag);
 }
-

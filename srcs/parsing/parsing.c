@@ -54,7 +54,7 @@ int	ft_parse(char *prompt, t_central *central)
 		ft_error("redirect");
 	ft_print_arr(central->pipe_matrix);
 	printf("\n");
-	ft_make_list(central);
+	ft_tokenizer(central);
 	printf("\nEOP\n");
 	return (0);
 }
