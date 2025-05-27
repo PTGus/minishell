@@ -6,53 +6,36 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/15 13:20:41 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:21:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	set_output(char **split)
+int	set_output(char *to_set)
 {
-	int	i;
 	int	fd;
 
-	i = -1;
-	while (split[++i])
+	if (access(to_set, F_OK) == 0)
 	{
-		if (ft_strcmp(split[i], ">") == 0)
+		if (access(to_set, W_OK) == 1)
 		{
-			i++;
-			fd = open(split[i], O_CREAT | O_TRUNC | O_RDWR, 0644);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
+			printf("bash: %s: Permission denied\n", to_set);
+			return (1);
 		}
-		else if (ft_strcmp(split[i], ">>") == 0)
+		else
 		{
-			i++;
-			if (access(split[i], F_OK) != 0)
-				fd = open(split[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else
-				fd = open(split[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			fd = open(to_set, O_TRUNC | O_WRONLY, 0644);
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
+			return (0);
 		}
 	}
-}
-
-void	redirect_output(t_central *central, char **split)
-{
-	int	i;
-
-	i = 0;
-	(void)central;
-	while (split[i])
+	else
 	{
-		if (split[i][0] == '>')
-		{
-			set_output(split + i);
-			i++;
-		}
-		i++;
+		fd = open(to_set, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		return (0);
 	}
 }

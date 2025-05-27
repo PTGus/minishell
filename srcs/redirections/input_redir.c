@@ -6,44 +6,26 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:11:52 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/15 13:55:03 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:15:59 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	set_input(char **split)
+int	set_input(char *to_set)
 {
-	int	i;
 	int	fd;
 
-	i = 0;
-	while (split[i])
+	if (access(to_set, X_OK | R_OK) == 0)
 	{
-		if (ft_strcmp(split[i], "<") == 0)
-		{
-			i++;
-			fd = open(split[i], O_RDONLY);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
-		i++;
+		fd = open(to_set, O_RDONLY, 0644);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		return (0);
 	}
-}
-
-void	redirect_input(t_central *central, char **split)
-{
-	int	i;
-
-	i = 0;
-	(void)central;
-	while (split[i])
+	else
 	{
-		if (split[i][0] == '<')
-		{
-			set_input(split + i);
-			i++;
-		}
-		i++;
+		not_dir(to_set);
+		return (1);
 	}
 }
