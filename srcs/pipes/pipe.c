@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 14:43:23 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:18:58 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	**segment_between_pipes(char **tok, int segment_idx)
 
 	i = 0;
 	seg = 0;
-	beg = 0;
 	while (tok[i] && seg < segment_idx)
 		if (tok[i++][0] == '|')
 			seg++;
@@ -35,11 +34,19 @@ char	**segment_between_pipes(char **tok, int segment_idx)
 	if (!out)
 		return (NULL);
 	j = 0;
-	while (beg < end)
-		out[j++] = ft_strdup(tok[beg++]);
+	i = beg;
+	while (i < end)
+	{
+		if (!ft_strcmp(tok[i], "<") || !ft_strcmp(tok[i], ">")
+			|| !ft_strcmp(tok[i], ">>") || !ft_strcmp(tok[i], "<<"))
+			i += 2; // skip redirection and its target
+		else
+			out[j++] = ft_strdup(tok[i++]);
+	}
 	out[j] = NULL;
 	return (out);
 }
+
 
 void	execute_pipes(t_central *central, char **split, \
 			int (*pipe_fd)[2], int curr_index, int pipe_amm)
@@ -62,6 +69,7 @@ void	piper(t_central *central, char **split, int cmd_count)
 	i = 0;
 	while (i < cmd_count)
 	{
+		has_to_redirect(split);
 		pid = fork();
 		if (pid == 0)
 			execute_pipes(central, split, pipe_fd, i, cmd_count - 1);

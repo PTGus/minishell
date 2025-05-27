@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 14:43:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:18:58 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,22 @@ void	piper(t_central *central, char **split, int cmd_count);
 
 //--------------------------------------------------------------//
 
+// REDIRECTIONS //
+
+// heredoc //
+
+// input_redir //
+int		set_input(char *to_set);
+
+// output_redir //
+int		set_output(char *to_set);
+
+// redirect //
+int		has_to_redirect(char **split);
+int		set_redirections(char **split);
+int		do_redirection(char **split, int index);
+
+//--------------------------------------------------------------//
 // SIGNALS //
 
 // signals //

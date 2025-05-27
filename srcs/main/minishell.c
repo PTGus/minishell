@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 14:39:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:19:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	do_cmd(t_central *central, char **split)
 		central->exit_val = 127;
 		return ;
 	}
+	has_to_redirect(split);
 	if (is_built_in(central, split) == 0)
 		return ;
 	else
