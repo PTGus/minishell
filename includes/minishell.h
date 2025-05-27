@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:46:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:30:17 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,21 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
+# define COMMAND	0
+# define CMD_FLAGS	1
+# define REDIR_IN	2
+# define REDIR_OUT	3
+# define APPEND_IN	4
+# define APPEND_OUT	5
+# define ARGUMENT	6
+
 typedef struct s_central
 {
 	struct s_envp	*dupenv;
 	int				exit_val;
+	struct s_input	***command_list;
+	char			**pipe_matrix;
+	int				matrix_len;
 }	t_central;
 
 typedef struct s_envp
@@ -48,6 +59,21 @@ typedef struct s_envp
 	int				has_equal;
 }	t_envp;
 
+typedef struct s_input
+{
+	struct s_input	*next;
+	struct s_input	*prev;
+	char			*value;
+	int				index;
+	int				token_type;
+}	t_input;
+
+//typedef struct s_split
+//{
+//	char			**str_matrix;
+//	int				matrix_len;
+//}	t_split;
+
 //--------------------------------------------------------------//
 
 // BUILT-IN //
@@ -60,7 +86,7 @@ void	set_old_pwd(t_envp **dupenv);
 void	set_home(t_envp **dupenv);
 
 // echo //
-void	ft_echo(t_central *central, char **split);
+void	ft_echo(char **split, t_central *central);
 void	echo_n(char **split);
 
 // env //
@@ -183,5 +209,25 @@ void	has_shell_operator(t_central *central, char **split);
 int		ft_strcmp(char *s1, char *s2);
 
 //--------------------------------------------------------------//
+
+// PARSE //
+
+// parsing //
+int		ft_parse(char *prompt, t_central *central);
+int		ft_is_quoted(char *prompt, int end_pos);
+void	ft_error(char *message);
+void	ft_tokenize(char *prompt);
+
+// split //
+char	**ft_split_pipes(char *prompt);
+int		ft_pipe_count(char *prompt);
+char	**ft_handle_split(char *prompt, char **split);
+void	ft_print_arr(char **str_arr);
+void	ft_free_split(char **split);
+
+// spacing //
+char	**ft_remove_extra_spaces(char **split);
+int		ft_spaced_len(char *command);
+int		ft_is_space(int c);
 
 #endif

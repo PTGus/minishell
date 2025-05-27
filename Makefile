@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/05/27 11:04:54 by gumendes         ###   ########.fr        #
+#    Updated: 2025/05/27 13:30:38 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,9 +59,11 @@ SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_PIPES	=	$(addprefix pipes/, pipe.c)
 SRC_REDIR	=	$(addprefix redirections/, input_redir.c output_redir.c redirect.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
-SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c export_utils.c list_utils.c pipe_utils.c redir_utils.c utils.c)
+SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c list_utils.c utils.c)
+SRC_PARSE	= 	$(addprefix parsing/, parsing.c split.c spacing.c)
 
-SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_ERRORS) $(SRC_MAIN) $(SRC_PIPES) $(SRC_REDIR) $(SRC_SIGNALS) $(SRC_UTILS))
+SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_ERRORS) \
+				$(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS) $(SRC_PARSE))
 
 OBJ         =   $(SRC:$(SRC_PATH)%.c=$(BUILD_PATH)/%.o)
 
