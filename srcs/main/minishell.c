@@ -6,45 +6,15 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 13:31:03 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:39:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/**
- * @brief An infinte loop that receives a string
- *  passed though the terminal and utilizes it as paramters.
- * @param central A struct that contains pointers to
- *  all the neccessary variables and lists.
- */
-void	rl_loop(t_central *central)
-{
-	const char	*prompt;
-	char		*rl;
-	char		**split;
+void	rl_loop(t_central *central);
 
-	prompt = "minishell$ ";
-	while (1)
-	{
-		rl = readline(prompt);
-		if (rl == NULL)
-			ctrl_d(central);
-		if (rl[0] == '\0')
-		{
-			free(rl);
-			continue ;
-		}
-		add_history(rl);
-		ft_parse(rl, central);
-		split = ft_split(rl, ' ');
-		do_cmd(split, central);
-		ft_freesplit(split);
-		free(rl);
-	}
-}
-
-int	main(int ac, char **av, char **env)//
+int	main(int ac, char **av, char **env)
 {
 	t_envp		**dupenv;
 	t_central	*central;

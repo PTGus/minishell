@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 13:35:14 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:40:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 	return (out);
 }
 
-void	execute_pipes(t_central *central, char **split,\
+void	execute_pipes(t_central *central, char **split, \
 			int (*pipe_fd)[2], int curr_index, int pipe_amm)
 {
 	close_unused_pipes(pipe_fd, pipe_amm, curr_index);

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 13:35:30 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:40:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	set_old_pwd(t_envp **dupenv);
 void	set_home(t_envp **dupenv);
 
 // echo //
-void	ft_echo(char **split, t_central *central);
+void	ft_echo(t_central *central, char **split);
 void	echo_n(char **split);
 
 // env //
@@ -154,7 +154,7 @@ int		is_built_in(t_central *central, char **split);
 // pipe //
 // void	execute_pipes(t_central *central, char **split,
 // 			int (*pipe_fd)[2], int curr_index, int pipe_amm);
-void	piper(t_central *central, char **split, int pipe_amm);
+void	piper(t_central *central, char **split, int cmd_count);
 
 //--------------------------------------------------------------//
 
@@ -189,6 +189,7 @@ int		is_special_exportion(t_central *central, char **split);
 void	print_declaration(t_envp *curr);
 void	hidden_export(t_central *central, char **split, int has_equal);
 t_envp	*new_valuesless_env(char *envp);
+int		to_pipe(t_central *central, char **split);
 
 // list_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
