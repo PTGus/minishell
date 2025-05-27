@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:28:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:38:17 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:10:23 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,28 @@ void	env_delone(t_envp *to_del)
 		tmp2->prev = NULL;
 		ft_envfreeone(to_del);
 	}
+}
+
+/**
+ * @brief Adds a node to the to a position before
+ *  the end of the list, updates the head if necessary.
+ * @param dupenv A linked list with the duplicated envp stored whitin it.
+ * @param curr The node to be inserted.
+ */
+void	insert_before_last(t_envp **dupenv, t_envp *curr)
+{
+	t_envp	*last;
+	t_envp	*b_last;
+
+	if (!dupenv)
+	{
+		*dupenv = curr;
+		return ;
+	}
+	last = lstlast(dupenv);
+	b_last = last->prev;
+	b_last->next = curr;
+	curr->prev = b_last;
+	curr->next = last;
+	last->prev = curr;
 }

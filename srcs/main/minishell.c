@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/12 11:43:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 13:31:03 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,40 @@ int	main(int ac, char **av, char **env)//
 }
 
 /**
+ * @brief An infinte loop that receives a string
+ *  passed though the terminal and utilizes it as paramters.
+ * @param central A struct that contains pointers to
+ *  all the neccessary variables and lists.
+ */
+void	rl_loop(t_central *central)
+{
+	const char	*prompt;
+	char		*rl;
+	char		**split;
+
+	prompt = "minishell$ ";
+	reset_fds(0);
+	while (1)
+	{
+		rl = readline(prompt);
+		if (rl == NULL)
+			ctrl_d(central);
+		if (rl[0] == '\0')
+		{
+			free(rl);
+			continue ;
+		}
+		add_history(rl);
+		split = ft_split(rl, ' ');
+		has_shell_operator(central, split);
+		ft_freesplit(split);
+		free(rl);
+		reset_fds(1);
+	}
+	reset_fds(2);
+}
+
+/**
  * @brief Checks if a command passed through realine
  *  is one of the built_in functions or not.
  * @param central A struct that contains pointers to
@@ -77,15 +111,15 @@ int	main(int ac, char **av, char **env)//
 int	is_built_in(t_central *central, char **split)
 {
 	if (ft_strcmp(split[0], "echo") == 0)
-		return (ft_echo(split, central), 0);
+		return (ft_echo(central, split), 0);
 	else if (ft_strcmp(split[0], "cd") == 0)
-		return (ft_cd(split, central), 0);
+		return (ft_cd(central, split), 0);
 	else if (ft_strcmp(split[0], "pwd") == 0)
 		return (ft_pwd(central), 0);
 	else if (ft_strcmp(split[0], "env") == 0)
-		return (ft_env(split, central), 0);
+		return (ft_env(central, split), 0);
 	else if (ft_strcmp(split[0], "export") == 0)
-		return (ft_export(split, central), 0);
+		return (ft_export(central, split), 0);
 	else if (ft_strcmp(split[0], "exit") == 0)
 		return (ft_exit(central, split[1]), 0);
 	else if (ft_strcmp(split[0], "unset") == 0)
@@ -100,12 +134,10 @@ int	is_built_in(t_central *central, char **split)
  * @param central A struct that contains pointers to
  *  all the neccessary variables and lists.
  */
-void	do_cmd(char **split, t_central *central)
+void	do_cmd(t_central *central, char **split)
 {
 	t_envp	*tmp;
 
-	if (!split || split[0] == NULL)
-		return ;
 	tmp = central->dupenv;
 	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
 		tmp = tmp->next;

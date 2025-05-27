@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/05/09 11:59:03 by gumendes         ###   ########.fr        #
+#    Updated: 2025/05/27 13:30:38 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,8 @@ SRC_CLEANUP	=	$(addprefix clean_up/, free.c)
 SRC_COMMAND	=	$(addprefix commands/, executer.c)
 SRC_ERRORS	=	$(addprefix err_handling/, errors.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
+SRC_PIPES	=	$(addprefix pipes/, pipe.c)
+SRC_REDIR	=	$(addprefix redirections/, input_redir.c output_redir.c redirect.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c list_utils.c utils.c)
 SRC_PARSE	= 	$(addprefix parsing/, parsing.c split.c spacing.c)
@@ -126,7 +128,7 @@ re: fclean all
 # Run the following command to get list of available colors
 # bash -c 'for c in {0..255}; do tput setaf $c; tput setaf $c | cat -v; echo =$c; done'
 #
-B  		= $(shell tput bold)
+B		= $(shell tput bold)
 BLA		= $(shell tput setaf 16)
 RED		= $(shell tput setaf 1)
 GRN		= $(shell tput setaf 46)
@@ -136,8 +138,8 @@ PRP		= $(shell tput setaf 57)
 CYA		= $(shell tput setaf 51)
 WHI		= $(shell tput setaf 15)
 GREY	= $(shell tput setaf 8)
-ORAN 	= $(shell tput setaf 202)
+ORAN	= $(shell tput setaf 202)
 YEL		= $(shell tput setaf 226)
-D 		= $(shell tput sgr0)
-BEL 	= $(shell tput bel)
-CLR 	= $(shell tput el 1)
+D		= $(shell tput sgr0)
+BEL		= $(shell tput bel)
+CLR		= $(shell tput el 1)
