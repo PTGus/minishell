@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 13:35:30 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:26:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	set_old_pwd(t_envp **dupenv);
 void	set_home(t_envp **dupenv);
 
 // echo //
-void	ft_echo(char **split, t_central *central);
+void	ft_echo(t_central *central, char **split);
 void	echo_n(char **split);
 
 // env //

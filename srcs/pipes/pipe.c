@@ -6,13 +6,13 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 13:35:14 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:26:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* char	**segment_between_pipes(char **tok, int segment_idx)
+char	**segment_between_pipes(char **tok, int segment_idx)
 {
 	int		i;
 	int		j;
@@ -48,7 +48,7 @@ void	execute_pipes(t_central *central, char **split,\
 	set_pipe_fds(pipe_fd, pipe_amm, curr_index);
 	do_cmd(central, segment_between_pipes(split, curr_index));
 	exit (central->exit_val);
-} */
+}
 
 void	piper(t_central *central, char **split, int cmd_count)
 {

@@ -6,44 +6,16 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 11:23:20 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/26 14:04:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	special_revalue(t_envp **dupenv, char **split)
-{
-	char	**var;
-	t_envp	*new;
-
-	new = *dupenv;
-	var = ft_split(split[1], '=');
-	while (new)
-	{
-		if (ft_strcmp(new->var, var[0]) == 0)
-		{
-			if (new->value != NULL)
-			{
-				free(new->value);
-				new->value = NULL;
-			}
-			new->has_equal = TRUE;
-			ft_freesplit(var);
-			return (1);
-		}
-		new = new->next;
-	}
-	ft_freesplit(var);
-	return (0);
-}
-
 int	is_special_exportion(t_central *central, char **split)
 {
 	int	i;
 
-	if (special_revalue(&central->dupenv, split) == 1)
-		return (0);
 	i = 0;
 	while (split[1][i])
 	{
@@ -78,6 +50,7 @@ void	hidden_export(t_central *central, char **split, int has_equal)
 		new->visible_env = FALSE;
 		new->has_equal = has_equal;
 		insert_before_last(&central->dupenv, new);
+		printf("%s\n", new->var);
 	}
 }
 
