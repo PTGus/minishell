@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:28:45 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:10:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ int	should_revalue(t_envp **dupenv, char**split)
 	var = ft_split(split[1], '=');
 	while (new)
 	{
-		if ((ft_strcmp(new->var, var[0]) == 0) && (new->has_equal == TRUE))
+		if (ft_strcmp(new->var, var[0]) == 0)
 		{
 			free(new->value);
 			new->value = NULL;
 			if (var[1] == NULL)
 				return (1);
 			new->value = ft_strdup(var[1]);
+			new->has_equal = TRUE;
 			ft_freesplit(var);
 			return (1);
 		}
