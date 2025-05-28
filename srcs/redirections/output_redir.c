@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 16:21:00 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:10:48 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	set_output(char *to_set)
 
 	if (access(to_set, F_OK) == 0)
 	{
-		if (access(to_set, W_OK) == 1)
+		if (access(to_set, W_OK) != 0)
 		{
-			printf("bash: %s: Permission denied\n", to_set);
+			no_perms(to_set);
 			return (1);
 		}
 		else

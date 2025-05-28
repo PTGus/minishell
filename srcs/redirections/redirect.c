@@ -6,27 +6,25 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 17:17:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:38:59 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	has_to_redirect(char **split)
+int	has_to_redirect(t_central *central, char **split)
 {
-	static int	i;
+	int	i;
 
+	i = 0;
 	while (split[i])
 	{
 		if (ft_strcmp(split[i], "|") == 0)
-		{
-			i++;
 			break ;
-		}
-		if (ft_strcmp(split[i], "<") == 0 | ft_strcmp(split[i], "<<") == 0
-			| ft_strcmp(split[i], ">") == 0 | ft_strcmp(split[i], ">>") == 0)
+		if (ft_strcmp(split[i], "<") == 0 || ft_strcmp(split[i], "<<") == 0
+			|| ft_strcmp(split[i], ">") == 0 || ft_strcmp(split[i], ">>") == 0)
 		{
-			set_redirections(split);
+			set_redirections(central, split);
 			return (0);
 		}
 		i++;
@@ -34,9 +32,10 @@ int	has_to_redirect(char **split)
 	return (1);
 }
 
-int	set_redirections(char **split)
+int	set_redirections(t_central *central, char **split)
 {
 	static int	i;
+	int			j;
 
 	while (split[i])
 	{
@@ -48,11 +47,14 @@ int	set_redirections(char **split)
 		if (ft_strcmp(split[i], "<") == 0 | ft_strcmp(split[i], "<<") == 0
 			| ft_strcmp(split[i], ">") == 0 | ft_strcmp(split[i], ">>") == 0)
 		{
-			if (do_redirection(split, i) == 1)
+			j = do_redirection(split, i);
+			if (j == 2)
 			{
-				printf("Invalid redirection\n");
+				not_dir(split[i + 1]);
+				central->exit_val = 1;
 				return (1);
 			}
+			i++;
 		}
 		i++;
 	}
@@ -67,7 +69,7 @@ int	do_redirection(char **split, int index)
 		return (set_output(split[index + 1]));
 	// else if (ft_strcmp(split[index], "<<") == 0)
 	// 	return (heredoc(split[index + 1]));
-	// else if (ft_strcmp(split[index], ">>") == 0)
-	// 	return (set_output(split[index + 1]));
+	else if (ft_strcmp(split[index], ">>") == 0)
+		return (append_redir(split[index + 1]));
 	return (1);
 }
