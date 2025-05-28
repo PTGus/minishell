@@ -6,11 +6,18 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:14:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:25:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	no_perms(char *str)
+{
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": Permission denied\n", 2);
+}
 
 /**
  * @brief A error message for when a command is not found.

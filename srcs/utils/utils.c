@@ -6,18 +6,54 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:41:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:32:26 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	**strip_redirs(char **tok)
+{
+	int		i;
+	int		j;
+	int		count;
+	char	**out;
+
+	i = 0;
+	while (tok[i])
+		i++;
+	count = i;
+	out = ft_calloc(count + 1, sizeof(char *));
+	if (!out)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (tok[i])
+	{
+		if (!ft_strcmp(tok[i], "<") || !ft_strcmp(tok[i], ">")
+			|| !ft_strcmp(tok[i], ">>") || !ft_strcmp(tok[i], "<<"))
+		{
+			if (tok[i + 1])     /* skip operator + filename (if present) */
+				i += 2;
+			else
+				i += 1;         /* malformed: operator at end */
+		}
+		else
+			out[j++] = ft_strdup(tok[i++]);
+	}
+	out[j] = NULL;
+	return (out);
+}
 
 void	has_shell_operator(t_central *central, char **split)
 {
 	if (to_pipe(central, split) == 0)
 		return ;
 	else
-		do_cmd(central, split);
+	{
+		has_to_redirect(central, split);
+		do_cmd(central, strip_redirs(split));
+	}
 }
 
 /**

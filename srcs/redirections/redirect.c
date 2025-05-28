@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/28 14:38:59 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:33:56 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	has_to_redirect(t_central *central, char **split)
 
 int	set_redirections(t_central *central, char **split)
 {
-	static int	i;
-	int			j;
+	int			i;
 
+	i = 0;
 	while (split[i])
 	{
 		if (ft_strcmp(split[i], "|") == 0)
@@ -47,8 +47,7 @@ int	set_redirections(t_central *central, char **split)
 		if (ft_strcmp(split[i], "<") == 0 | ft_strcmp(split[i], "<<") == 0
 			| ft_strcmp(split[i], ">") == 0 | ft_strcmp(split[i], ">>") == 0)
 		{
-			j = do_redirection(split, i);
-			if (j == 2)
+			if (do_redirection(split, i) == 2)
 			{
 				not_dir(split[i + 1]);
 				central->exit_val = 1;

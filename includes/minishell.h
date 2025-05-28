@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 17:18:58 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/28 15:27:26 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ char	*pather(t_envp *path, char *cmd);
 // ERR_HANDLING //
 
 // errors //
+void	no_perms(char *str);
 void	comm_not_foud(char *str);
 void	not_dir(char *str);
 
@@ -160,7 +161,8 @@ void	piper(t_central *central, char **split, int cmd_count);
 
 // REDIRECTIONS //
 
-// heredoc //
+// append_redir //
+int	append_redir(char *to_set);
 
 // input_redir //
 int		set_input(char *to_set);
@@ -169,8 +171,8 @@ int		set_input(char *to_set);
 int		set_output(char *to_set);
 
 // redirect //
-int		has_to_redirect(char **split);
-int		set_redirections(char **split);
+int		has_to_redirect(t_central *central, char **split);
+int		set_redirections(t_central *central, char **split);
 int		do_redirection(char **split, int index);
 
 //--------------------------------------------------------------//
