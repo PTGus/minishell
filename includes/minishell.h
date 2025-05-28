@@ -34,8 +34,13 @@
 # define ARGUMENT	0
 # define REDIR_IN	1
 # define REDIR_OUT	2
-# define HERE_DOC	3
-# define APPEND_OUT	4
+# define APPEND_OUT	3
+# define HERE_DOC	4
+# define HERE_DOC_Q	5
+
+# define UNQUOTED	0
+# define SINGLE_Q	1
+# define DOUBLE_Q	2
 
 typedef struct s_input
 {
