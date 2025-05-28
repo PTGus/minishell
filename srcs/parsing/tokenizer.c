@@ -88,10 +88,10 @@ void	ft_assign_token(t_input *node)
 		node->token = REDIR_IN;
 	else if (ft_strcmp(">", node->value) == 0)
 		node->token = REDIR_OUT;
-	else if (ft_strcmp("<<", node->value) == 0)
-		node->token = HERE_DOC;
 	else if (ft_strcmp(">>", node->value) == 0)
 		node->token = APPEND_OUT;
+	else if (ft_strcmp("<<", node->value) == 0)
+		node->token = HERE_DOC;
 	else
 		node->token = ARGUMENT;
 }
