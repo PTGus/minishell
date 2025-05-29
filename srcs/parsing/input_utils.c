@@ -59,6 +59,7 @@ void	ft_input_add_back(t_input **lst, t_input *new_node) //LACKING PREV
 		return ;
 	}
 	last->next = new_node;
+	new_node->prev = last;
 }
 
 /** @brief Gets the number of elements in a list
