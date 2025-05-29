@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/28 15:33:56 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:28:21 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	has_to_redirect(t_central *central, char **split)
 	i = 0;
 	while (split[i])
 	{
-		if (ft_strcmp(split[i], "|") == 0)
-			break ;
 		if (ft_strcmp(split[i], "<") == 0 || ft_strcmp(split[i], "<<") == 0
 			|| ft_strcmp(split[i], ">") == 0 || ft_strcmp(split[i], ">>") == 0)
 		{
@@ -38,25 +36,19 @@ int	set_redirections(t_central *central, char **split)
 
 	i = 0;
 	while (split[i])
-	{
-		if (ft_strcmp(split[i], "|") == 0)
-		{
-			i++;
-			break ;
-		}
-		if (ft_strcmp(split[i], "<") == 0 | ft_strcmp(split[i], "<<") == 0
-			| ft_strcmp(split[i], ">") == 0 | ft_strcmp(split[i], ">>") == 0)
-		{
-			if (do_redirection(split, i) == 2)
+    {
+        if (!ft_strcmp(split[i], "<")  || !ft_strcmp(split[i], "<<") ||
+            !ft_strcmp(split[i], ">")  || !ft_strcmp(split[i], ">>"))
+        {
+            if (do_redirection(split, i) == 2)
 			{
-				not_dir(split[i + 1]);
 				central->exit_val = 1;
-				return (1);
+                return (1);
 			}
-			i++;
-		}
-		i++;
-	}
+            i++;
+        }
+        i++;
+    }
 	return (0);
 }
 

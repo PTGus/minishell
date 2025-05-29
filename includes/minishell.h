@@ -6,12 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/28 15:27:26 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:57:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+extern int g_signal;
 
 # include <readline/readline.h>
 # include <readline/history.h>

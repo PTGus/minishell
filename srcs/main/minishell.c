@@ -6,11 +6,13 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/28 15:30:20 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:53:15 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	g_signal = 0;
 
 void	rl_loop(t_central *central);
 
@@ -60,6 +62,11 @@ void	rl_loop(t_central *central)
 		{
 			free(rl);
 			continue ;
+		}
+		if (g_signal == 130)
+		{
+			central->exit_val = g_signal;
+			g_signal = 0;
 		}
 		add_history(rl);
 		split = ft_split(rl, ' ');

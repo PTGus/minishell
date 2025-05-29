@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:54 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 10:35:52 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:56:02 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	ctrl_c(int sig)
 {
 	(void)sig;
+	g_signal = 130;
 	rl_replace_line("", 0);
-	ft_putstr_fd(" \n", 1);
+	printf("\n");
 	rl_on_new_line();
 	rl_redisplay();
 }
