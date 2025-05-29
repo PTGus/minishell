@@ -12,6 +12,7 @@
 
 #include "../../includes/minishell.h"
 
+//TO-DO make print utils file to free space for 1 function, rewrite assign list
 void	ft_print_list_array(t_input **array)
 {
 	int		i;
@@ -41,9 +42,10 @@ int	ft_assign_list(t_central *central, int i, int l)
 	j = -1;
 	k = 0;
 	index = 0;
-	while (central->pipe_matrix[i][++j])
+	while (central->pipe_matrix[i] && central->pipe_matrix[i][++j]) //am i trying to access one address after max len? is it \0?
 	{
-		if ((central->pipe_matrix[i][j + 1] == ' '
+		printf("pm(i) %s @ %i, pm(ij) %c @ %i\n", central->pipe_matrix[i], i, central->pipe_matrix[i][j], j);
+		if ((central->pipe_matrix[i][j + 1] && central->pipe_matrix[i][j + 1] == ' '
 			&& ft_is_quoted(central->pipe_matrix[i], j + 1) != 0)
 			|| central->pipe_matrix[i][j + 1] == '\0')
 		{
@@ -52,8 +54,7 @@ int	ft_assign_list(t_central *central, int i, int l)
 			if (!str || !current)
 				return (ft_free_list_err(central, str, current), 1);
 			ft_input_add_back(&central->cmd[l], current);
-			k = j + 2;
-			j++;
+			k = 2 + j++;
 		}
 	}
 	return (0);
@@ -69,10 +70,13 @@ int	ft_make_list(t_central *central)
 		return (1);
 	i = -1;
 	l = 0;
+	while (l < central->matrix_len)
+		central->cmd[l++] = NULL;
+	l = 0;
 	while (central->pipe_matrix && central->pipe_matrix[++i])
 	{
-		ft_assign_list(central, i, l);
-		l++;
+		if (ft_assign_list(central, i, l++) != 0)
+			return (1);
 	}
 	central->cmd[l] = NULL;
 	ft_print_list_array(central->cmd);
