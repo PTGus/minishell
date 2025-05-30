@@ -91,19 +91,3 @@ char	**ft_handle_split(char *prompt, char **split)
 	}
 	return (split);
 }
-
-/**
- * @brief Prints an array of strings for debugging
- * @param str_arr Array of strings to print
- */
-void	ft_print_arr(char **str_arr)
-{
-	int	i;
-
-	i = 0;
-	while (str_arr && str_arr[i])
-	{
-		printf("%d: '%s'\n", i, str_arr[i]);
-		i++;
-	}
-}
