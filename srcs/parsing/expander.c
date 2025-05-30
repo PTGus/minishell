@@ -11,26 +11,29 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
-int ft_get_expand_end(char *str, int i, int quote_type)
+
+int ft_get_expand_end(char *str, int j) //TO_DO -> continue first flag logic
 {
-	int j;
+	int first_flag;
+	int quote_flag;
 
-	j = 0;
-	while (str[i + j])
+	first_flag = 0;
+	quote_flag = 0;
+	while (str[j])
 	{
-		if (quote_type == UNQUOTED)
-		{
-
-		}
-		else if (quote_type == DOUBLE_Q)
-		{
-
-		}
-		j++;
+		if (str[j] == '\"' && quote_flag == 0 )
+			quote_flag = 1;
+		else if (str[j] == '?' && quote_flag == 0)
+			return (-1);
+		else if (str[j] == '$' && quote_flag == 0)
+			return (-2);
+		else if ((str[j] >= 'a' && str[j] <= 'z') || (str[j] >= 'A' && str[j] <= 'Z')
+			|| (str[j] >= '0' && str[j] <= '9') || str[j] == '_')
+			j++;
 	}
+	return (j);
 }
-*/
+
 //iter through list
 //if a $ is found unquoted use getenv to substitute
 //remeber double quotes vs single
@@ -44,13 +47,7 @@ void ft_check_expand(t_input *node)
 		if (node->value[i] == '$' && node->value[i + 1]
 			&& ft_is_quoted(node->value, i) != 1)
 		{
-			printf("expander at %i!\n", i);
-			/*
-			if (ft_is_quoted(node->value[i + 1]) == UNQUOTED) 
-				ft_get_expand_end(node->value, i + 1, 0);
-			else if (ft_is_quoted(node->value[i + 1]) == DOUBLE_Q)
-				ft_get_expand_end(node->value, i + 1, 2);
-			*/
+			ft_get_expand_end(node->value, i + 1);
 		}
 	}
 }

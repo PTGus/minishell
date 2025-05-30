@@ -70,6 +70,19 @@ int	ft_make_list(t_central *central)
 	return (0);
 }
 
+int	ft_is_delimiter_quoted(t_input *current)
+{
+	int		i;
+	char	*next_val;
+
+	i = -1;
+	next_val = current->next->value;
+	while (next_val && next_val[++i])
+		if (next_val[i] == '\"' || next_val[i] == '\'')
+			return (1);
+	return(0);
+}
+
 void	ft_assign_token(t_input *node)
 {
 	if (node->token != -1 || node->value == NULL)
@@ -81,7 +94,12 @@ void	ft_assign_token(t_input *node)
 	else if (ft_strcmp(">>", node->value) == 0)
 		node->token = APPEND_OUT;
 	else if (ft_strcmp("<<", node->value) == 0)
-		node->token = HERE_DOC;
+	{
+		if (ft_is_delimiter_quoted(node) == 0)
+			node->token = HERE_DOC;
+		else
+			node->token = HERE_DOC_Q;
+	}
 	else
 		node->token = ARGUMENT;
 }
