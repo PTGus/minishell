@@ -221,7 +221,6 @@ int		ft_is_quoted(char *prompt, int end_pos);
 char	**ft_split_pipes(char *prompt, t_central *central);
 int		ft_pipe_count(char *prompt);
 char	**ft_handle_split(char *prompt, char **split);
-void	ft_print_arr(char **str_arr);
 
 // spacing //
 int		ft_remove_extra_spaces(t_central *central);
@@ -246,7 +245,6 @@ void	ft_input_iter(t_input *lst, void (*f)(void *));
 // tokenizer //
 int		ft_make_list(t_central *central);
 int		ft_assign_list(t_central *central, int i, int l);
-void	ft_print_list_array(t_input **array);
 int		ft_tokenizer(t_central *central);
 
 // frees //
@@ -255,5 +253,9 @@ void	ft_free_list_err(t_central *central, char *str, t_input *current);
 
 // expander //
 int		ft_expander(t_central *central);
+
+// print_utils //
+void	ft_print_arr(char **str_arr);
+void	ft_print_list_array(t_input **array);
 
 #endif
