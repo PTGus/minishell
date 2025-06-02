@@ -55,6 +55,7 @@ int	ft_parse(char *prompt, t_central *central)
 	ft_print_arr(central->pipe_matrix);
 	printf("\n");
 	ft_tokenizer(central);
+	ft_expander(central);
 	printf("\nEOP\n");
 	return (0);
 }

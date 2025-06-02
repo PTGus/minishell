@@ -59,7 +59,7 @@ SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c list_utils.c utils.c)
 SRC_PARSE	= 	$(addprefix parsing/, parsing.c quotes.c split.c spacing.c redirects.c \
-				tokenizer.c input_utils.c frees.c print_utils.c)
+				tokenizer.c input_utils.c frees.c print_utils.c expander.c)
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_ERRORS) \
 				$(SRC_MAIN) $(SRC_SIGNALS) $(SRC_UTILS) $(SRC_PARSE))
