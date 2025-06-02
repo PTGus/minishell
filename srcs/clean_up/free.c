@@ -6,11 +6,19 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:47:43 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:28:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	clean_doc(char *rl_doc)
+{
+	if (!rl_doc)
+		return ;
+	if (rl_doc != NULL)
+		free(rl_doc);
+}
 
 /**
  * @brief Calls all the clean up functions to free all the allocated memory.

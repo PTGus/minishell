@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/29 16:53:15 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:02:21 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ int	main(int ac, char **av, char **env)
 		central = ft_calloc(1, sizeof(t_central));
 		duplicate_env(dupenv, env);
 		init_central(central, dupenv);
+		reset_fds(0);
 		handle_signals();
 		rl_loop(central);
+		reset_fds(2);
 		clean_all(central);
 		return (0);
 	}
@@ -47,15 +49,12 @@ int	main(int ac, char **av, char **env)
  */
 void	rl_loop(t_central *central)
 {
-	const char	*prompt;
 	char		*rl;
 	char		**split;
 
-	prompt = "minishell$ ";
-	reset_fds(0);
 	while (1)
 	{
-		rl = readline(prompt);
+		rl = readline("minishell$ ");
 		if (rl == NULL)
 			ctrl_d(central);
 		if (rl[0] == '\0')
@@ -75,7 +74,6 @@ void	rl_loop(t_central *central)
 		free(rl);
 		reset_fds(1);
 	}
-	reset_fds(2);
 }
 
 /**

@@ -6,12 +6,13 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/28 15:32:26 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:42:42 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// temporary function to be deleted used only in testing
 char	**strip_redirs(char **tok)
 {
 	int		i;
@@ -47,13 +48,17 @@ char	**strip_redirs(char **tok)
 
 void	has_shell_operator(t_central *central, char **split)
 {
+	char	**tmp;
 	if (to_pipe(central, split) == 0)
 		return ;
 	else
 	{
+		tmp = strip_redirs(split);
 		has_to_redirect(central, split);
-		do_cmd(central, strip_redirs(split));
+		do_cmd(central, tmp);
+		ft_freesplit(tmp);
 	}
+	delete_doc();
 }
 
 /**

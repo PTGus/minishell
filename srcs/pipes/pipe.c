@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/29 16:18:22 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:36:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,6 @@ void	piper(t_central *central, char **split, int cmd_count)
 		waitpid(pid, &status, 0);
 	}
 	close_all_pipes(pipe_fd, cmd_count - 1);
-	i = -1;
-	// while (++i < cmd_count)
-	// 	waitpid(-1, &status, 0);
 	central->exit_val = status;
 	free(pipe_fd);
 }

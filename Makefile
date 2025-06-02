@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/05/28 15:28:04 by gumendes         ###   ########.fr        #
+#    Updated: 2025/06/02 13:47:31 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ get_libft:
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(LEAK) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
 	@echo "$(GRN)[PROJECT BUILT]$(END)"
 
 # Rule to create object files in the .build folder

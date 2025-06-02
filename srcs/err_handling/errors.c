@@ -6,11 +6,19 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/28 15:25:37 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/02 13:56:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	bad_doc(char *str)
+{
+	ft_putstr_fd("bash: warning: here-document ", 2);
+	ft_putstr_fd("at line 1 delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("')\n", 2);
+}
 
 void	no_perms(char *str)
 {

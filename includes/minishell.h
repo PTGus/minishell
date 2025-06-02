@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/29 16:57:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/02 15:27:28 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,11 @@ void	ft_unset(t_central *central, char *to_unset);
 // CLEAN_UP //
 
 // free //
+void	clean_doc(char *rl_doc);
 void	clean_all(t_central *central);
 void	ft_envfreeone(t_envp *dupenv);
 void	free_env(t_envp **dupenv);
 void	ft_freesplit(char **split);
-void	free_int_arr(int (*pipe_fd)[2], int elems);
 
 //--------------------------------------------------------------//
 
@@ -136,6 +136,7 @@ char	*pather(t_envp *path, char *cmd);
 // ERR_HANDLING //
 
 // errors //
+void	bad_doc(char *str);
 void	no_perms(char *str);
 void	comm_not_foud(char *str);
 void	not_dir(char *str);
