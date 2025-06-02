@@ -34,11 +34,18 @@ int ft_get_expand_end(char *str, int j, int qt) //TO_DO -> $ ONLY prints in "" i
 	return (printf("return end %i for %c\n", j - 1, str[j - 1]), j - 1);
 }
 
-/*int	ft_execute_expand(char *str, int i, int j)
+int	ft_execute_expand(char *str, int i, int j)
 {
-	char *exp;
-	getenv()
-}*/
+	char *temp;
+	char *expand;
+
+	temp = ft_substr(str, i + 1, j - i + 1);
+	if (!temp)
+		return (1);
+	expand = getenv(temp);
+	printf("expand %s\nresult %s", temp, expand);
+	return (0);
+}
 
 //iter through list
 //if a $ is found unquoted use getenv to substitute
@@ -58,11 +65,12 @@ void ft_check_expand(t_input *node)
 		{
 			printf("found $-> %s @[%i]\n", node->value, i);
 			j = ft_get_expand_end(node->value, i + 1, ft_is_quoted(node->value, i));
-			//if (ft_execute_expand(node->value, i, j) == 0)
-	//			return ;
-			printf("j is %i\n", j);
-			i = j + 1;
-			printf("i becomes %i\n", i);
+			if (ft_execute_expand(node->value, i, j) == 0)
+				return ;
+			//NEED TO DO i = 0 after expand
+			//printf("j is %i\n", j);
+		//	i = j + 1;
+		//	printf("i becomes %i\n", i);
 		}
 		else 
 			i++;
