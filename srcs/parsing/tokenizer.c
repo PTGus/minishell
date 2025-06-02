@@ -26,13 +26,10 @@ int	ft_assign_list(t_central *central, int i, int l)
 	index = 0;
 	while (central->pipe_matrix[i] && central->pipe_matrix[i][j]) //am i trying to access one address after max len? is it \0?
 	{
-		printf("pm(i) %s @ %i, pm(ij) %c @ %i\n", central->pipe_matrix[i], i, central->pipe_matrix[i][j], j);
 		if ((central->pipe_matrix[i][j + 1] && central->pipe_matrix[i][j + 1] == ' '
 			&& ft_is_quoted(central->pipe_matrix[i], j + 1) == 0)
 			|| central->pipe_matrix[i][j + 1] == '\0')
 		{
-			if (central->pipe_matrix[i][j + 1] == ' ')
-				printf("space\n");
 			str = ft_substr(central->pipe_matrix[i], k, (j - k + 1));
 			current = ft_input_new(str, index++);
 			if (!str || !current)
@@ -65,7 +62,6 @@ int	ft_make_list(t_central *central)
 			return (1);
 	}
 	central->cmd[l] = NULL;
-	ft_print_list_array(central->cmd);
 	ft_free_split(central->pipe_matrix);
 	return (0);
 }
@@ -122,6 +118,6 @@ int	ft_tokenizer(t_central *central)
 		}
 	}
 	ft_print_list_array(central->cmd);
-	ft_free_list_err(central, NULL, NULL);
+	//ft_free_list_err(central, NULL, NULL);
 	return (0);
 }

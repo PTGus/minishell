@@ -12,27 +12,33 @@
 
 #include "../../includes/minishell.h"
 
-int ft_get_expand_end(char *str, int j) //TO_DO -> continue first flag logic
+int ft_get_expand_end(char *str, int j, int qt) //TO_DO -> $ ONLY prints in "" if it's the only element, otherwise expands to valid or nothing
 {
-	int first_flag;
-	int quote_flag;
+	int first;
 
-	first_flag = 0;
-	quote_flag = 0;
+	(void)qt;//DEL?
+	first = 1;
 	while (str[j])
 	{
-		if (str[j] == '\"' && quote_flag == 0 )
-			quote_flag = 1;
-		else if (str[j] == '?' && quote_flag == 0)
-			return (-1);
-		else if (str[j] == '$' && quote_flag == 0)
-			return (-2);
-		else if ((str[j] >= 'a' && str[j] <= 'z') || (str[j] >= 'A' && str[j] <= 'Z')
-			|| (str[j] >= '0' && str[j] <= '9') || str[j] == '_')
-			j++;
+		if ((str[j] == '?' || str[j] == '$') && first == 1)
+			return (printf("return spec %i for %c\n", j, str[j]), j);
+		else if (ft_isdigit(str[j]) == 1 && first == 1)
+			return (printf("return num %i for %c\n", j, str[j]), j);
+		else if (ft_isalpha(str[j]) == 1 || str[j] == '_'
+			|| (ft_isdigit(str[j]) == 1 && first == 0))
+			first = 0;
+		else
+			return (printf("return misc %i for %c\n", j - 1, str[j - 1]), j - 1);
+		j++;
 	}
-	return (j);
+	return (printf("return end %i for %c\n", j - 1, str[j - 1]), j - 1);
 }
+
+/*int	ft_execute_expand(char *str, int i, int j)
+{
+	char *exp;
+	getenv()
+}*/
 
 //iter through list
 //if a $ is found unquoted use getenv to substitute
@@ -40,15 +46,26 @@ int ft_get_expand_end(char *str, int j) //TO_DO -> continue first flag logic
 void ft_check_expand(t_input *node)
 {
 	int i;
+	int j;
 
-	i = -1;
-	while (node->value[++i])
+	i = 0;
+	while (node->value[i])
 	{
+		j = 0;
+		printf("i is %i\n", i);
 		if (node->value[i] == '$' && node->value[i + 1]
 			&& ft_is_quoted(node->value, i) != 1)
 		{
-			ft_get_expand_end(node->value, i + 1);
+			printf("found $-> %s @[%i]\n", node->value, i);
+			j = ft_get_expand_end(node->value, i + 1, ft_is_quoted(node->value, i));
+			//if (ft_execute_expand(node->value, i, j) == 0)
+	//			return ;
+			printf("j is %i\n", j);
+			i = j + 1;
+			printf("i becomes %i\n", i);
 		}
+		else 
+			i++;
 	}
 }
 
@@ -65,8 +82,8 @@ int	ft_expander(t_central *central)
 		while (current)
 		{
 			next = current->next;
-			if (next->token == 0)
-				ft_check_expand(next);
+			if (current && current->token == 0)
+				ft_check_expand(current);
 			current = next;
 		}
 
