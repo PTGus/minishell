@@ -12,11 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-int ft_get_expand_end(char *str, int j, int qt) //TO_DO -> $ ONLY prints in "" if it's the only element, otherwise expands to valid or nothing
+int ft_get_expand_end(char *str, int j) //TO_DO -> $ ONLY prints in "" if it's the only element, otherwise expands to valid or nothing
 {
 	int first;
 
-	(void)qt;//DEL?
 	first = 1;
 	while (str[j])
 	{
@@ -34,15 +33,51 @@ int ft_get_expand_end(char *str, int j, int qt) //TO_DO -> $ ONLY prints in "" i
 	return (printf("return end %i for %c\n", j - 1, str[j - 1]), j - 1);
 }
 
-int	ft_execute_expand(char *str, int i, int j)
+void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 {
-	char *temp;
-	char *expand;
+	int	i;
+	int	j;
+	int k;
 
-	temp = ft_substr(str, i + 1, j - i + 1);
+	i = 0;
+	j = 0;
+	k = 0;
+	while (i < vals[2])
+	{
+		if (i <= vals[0])
+			new_str[i] = str[j++];
+		else if (i > vals[0] && i <= vals[1])
+		{
+			new_str[i] = expand[k++];
+			if (i == vals[1])
+				j = j + (vals[1] - vals[0] + 1) + 1;			
+		}
+		else if (i > vals[1])
+			new_str[i] = str[j++];
+		printf("%i:'%s'\n", i, new_str);
+		i++;
+	}
+	printf("'%s' expanded with '%s':\n'%s'\n", str, expand, new_str);
+}
+
+int	ft_execute_expand(char *str, int start, int end)
+{
+	char	*temp;
+	char	*expand;
+	char	*new_str;
+	int		vals[3];
+
+	temp = ft_substr(str, start + 1, end - start + 1);
 	if (!temp)
 		return (1);
 	expand = getenv(temp);
+	vals[0] = start;
+	vals[1] = end;
+	vals[2] = ft_strlen(str) - (ft_strlen(temp) + 1) + ft_strlen(expand);
+	new_str = ft_calloc((vals[2] + 1), sizeof(char));
+	if (!new_str)
+		return (1);
+	ft_assign_expand(str, vals, new_str, expand);
 	printf("expand %s\nresult %s", temp, expand);
 	return (0);
 }
@@ -64,7 +99,7 @@ void ft_check_expand(t_input *node)
 			&& ft_is_quoted(node->value, i) != 1)
 		{
 			printf("found $-> %s @[%i]\n", node->value, i);
-			j = ft_get_expand_end(node->value, i + 1, ft_is_quoted(node->value, i));
+			j = ft_get_expand_end(node->value, i + 1);
 			if (ft_execute_expand(node->value, i, j) == 0)
 				return ;
 			//NEED TO DO i = 0 after expand
