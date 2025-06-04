@@ -48,6 +48,8 @@ void	ft_free_list_err(t_central *central, char *str, t_input *current)
 		free(str);
 	if (current)
 		free(current);
+	str = NULL;
+	current = NULL;
 	while (central->cmd[++i])
 	{
 		temp = central->cmd[i];
@@ -61,4 +63,19 @@ void	ft_free_list_err(t_central *central, char *str, t_input *current)
 	}
 	if (central->cmd)
 		free(central->cmd);
+	central->cmd = NULL;
+}
+
+void	ft_free_strings(char *temp, char *expand, int null_exp)
+{
+	if (temp)
+	{
+		free(temp);
+		temp = NULL;
+	}
+	if (null_exp == 1)
+	{
+		free(expand);
+		expand = NULL;
+	}
 }
