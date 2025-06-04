@@ -38,21 +38,27 @@ void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 	int	i;
 	int	j;
 	int k;
+	int exp_end;
 
 	i = 0;
 	j = 0;
 	k = 0;
+	exp_end = vals[0] + ft_strlen(expand);
+	printf("exp_strlen %zu\n", ft_strlen(expand));
+	printf("%s @%i is %c\n", str, vals[0], str[vals[0]]);
+	printf("i%i j%i k%i expend%i start%i end%i old_len%i\n", i, j, k, exp_end, vals[0], vals[1], vals[2]);
 	while (i < vals[2])
 	{
-		if (i <= vals[0])
+		if (i < vals[0]) // was <= before
 			new_str[i] = str[j++];
-		else if (i > vals[0] && i <= vals[1])
+		else if (i >= vals[0] && i <= exp_end)
 		{
-			new_str[i] = expand[k++];
-			if (i == vals[1])
-				j = j + (vals[1] - vals[0] + 1) + 1;			
+			if (expand[0] != '\0')
+				new_str[i] = expand[k++];
+			if (i == exp_end)
+				j = vals[1] + 1;
 		}
-		else if (i > vals[1])
+		else if (i > exp_end)
 			new_str[i] = str[j++];
 		printf("%i:'%s'\n", i, new_str);
 		i++;
@@ -66,11 +72,17 @@ int	ft_execute_expand(char *str, int start, int end)
 	char	*expand;
 	char	*new_str;
 	int		vals[3];
+	int		null_exp;
 
+	null_exp = 1;
 	temp = ft_substr(str, start + 1, end - start + 1);
 	if (!temp)
 		return (1);
 	expand = getenv(temp);
+	if (expand)
+		null_exp = 0;
+	else
+		expand = ft_strdup("");
 	vals[0] = start;
 	vals[1] = end;
 	vals[2] = ft_strlen(str) - (ft_strlen(temp) + 1) + ft_strlen(expand);
@@ -78,13 +90,15 @@ int	ft_execute_expand(char *str, int start, int end)
 	if (!new_str)
 		return (1);
 	ft_assign_expand(str, vals, new_str, expand);
-	printf("expand %s\nresult %s", temp, expand);
+	//printf("expand %s\nresult %s", temp, expand);
+	ft_free_strings(temp, expand, null_exp);
+	ft_free_strings(new_str, NULL, 0);
 	return (0);
 }
 
 //iter through list
-//if a $ is found unquoted use getenv to substitute
-//remeber double quotes vs single
+//HOW DO QUOTES WORK?
+//HOW DOES IT DEAL WITH MULTI EXPANDS in 1 node
 void ft_check_expand(t_input *node)
 {
 	int i;
@@ -94,7 +108,6 @@ void ft_check_expand(t_input *node)
 	while (node->value[i])
 	{
 		j = 0;
-		printf("i is %i\n", i);
 		if (node->value[i] == '$' && node->value[i + 1]
 			&& ft_is_quoted(node->value, i) != 1)
 		{

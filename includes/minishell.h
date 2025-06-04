@@ -250,6 +250,7 @@ int		ft_tokenizer(t_central *central);
 // frees //
 void	ft_free_split(char **split);
 void	ft_free_list_err(t_central *central, char *str, t_input *current);
+void	ft_free_strings(char *temp, char *expand, int null_exp);
 
 // expander //
 int		ft_expander(t_central *central);
