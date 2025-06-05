@@ -47,11 +47,11 @@ void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 	printf("i%i j%i k%i start%i end%i old_len%i\n", i, j, k, vals[0], vals[1], vals[2]);
 	while (j < vals[0]) 
 		new_str[i++] = str[j++];
-	j = 0;
 	while (expand[k])
 		new_str[i++] = expand[k++];
-	while (j + (vals[1] + 1) <= ((int)ft_strlen(str) - 1)) // A MESS, CHECK OFF BY ONES
-		new_str[i++] = str[vals[1] + 1 + j++];
+	j = vals[1] + 1;
+	while (str[j])
+		new_str[i++] = str[j++];
 	printf("'%s' expanded with '%s':\n'%s'\n", str, expand, new_str);
 }
 
