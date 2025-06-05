@@ -38,31 +38,20 @@ void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 	int	i;
 	int	j;
 	int k;
-	int exp_end;
 
 	i = 0;
 	j = 0;
 	k = 0;
-	exp_end = vals[0] + ft_strlen(expand);
-	printf("exp_strlen %zu\n", ft_strlen(expand));
+	printf("strlen expand: %zu\n", ft_strlen(expand));
 	printf("%s @%i is %c\n", str, vals[0], str[vals[0]]);
-	printf("i%i j%i k%i expend%i start%i end%i old_len%i\n", i, j, k, exp_end, vals[0], vals[1], vals[2]);
-	while (i < vals[2])
-	{
-		if (i < vals[0]) // was <= before
-			new_str[i] = str[j++];
-		else if (i >= vals[0] && i <= exp_end)
-		{
-			if (expand[0] != '\0')
-				new_str[i] = expand[k++];
-			if (i == exp_end)
-				j = vals[1] + 1;
-		}
-		else if (i > exp_end)
-			new_str[i] = str[j++];
-		printf("%i:'%s'\n", i, new_str);
-		i++;
-	}
+	printf("i%i j%i k%i start%i end%i old_len%i\n", i, j, k, vals[0], vals[1], vals[2]);
+	while (j < vals[0]) 
+		new_str[i++] = str[j++];
+	j = 0;
+	while (expand[k])
+		new_str[i++] = expand[k++];
+	while (j + (vals[1] + 1) <= ((int)ft_strlen(str) - 1)) // A MESS, CHECK OFF BY ONES
+		new_str[i++] = str[vals[1] + 1 + j++];
 	printf("'%s' expanded with '%s':\n'%s'\n", str, expand, new_str);
 }
 
@@ -75,17 +64,19 @@ int	ft_execute_expand(char *str, int start, int end)
 	int		null_exp;
 
 	null_exp = 1;
-	temp = ft_substr(str, start + 1, end - start + 1);
+	temp = ft_substr(str, start + 1, end - start);
 	if (!temp)
 		return (1);
 	expand = getenv(temp);
+	printf("str:'%s' op:'%c'@%i ed:'%c'@%i temp:'%s'", str, str[start], start, str[end], end, temp);
+	printf("getenv result:'%s'\n", expand);
 	if (expand)
 		null_exp = 0;
 	else
 		expand = ft_strdup("");
 	vals[0] = start;
 	vals[1] = end;
-	vals[2] = ft_strlen(str) - (ft_strlen(temp) + 1) + ft_strlen(expand);
+	vals[2] = (ft_strlen(temp) - ft_strlen(expand)) + end;
 	new_str = ft_calloc((vals[2] + 1), sizeof(char));
 	if (!new_str)
 		return (1);
