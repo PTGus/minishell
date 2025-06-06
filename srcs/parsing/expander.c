@@ -37,22 +37,21 @@ void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 {
 	int	i;
 	int	j;
-	int k;
 
 	i = 0;
 	j = 0;
-	k = 0;
 	printf("strlen expand: %zu\n", ft_strlen(expand));
 	printf("%s @%i is %c\n", str, vals[0], str[vals[0]]);
-	printf("i%i j%i k%i start%i end%i old_len%i\n", i, j, k, vals[0], vals[1], vals[2]);
+	printf("i%i j%i start%i end%i old_len%i\n", i, j, vals[0], vals[1], vals[2]);
 	while (j < vals[0]) 
 		new_str[i++] = str[j++];
-	while (expand[k])
-		new_str[i++] = expand[k++];
+	j = 0;
+	while (expand[j])
+		new_str[i++] = expand[j++];
 	j = vals[1] + 1;
 	while (str[j])
 		new_str[i++] = str[j++];
-	printf("'%s' expanded with '%s':\n'%s'\n", str, expand, new_str);
+	//printf("FINAL:'%s'", new_str);
 }
 
 int	ft_execute_expand(char *str, int start, int end)
@@ -69,19 +68,17 @@ int	ft_execute_expand(char *str, int start, int end)
 		return (1);
 	expand = getenv(temp);
 	printf("str:'%s' op:'%c'@%i ed:'%c'@%i temp:'%s'", str, str[start], start, str[end], end, temp);
-	printf("getenv result:'%s'\n", expand);
 	if (expand)
 		null_exp = 0;
 	else
 		expand = ft_strdup("");
 	vals[0] = start;
 	vals[1] = end;
-	vals[2] = (ft_strlen(temp) - ft_strlen(expand)) + end;
+	vals[2] = start + ft_strlen(expand) + ft_strlen(str + end + 1);
 	new_str = ft_calloc((vals[2] + 1), sizeof(char));
 	if (!new_str)
 		return (1);
 	ft_assign_expand(str, vals, new_str, expand);
-	//printf("expand %s\nresult %s", temp, expand);
 	ft_free_strings(temp, expand, null_exp);
 	ft_free_strings(new_str, NULL, 0);
 	return (0);
@@ -106,10 +103,7 @@ void ft_check_expand(t_input *node)
 			j = ft_get_expand_end(node->value, i + 1);
 			if (ft_execute_expand(node->value, i, j) == 0)
 				return ;
-			//NEED TO DO i = 0 after expand
-			//printf("j is %i\n", j);
-		//	i = j + 1;
-		//	printf("i becomes %i\n", i);
+			i = 0;
 		}
 		else 
 			i++;
