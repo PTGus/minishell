@@ -35,8 +35,9 @@ int ft_get_expand_end(char *str, int j) //TO_DO -> $ ONLY prints in "" if it's t
 
 void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*temp;
 
 	i = 0;
 	j = 0;
@@ -51,7 +52,10 @@ void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 	j = vals[1] + 1;
 	while (str[j])
 		new_str[i++] = str[j++];
-	//printf("FINAL:'%s'", new_str);
+	temp = str;
+	str = new_str;
+	//free(temp);
+	printf("FINAL:'%s'\n", str);
 }
 
 int	ft_execute_expand(char *str, int start, int end)
@@ -67,7 +71,6 @@ int	ft_execute_expand(char *str, int start, int end)
 	if (!temp)
 		return (1);
 	expand = getenv(temp);
-	printf("str:'%s' op:'%c'@%i ed:'%c'@%i temp:'%s'", str, str[start], start, str[end], end, temp);
 	if (expand)
 		null_exp = 0;
 	else
@@ -80,7 +83,6 @@ int	ft_execute_expand(char *str, int start, int end)
 		return (1);
 	ft_assign_expand(str, vals, new_str, expand);
 	ft_free_strings(temp, expand, null_exp);
-	ft_free_strings(new_str, NULL, 0);
 	return (0);
 }
 
@@ -101,9 +103,11 @@ void ft_check_expand(t_input *node)
 		{
 			printf("found $-> %s @[%i]\n", node->value, i);
 			j = ft_get_expand_end(node->value, i + 1);
-			if (ft_execute_expand(node->value, i, j) == 0)
+			if (ft_execute_expand(node->value, i, j) == 1)
 				return ;
-			i = 0;
+			//i = 0;
+			printf("node val is: '%s'\n",node->value);
+			i++;
 		}
 		else 
 			i++;
@@ -129,5 +133,6 @@ int	ft_expander(t_central *central)
 		}
 
 	}
+	ft_print_list_array(central->cmd);
 	return (0);
 }

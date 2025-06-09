@@ -49,6 +49,7 @@ int	ft_make_list(t_central *central)
 	int		l;
 
 	central->cmd = malloc((central->matrix_len + 1) * sizeof(t_input *));
+	printf("matrix_len %i\n", central->matrix_len);
 	if (!central->cmd)
 		return (1);
 	i = -1;

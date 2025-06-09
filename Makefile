@@ -18,7 +18,7 @@ CC			=	cc
 RM			=	rm -rf
 CFLAGS		=	-Wall -Wextra -Werror -pthread -g
 LDFLAGS		=	-lreadline -lncurses
-#LEAK		=	-fsanitize=leak
+#LEAK		=	-fsanitize=leak,address,undefined
 
 #==============================================================================#
 #                                  PATHS       					               #
