@@ -33,7 +33,7 @@ int ft_get_expand_end(char *str, int j) //TO_DO -> $ ONLY prints in "" if it's t
 	return (printf("return end %i for %c\n", j - 1, str[j - 1]), j - 1);
 }
 
-void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
+void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 {
 	int		i;
 	int		j;
@@ -42,23 +42,23 @@ void	ft_assign_expand(char *str, int *vals, char *new_str, char *expand)
 	i = 0;
 	j = 0;
 	printf("strlen expand: %zu\n", ft_strlen(expand));
-	printf("%s @%i is %c\n", str, vals[0], str[vals[0]]);
+	printf("%s @%i is %c\n", *str, vals[0], (*str)[vals[0]]);
 	printf("i%i j%i start%i end%i old_len%i\n", i, j, vals[0], vals[1], vals[2]);
 	while (j < vals[0]) 
-		new_str[i++] = str[j++];
+		new_str[i++] = (*str)[j++];
 	j = 0;
 	while (expand[j])
 		new_str[i++] = expand[j++];
 	j = vals[1] + 1;
-	while (str[j])
-		new_str[i++] = str[j++];
-	temp = str;
-	str = new_str;
-	//free(temp);
-	printf("FINAL:'%s'\n", str);
+	while ((*str)[j])
+		new_str[i++] = (*str)[j++];
+	temp = *str;
+	*str = new_str;
+	free(temp);
+	printf("FINAL:'%s'\n", *str);
 }
 
-int	ft_execute_expand(char *str, int start, int end)
+int	ft_execute_expand(char **str, int start, int end)
 {
 	char	*temp;
 	char	*expand;
@@ -67,7 +67,7 @@ int	ft_execute_expand(char *str, int start, int end)
 	int		null_exp;
 
 	null_exp = 1;
-	temp = ft_substr(str, start + 1, end - start);
+	temp = ft_substr(*str, start + 1, end - start);
 	if (!temp)
 		return (1);
 	expand = getenv(temp);
@@ -77,7 +77,7 @@ int	ft_execute_expand(char *str, int start, int end)
 		expand = ft_strdup("");
 	vals[0] = start;
 	vals[1] = end;
-	vals[2] = start + ft_strlen(expand) + ft_strlen(str + end + 1);
+	vals[2] = start + ft_strlen(expand) + ft_strlen(*str + end + 1);
 	new_str = ft_calloc((vals[2] + 1), sizeof(char));
 	if (!new_str)
 		return (1);
@@ -103,7 +103,7 @@ void ft_check_expand(t_input *node)
 		{
 			printf("found $-> %s @[%i]\n", node->value, i);
 			j = ft_get_expand_end(node->value, i + 1);
-			if (ft_execute_expand(node->value, i, j) == 1)
+			if (ft_execute_expand(&node->value, i, j) == 1)
 				return ;
 			//i = 0;
 			printf("node val is: '%s'\n",node->value);
