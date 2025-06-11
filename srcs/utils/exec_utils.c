@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:16:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:26:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ char	**get_exec_env(t_envp **dupenv)
 	}
 	vars[i] = NULL;
 	return (vars);
+}
+
+int	is_relative(char *cmd)
+{
+	if (ft_strncmp(cmd, "./", 2) == 0)
+		return (0);
+	return (1);
 }

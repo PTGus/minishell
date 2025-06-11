@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/02 15:28:14 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/04 10:35:42 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	clean_doc(char *rl_doc)
 {
 	if (!rl_doc)
 		return ;
-	if (rl_doc != NULL)
-		free(rl_doc);
+	free(rl_doc);
 }
 
 /**

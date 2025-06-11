@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/02 15:42:42 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:10:57 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,23 @@ char	**strip_redirs(char **tok)
 
 void	has_shell_operator(t_central *central, char **split)
 {
-	char	**tmp;
-	if (to_pipe(central, split) == 0)
-		return ;
-	else
-	{
-		tmp = strip_redirs(split);
-		has_to_redirect(central, split);
-		do_cmd(central, tmp);
-		ft_freesplit(tmp);
-	}
-	delete_doc();
+	int	i;
+	int	pipe_count;
+	// char	**tmp;
+	// if (to_pipe(central, split) == 0)
+	// 	return ;
+	// else
+	// {
+	// 	tmp = strip_redirs(split);
+	// 	do_cmd(central, tmp);
+	// 	ft_freesplit(tmp);
+	// }
+	i = 0;
+	pipe_count = 0;
+	while (split[i])
+		if (ft_strcmp(split[i++], "|") == 0)
+			pipe_count++;
+	piper(central, split, pipe_count + 1);
 }
 
 /**
@@ -76,4 +82,19 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (s1[i] - s2[i]);
+}
+
+void	increase_shlvl(t_envp **dupenv)
+{
+	t_envp	*tmp;
+	int		tmp_val;
+
+	tmp = *dupenv;
+	while (ft_strcmp(tmp->var, "SHLVL") != 0)
+		tmp = tmp->next;
+	tmp_val = ft_atoi(tmp->value);
+	tmp_val++;
+	free(tmp->value);
+	tmp->value = NULL;
+	tmp->value = ft_itoa(tmp_val);
 }

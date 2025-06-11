@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/02 15:27:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:35:03 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,10 @@ void	piper(t_central *central, char **split, int cmd_count);
 // append_redir //
 int	append_redir(char *to_set);
 
+// heredoc //
+int		ft_heredoc(char *delimiter);
+void	redirect_to_doc(int fd);
+
 // input_redir //
 int		set_input(char *to_set);
 
@@ -204,6 +208,7 @@ void	insert_before_last(t_envp **dupenv, t_envp *curr);
 // exec_utils //
 char	*get_line(t_envp *dupenv);
 char	**get_exec_env(t_envp **dupenv);
+int		is_relative(char *cmd);
 
 // export utils //
 int		is_special_exportion(t_central *central, char **split);
@@ -229,6 +234,7 @@ void	reset_fds(int status);
 // utils //
 void	has_shell_operator(t_central *central, char **split);
 int		ft_strcmp(char *s1, char *s2);
+void	increase_shlvl(t_envp **dupenv);
 
 //--------------------------------------------------------------//
 

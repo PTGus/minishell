@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/02 14:02:21 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/04 13:31:46 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char **av, char **env)
 		dupenv = ft_calloc(1, sizeof(t_envp *));
 		central = ft_calloc(1, sizeof(t_central));
 		duplicate_env(dupenv, env);
+		increase_shlvl(dupenv);
 		init_central(central, dupenv);
 		reset_fds(0);
 		handle_signals();

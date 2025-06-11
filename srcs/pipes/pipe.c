@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/02 10:36:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 10:15:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	execute_pipes(t_central *central, char **split, \
 	char	**slice;
 	char	**redir;
 
-	reset_fds(1);
 	redir = segment_full(split, curr_index);
 	slice = segment_between_pipes(split, curr_index);
 	set_pipe_fds(pipe_fd, pipe_amm, curr_index);
@@ -98,21 +97,25 @@ void	execute_pipes(t_central *central, char **split, \
 void	piper(t_central *central, char **split, int cmd_count)
 {
 	int		(*pipe_fd)[2];
-	pid_t	pid;
+	pid_t	*pid;
 	int		status;
 	int		i;
 
 	pipe_fd = malloc(sizeof(int [2]) * (cmd_count - 1));
+	pid = malloc(sizeof(pid_t) * cmd_count);
 	init_pipes(pipe_fd, cmd_count - 1);
 	i = -1;
 	while (++i < cmd_count)
 	{
-		pid = fork();
-		if (pid == 0)
+		pid[i] = fork();
+		if (pid[i] == 0)
 			execute_pipes(central, split, pipe_fd, i, cmd_count - 1);
-		waitpid(pid, &status, 0);
 	}
+	i = -1;
+	while (++i < cmd_count)
+		waitpid(pid[i], &status, 0);
 	close_all_pipes(pipe_fd, cmd_count - 1);
 	central->exit_val = status;
+	free(pid);
 	free(pipe_fd);
 }

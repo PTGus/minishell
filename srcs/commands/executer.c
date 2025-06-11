@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/02 14:02:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/04 14:19:31 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	executer(char *exec, t_central *central, char **split)
 	int		status;
 	pid_t	pid;
 
+	has_to_redirect(central, split);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -68,6 +69,8 @@ void	executer(char *exec, t_central *central, char **split)
 	{
 		envp = get_exec_env(&central->dupenv);
 		execve(exec, split, envp);
+		ft_free_split(envp);
+		exit(0);
 	}
 	else
 	{
@@ -91,6 +94,8 @@ char	*pather(t_envp *path, char *cmd)
 	char	**all_paths;
 	char	*path_part;
 
+	if (is_relative(cmd) == 0)
+		return (ft_strdup(cmd));
 	all_paths = ft_split(path->value, ':');
 	i = -1;
 	while (all_paths[++i])

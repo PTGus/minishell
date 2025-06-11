@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/06/02 13:47:31 by gumendes         ###   ########.fr        #
+#    Updated: 2025/06/04 14:02:59 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ SRC_COMMAND	=	$(addprefix commands/, executer.c)
 SRC_ERRORS	=	$(addprefix err_handling/, errors.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_PIPES	=	$(addprefix pipes/, pipe.c)
-SRC_REDIR	=	$(addprefix redirections/, append_redir.c input_redir.c output_redir.c redirect.c)
+SRC_REDIR	=	$(addprefix redirections/, append_redir.c heredoc.c input_redir.c output_redir.c redirect.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c export_utils.c list_utils.c pipe_utils.c redir_utils.c utils.c)
 SRC_PARSE	= 	$(addprefix parsing/, parsing.c split.c spacing.c)
@@ -84,7 +84,7 @@ get_libft:
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) $(LEAK) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(LDFLAGS)
 	@echo "$(GRN)[PROJECT BUILT]$(END)"
 
 # Rule to create object files in the .build folder
