@@ -45,4 +45,3 @@ void	ft_print_list_array(t_input **array)
 		printf("\n");
 	}
 }
-

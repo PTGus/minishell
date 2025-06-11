@@ -24,10 +24,10 @@ int	ft_assign_list(t_central *central, int i, int l)
 	j = 0;
 	k = 0;
 	index = 0;
-	while (central->pipe_matrix[i] && central->pipe_matrix[i][j]) //am i trying to access one address after max len? is it \0?
+	while (central->pipe_matrix[i] && central->pipe_matrix[i][j])
 	{
-		if ((central->pipe_matrix[i][j + 1] && central->pipe_matrix[i][j + 1] == ' '
-			&& ft_is_quoted(central->pipe_matrix[i], j + 1) == 0)
+		if ((central->pipe_matrix[i][j + 1] && central->pipe_matrix[i][j + 1]
+			== ' ' && ft_is_quoted(central->pipe_matrix[i], j + 1) == 0)
 			|| central->pipe_matrix[i][j + 1] == '\0')
 		{
 			str = ft_substr(central->pipe_matrix[i], k, (j - k + 1));
@@ -77,7 +77,7 @@ int	ft_is_delimiter_quoted(t_input *current)
 	while (next_val && next_val[++i])
 		if (next_val[i] == '\"' || next_val[i] == '\'')
 			return (1);
-	return(0);
+	return (0);
 }
 
 void	ft_assign_token(t_input *node)
@@ -119,6 +119,6 @@ int	ft_tokenizer(t_central *central)
 		}
 	}
 	ft_print_list_array(central->cmd);
-	//ft_free_list_err(central, NULL, NULL);
 	return (0);
 }
+//ft_free_list_err(central, NULL, NULL);

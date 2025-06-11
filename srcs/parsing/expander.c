@@ -11,10 +11,15 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+//TO_DO -> $ ONLY prints in "" if it's the only element, 
+//otherwise expands to valid or nothing
+//ERASE quotes
+//check for expands into expands
+//check if expands work as expected with quotes involved
 
-int ft_get_expand_end(char *str, int j) //TO_DO -> $ ONLY prints in "" if it's the only element, otherwise expands to valid or nothing
+int	ft_get_expand_end(char *str, int j)
 {
-	int first;
+	int	first;
 
 	first = 1;
 	while (str[j])
@@ -27,7 +32,8 @@ int ft_get_expand_end(char *str, int j) //TO_DO -> $ ONLY prints in "" if it's t
 			|| (ft_isdigit(str[j]) == 1 && first == 0))
 			first = 0;
 		else
-			return (printf("return misc %i for %c\n", j - 1, str[j - 1]), j - 1);
+			return (printf("return misc %i for %c\n",
+					j - 1, str[j - 1]), j - 1);
 		j++;
 	}
 	return (printf("return end %i for %c\n", j - 1, str[j - 1]), j - 1);
@@ -41,10 +47,8 @@ void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 
 	i = 0;
 	j = 0;
-	printf("strlen expand: %zu\n", ft_strlen(expand));
 	printf("%s @%i is %c\n", *str, vals[0], (*str)[vals[0]]);
-	printf("i%i j%i start%i end%i old_len%i\n", i, j, vals[0], vals[1], vals[2]);
-	while (j < vals[0]) 
+	while (j < vals[0])
 		new_str[i++] = (*str)[j++];
 	j = 0;
 	while (expand[j])
@@ -86,13 +90,13 @@ int	ft_execute_expand(char **str, int start, int end)
 	return (0);
 }
 
-//iter through list
+//iter through list //HAVE TO CHECK 
 //HOW DO QUOTES WORK?
 //HOW DOES IT DEAL WITH MULTI EXPANDS in 1 node
-void ft_check_expand(t_input *node)
+void	ft_check_expand(t_input *node)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (node->value[i])
@@ -106,10 +110,10 @@ void ft_check_expand(t_input *node)
 			if (ft_execute_expand(&node->value, i, j) == 1)
 				return ;
 			//i = 0;
-			printf("node val is: '%s'\n",node->value);
+			printf("node val is: '%s'\n", node->value);
 			i++;
 		}
-		else 
+		else
 			i++;
 	}
 }
@@ -117,8 +121,8 @@ void ft_check_expand(t_input *node)
 int	ft_expander(t_central *central)
 {
 	int		i;
-	t_input *current;
-	t_input *next;
+	t_input	*current;
+	t_input	*next;
 
 	i = -1;
 	while (central->cmd[++i])
@@ -131,7 +135,6 @@ int	ft_expander(t_central *central)
 				ft_check_expand(current);
 			current = next;
 		}
-
 	}
 	ft_print_list_array(central->cmd);
 	return (0);
