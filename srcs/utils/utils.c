@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 10:10:57 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:41:53 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,22 @@ char	**strip_redirs(char **tok)
 	return (out);
 }
 
+char	**segment_full(char **tok, int segment_idx);
+
 void	has_shell_operator(t_central *central, char **split)
 {
-	int	i;
-	int	pipe_count;
-	// char	**tmp;
-	// if (to_pipe(central, split) == 0)
-	// 	return ;
-	// else
-	// {
-	// 	tmp = strip_redirs(split);
-	// 	do_cmd(central, tmp);
-	// 	ft_freesplit(tmp);
-	// }
-	i = 0;
-	pipe_count = 0;
-	while (split[i])
-		if (ft_strcmp(split[i++], "|") == 0)
-			pipe_count++;
-	piper(central, split, pipe_count + 1);
+	char	**tmp;
+	char	**redir;
+
+	if (to_pipe(central, split) != 0)
+	{
+		tmp = strip_redirs(split);
+		redir = segment_full(split, 0);
+		has_to_redirect(central, redir);
+		do_solo(central, tmp);
+		ft_freesplit(tmp);
+		ft_freesplit(redir);
+	}
 }
 
 /**

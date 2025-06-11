@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:28:45 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:21:02 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	should_revalue(t_envp **dupenv, char**split)
 		new = new->next;
 	}
 	ft_freesplit(var);
-	return (0);
+	exit(0);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/04 13:31:46 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:43:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	rl_loop(t_central *central)
  *  all the neccessary variables and lists.
  * @param split An array of arrays with the prompt received from read line.
  */
-int	is_built_in(t_central *central, char **split)
+int	do_builtin(t_central *central, char **split)
 {
 	if (ft_strcmp(split[0], "echo") == 0)
 		return (ft_echo(central, split), 0);
@@ -123,7 +123,7 @@ void	do_cmd(t_central *central, char **split)
 		central->exit_val = 127;
 		return ;
 	}
-	if (is_built_in(central, split) == 0)
+	if (do_builtin(central, split) == 0)
 		return ;
 	else
 		commander(central, split);

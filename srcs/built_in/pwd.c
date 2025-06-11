@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:50:00 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/07 13:58:43 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:21:02 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
  */
 void	ft_pwd(t_central *central)
 {
-	char	*cwd;
+	t_envp	*tmp;
 
-	cwd = getcwd(NULL, 0);
-	printf("%s\n", cwd);
+	tmp = ft_getenv(&central->dupenv, "PWD");
+	printf("%s\n", tmp->value);
 	central->exit_val = 0;
 }

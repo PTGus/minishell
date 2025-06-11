@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/04 14:19:31 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:54:57 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,12 @@ int	commander(t_central *central, char **split)
 void	executer(char *exec, t_central *central, char **split)
 {
 	char	**envp;
-	int		status;
-	pid_t	pid;
 
-	has_to_redirect(central, split);
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("pid");
-		exit (1);
-	}
-	if (pid == 0)
-	{
-		envp = get_exec_env(&central->dupenv);
-		execve(exec, split, envp);
-		ft_free_split(envp);
-		exit(0);
-	}
-	else
-	{
-		waitpid(-1, &status, 0);
-		central->exit_val = status;
-	}
+	envp = get_exec_env(&central->dupenv);
+	execve(exec, split, envp);
+	clean_all(central);
+	ft_free_split(envp);
+	exit(1);
 }
 
 /**

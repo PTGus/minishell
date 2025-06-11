@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/04 13:26:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:35:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,50 @@ int	is_relative(char *cmd)
 	if (ft_strncmp(cmd, "./", 2) == 0)
 		return (0);
 	return (1);
+}
+
+char	**strip_redirs(char **tok);
+
+void	do_solo(t_central *central, char **split)
+{
+	pid_t	pid;
+	int		status;
+	int		pipe_fd[2];
+
+	if (is_built_in(split[0]) == 0)
+	{
+		do_builtin(central, split);
+		return ;
+	}
+	pipe(pipe_fd);
+	pid = fork();
+	status = 0;
+	if (pid == 0)
+	{
+		has_to_redirect(central, split);
+		do_cmd(central, strip_redirs(split));
+	}
+	else
+		waitpid(-1, &status, 0);
+	central->exit_val = status;
+}
+
+int	is_built_in(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "cd") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (0);
+	else
+		return (1);
 }

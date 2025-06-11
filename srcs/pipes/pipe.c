@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 10:15:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:57:51 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	execute_pipes(t_central *central, char **split, \
 
 	redir = segment_full(split, curr_index);
 	slice = segment_between_pipes(split, curr_index);
-	set_pipe_fds(pipe_fd, pipe_amm, curr_index);
 	has_to_redirect(central, redir);
 	close_unused_pipes(pipe_fd, pipe_amm, curr_index);
+	set_pipe_fds(pipe_fd, pipe_amm, curr_index);
 	do_cmd(central, slice);
 	ft_freesplit(slice);
 	ft_freesplit(redir);
@@ -109,12 +109,15 @@ void	piper(t_central *central, char **split, int cmd_count)
 	{
 		pid[i] = fork();
 		if (pid[i] == 0)
+		{
 			execute_pipes(central, split, pipe_fd, i, cmd_count - 1);
+			exit(1);
+		}
 	}
+	close_all_pipes(pipe_fd, cmd_count - 1);
 	i = -1;
 	while (++i < cmd_count)
 		waitpid(pid[i], &status, 0);
-	close_all_pipes(pipe_fd, cmd_count - 1);
 	central->exit_val = status;
 	free(pid);
 	free(pipe_fd);
