@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <readline/readline.h>
-#include <readline/history.h>
+# include <readline/history.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
@@ -149,8 +149,8 @@ int		is_built_in(t_central *central, char **split);
 // PIPES //
 
 // pipe //
-// void	execute_pipes(t_central *central, char **split,
-// 			int (*pipe_fd)[2], int curr_index, int pipe_amm);
+void	execute_pipes(t_central *central, char **split,
+			int (*pipe_fd)[2], int curr_index, int pipe_amm);
 void	piper(t_central *central, char **split, int cmd_count);
 
 //--------------------------------------------------------------//
@@ -244,7 +244,7 @@ void	ft_input_iter(t_input *lst, void (*f)(void *));
 
 // tokenizer //
 int		ft_make_list(t_central *central);
-int		ft_assign_list(t_central *central, int i, int l);
+int		ft_assign_list(t_central *central, int i, int l, int index);
 int		ft_tokenizer(t_central *central);
 
 // frees //

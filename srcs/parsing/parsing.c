@@ -56,6 +56,7 @@ int	ft_parse(char *prompt, t_central *central)
 	printf("\n");
 	ft_tokenizer(central);
 	ft_expander(central);
+	ft_quote_eraser(central);
 	printf("\nEOP\n");
 	return (0);
 }

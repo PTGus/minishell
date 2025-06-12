@@ -109,9 +109,8 @@ void	ft_check_expand(t_input *node)
 			j = ft_get_expand_end(node->value, i + 1);
 			if (ft_execute_expand(&node->value, i, j) == 1)
 				return ;
-			//i = 0;
+			i = 0;
 			printf("node val is: '%s'\n", node->value);
-			i++;
 		}
 		else
 			i++;

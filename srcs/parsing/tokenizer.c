@@ -12,18 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-//TO-DO make print utils file to free space for 1 function, rewrite assign list
-int	ft_assign_list(t_central *central, int i, int l)
+int	ft_assign_list(t_central *central, int i, int l, int index)
 {
 	int		j;
 	int		k;
-	int		index;
 	t_input	*current;
 	char	*str;
 
 	j = 0;
 	k = 0;
-	index = 0;
 	while (central->pipe_matrix[i] && central->pipe_matrix[i][j])
 	{
 		if ((central->pipe_matrix[i][j + 1] && central->pipe_matrix[i][j + 1]
@@ -59,7 +56,7 @@ int	ft_make_list(t_central *central)
 	l = 0;
 	while (central->pipe_matrix && central->pipe_matrix[++i])
 	{
-		if (ft_assign_list(central, i, l++) != 0)
+		if (ft_assign_list(central, i, l++, 0) != 0)
 			return (1);
 	}
 	central->cmd[l] = NULL;
