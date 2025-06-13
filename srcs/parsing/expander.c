@@ -103,7 +103,8 @@ void	ft_check_expand(t_input *node)
 	{
 		j = 0;
 		if (node->value[i] == '$' && node->value[i + 1]
-			&& ft_is_quoted(node->value, i) != 1)
+			&& ft_is_quoted(node->value, i) != 1
+			&& (node->value[i + 1] != '\"' && ft_is_quoted(node->value, i) != 2))
 		{
 			printf("found $-> %s @[%i]\n", node->value, i);
 			j = ft_get_expand_end(node->value, i + 1);
@@ -129,12 +130,16 @@ int	ft_expander(t_central *central)
 		current = central->cmd[i];
 		while (current)
 		{
-			next = current->next;
 			if (current && current->token == 0)
+			{
 				ft_check_expand(current);
+				ft_is_node_spaced(current);
+			}
+			next = current->next;
 			current = next;
 		}
 	}
+	printf("VVV\n");
 	ft_print_list_array(central->cmd);
 	return (0);
 }

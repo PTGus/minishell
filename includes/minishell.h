@@ -216,6 +216,7 @@ void	ft_tokenize(char *prompt);
 
 // quotes //
 int		ft_is_quoted(char *prompt, int end_pos);
+void	ft_quote_eraser(t_central *central);
 
 // split //
 char	**ft_split_pipes(char *prompt, t_central *central);
@@ -254,6 +255,9 @@ void	ft_free_strings(char *temp, char *expand, int null_exp);
 
 // expander //
 int		ft_expander(t_central *central);
+
+// spaced_nodes //
+void	ft_is_node_spaced(t_input *node);
 
 // print_utils //
 void	ft_print_arr(char **str_arr);

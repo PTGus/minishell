@@ -1,0 +1,10 @@
+
+TO-DO
+- separate spaced expands into diff nodes
+- erase quotes
+- implement getenv for dupenv
+- after that check crazy testing from diogo
+
+DONE
+- write $ when it has nothing after
+

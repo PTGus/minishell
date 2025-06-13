@@ -47,6 +47,7 @@ int	ft_is_quoted(char *prompt, int end_pos)
 
 int	ft_quote_checker(t_input *node)
 {
+	(void)node;
 	//expand
 	return (0);
 }
