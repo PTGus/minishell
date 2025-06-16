@@ -45,13 +45,50 @@ int	ft_is_quoted(char *prompt, int end_pos)
 	return (quote_flag);
 }
 
-int	ft_quote_checker(t_input *node)
+int ft_erase_node_quotes(t_input *node, int count)
 {
-	(void)node;
-	//expand
-	return (0);
+	int len;
+	int i;
+	int j;
+	int new_val;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(node->value) - count;
+	new_val = calloc((len + 1) * sizeof(char));
+	while (node->value[j])
+	{
+		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1) ||
+			(node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
+		{
+			new_val[i] = node->value[j];
+		}
+		i++; // FALTA ACABAR
+		j++;
+	}
+
 }
 
+int	ft_quote_checker(t_input *node)
+{
+	int	j;
+	int count;
+
+	count = 0;
+	j = -1;
+	while (node->value[++j])
+	{
+		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1) ||
+			(node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
+		{
+			printf("%s quote pos %i\n", node->value, j);
+			count++;
+		}
+	}
+	if (count > 0)
+		ft_erase_node_quotes(node, count);
+	return (0);
+}
 
 void	ft_quote_eraser(t_central *central)
 {
@@ -66,7 +103,7 @@ void	ft_quote_eraser(t_central *central)
 		while (current)
 		{
 			next = current->next;
-			if (current && current->token == 0)
+			if (current->value && current->token == 0)
 				ft_quote_checker(current);
 			current = next;
 		}
