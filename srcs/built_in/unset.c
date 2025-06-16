@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:00:05 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:35:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:48:19 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_unset(t_central *central, char *to_unset)
 		return ;
 	}
 	tmp = central->dupenv;
-	while (ft_strcmp(tmp->var, to_unset) != 0 || tmp != NULL)
+	while (tmp != NULL && ft_strcmp(tmp->var, to_unset) != 0)
 		tmp = tmp->next;
 	if (!tmp)
 	{

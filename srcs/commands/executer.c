@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 15:54:57 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:14:08 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int	commander(t_central *central, char **split)
 		path = path->next;
 	if (!path)
 	{
-		central->exit_val = 127;
-		return (not_dir(split[0]), 1);
+		not_dir(split[0]);
+		exit(127);
 	}
 	else
 		exec = pather(path, split[0]);
 	if (!exec)
 	{
 		comm_not_foud(split[0]);
-		central->exit_val = 127;
-		return (free(exec), 1);
+		free(exec);
+		exit(127);
 	}
 	executer(exec, central, split);
 	free(exec);

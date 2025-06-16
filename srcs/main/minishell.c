@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 11:43:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:10:15 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,26 @@ void	rl_loop(t_central *central)
  */
 int	do_builtin(t_central *central, char **split)
 {
-	if (ft_strcmp(split[0], "echo") == 0)
+	t_envp	*tmp;
+
+	tmp = central->dupenv;
+	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
+		tmp = tmp->next;
+	if (!tmp)
+		return (127);
+	if (ft_strcmp(split[0], "echo") == 0) // works whithout PATH
 		return (ft_echo(central, split), 0);
-	else if (ft_strcmp(split[0], "cd") == 0)
+	else if (ft_strcmp(split[0], "cd") == 0) // works whithout PATH
 		return (ft_cd(central, split), 0);
-	else if (ft_strcmp(split[0], "pwd") == 0)
+	else if (ft_strcmp(split[0], "pwd") == 0) // works whithout PATH
 		return (ft_pwd(central), 0);
-	else if (ft_strcmp(split[0], "env") == 0)
+	else if (ft_strcmp(split[0], "env") == 0) // doesnt work whithout PATH
 		return (ft_env(central, split), 0);
-	else if (ft_strcmp(split[0], "export") == 0)
+	else if (ft_strcmp(split[0], "export") == 0) // works whithout PATH
 		return (ft_export(central, split), 0);
-	else if (ft_strcmp(split[0], "exit") == 0)
+	else if (ft_strcmp(split[0], "exit") == 0) // works whithout PATH
 		return (ft_exit(central, split[1]), 0);
-	else if (ft_strcmp(split[0], "unset") == 0)
+	else if (ft_strcmp(split[0], "unset") == 0) // works whithout PATH
 		return (ft_unset(central, split[1]), 0);
 	else
 		return (1);
