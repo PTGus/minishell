@@ -39,7 +39,7 @@ void	ft_print_list_array(t_input **array)
 		temp = array[i];
 		while (temp)
 		{
-			printf("l%i:'%s'(t:%i)\n", temp->index, temp->value, temp->token);
+			printf("l%i:%s(t:%i)\n", temp->index, temp->value, temp->token);
 			temp = temp->next;
 		}
 		printf("\n");

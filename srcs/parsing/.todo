@@ -1,10 +1,10 @@
 
 TO-DO
-- separate spaced expands into diff nodes
-- erase quotes
 - implement getenv for dupenv
 - after that check crazy testing from diogo
+- write $ when it has nothing after
 
 DONE
-- write $ when it has nothing after
+- separate spaced expands into diff nodes
+- erase quotes
 

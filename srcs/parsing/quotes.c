@@ -47,26 +47,30 @@ int	ft_is_quoted(char *prompt, int end_pos)
 
 int ft_erase_node_quotes(t_input *node, int count)
 {
-	int len;
-	int i;
-	int j;
-	int new_val;
+	int		len;
+	int		i;
+	int		j;
+	char	*new_val;
+	char	*temp;
 
 	i = 0;
 	j = 0;
 	len = ft_strlen(node->value) - count;
-	new_val = calloc((len + 1) * sizeof(char));
-	while (node->value[j])
+	new_val = ft_calloc((len + 1), sizeof(char));
+	if (!new_val)
+		return (1);
+	while (i < len)
 	{
 		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1) ||
 			(node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
-		{
-			new_val[i] = node->value[j];
-		}
-		i++; // FALTA ACABAR
-		j++;
+			j++;
+		else 
+			new_val[i++] = node->value[j++];
 	}
-
+	temp = node->value;
+	node->value = new_val;
+	free(temp);
+	return (0);
 }
 
 int	ft_quote_checker(t_input *node)
@@ -86,7 +90,7 @@ int	ft_quote_checker(t_input *node)
 		}
 	}
 	if (count > 0)
-		ft_erase_node_quotes(node, count);
+		return(ft_erase_node_quotes(node, count));
 	return (0);
 }
 

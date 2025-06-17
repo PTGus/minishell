@@ -74,7 +74,7 @@ int	ft_execute_expand(char **str, int start, int end)
 	temp = ft_substr(*str, start + 1, end - start);
 	if (!temp)
 		return (1);
-	expand = getenv(temp);
+	expand = getenv(temp); //HAVE TO SWAP TO CUSTOM FUNCTION, DEAL WITH $ and ?
 	if (expand)
 		null_exp = 0;
 	else
@@ -104,7 +104,7 @@ void	ft_check_expand(t_input *node)
 		j = 0;
 		if (node->value[i] == '$' && node->value[i + 1]
 			&& ft_is_quoted(node->value, i) != 1
-			&& (node->value[i + 1] != '\"' && ft_is_quoted(node->value, i) != 2))
+			&& (node->value[i + 1] != '\"'))
 		{
 			printf("found $-> %s @[%i]\n", node->value, i);
 			j = ft_get_expand_end(node->value, i + 1);
