@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-//TO_DO -> $ ONLY prints in "" if it's the only element, 
-//otherwise expands to valid or nothing
-//ERASE quotes
-//check for expands into expands
-//check if expands work as expected with quotes involved
 
+/**
+ * @brief	Obtains the position at which the current expansion ends
+ * @param	first -  1= first position checked, important for numbers and
+ * special characters
+ * @return	Position of the last element of string to expand
+*/
 int	ft_get_expand_end(char *str, int j)
 {
 	int	first;
@@ -27,18 +28,27 @@ int	ft_get_expand_end(char *str, int j)
 		if ((str[j] == '?' || str[j] == '$') && first == 1)
 			return (printf("return spec %i for %c\n", j, str[j]), j);
 		else if (ft_isdigit(str[j]) == 1 && first == 1)
-			return (printf("return num %i for %c\n", j, str[j]), j);
+			return (j);
 		else if (ft_isalpha(str[j]) == 1 || str[j] == '_'
 			|| (ft_isdigit(str[j]) == 1 && first == 0))
 			first = 0;
 		else
-			return (printf("return misc %i for %c\n",
-					j - 1, str[j - 1]), j - 1);
+			return (j - 1);
 		j++;
 	}
-	return (printf("return end %i for %c\n", j - 1, str[j - 1]), j - 1);
+	return (j - 1);
 }
 
+/**
+ * @brief	Iterates and reassings pre-expand, expand (which changes), and 
+ * post-expand
+ * @param	str - String to copy pre and post from
+ * @param	new_str - Previously alloc'ed to hold result
+ * @param	expand - Result of expansion to copy into new_str
+ * @param	vals - Array with ints: start(0) and end(1) pos for 
+ * expand in str, * and new len(2)
+ * @return
+*/ 
 void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 {
 	int		i;
@@ -47,7 +57,6 @@ void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 
 	i = 0;
 	j = 0;
-	printf("%s @%i is %c\n", *str, vals[0], (*str)[vals[0]]);
 	while (j < vals[0])
 		new_str[i++] = (*str)[j++];
 	j = 0;
@@ -59,9 +68,28 @@ void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 	temp = *str;
 	*str = new_str;
 	free(temp);
-	printf("FINAL:'%s'\n", *str);
 }
 
+/**
+ * @brief	
+ * @param
+ * @return
+*/ 
+char	*ft_get_dupenv_val(char *str) //SWAP GETENV WITH DUPENV
+{
+	if (ft_strncmp(str, "$", 1) == 0)
+		return ("PID");
+	else if (ft_strncmp(str, "?", 1) == 0)
+		return ("TEMP_EXIT");
+	else
+		return (getenv(str));
+}
+
+/**
+ * @brief	
+ * @param
+ * @return
+*/ 
 int	ft_execute_expand(char **str, int start, int end)
 {
 	char	*temp;
@@ -74,7 +102,7 @@ int	ft_execute_expand(char **str, int start, int end)
 	temp = ft_substr(*str, start + 1, end - start);
 	if (!temp)
 		return (1);
-	expand = getenv(temp); //HAVE TO SWAP TO CUSTOM FUNCTION, DEAL WITH $ and ?
+	expand = ft_get_dupenv_val(temp);
 	if (expand)
 		null_exp = 0;
 	else
@@ -90,9 +118,11 @@ int	ft_execute_expand(char **str, int start, int end)
 	return (0);
 }
 
-//iter through list //HAVE TO CHECK 
-//HOW DO QUOTES WORK?
-//HOW DOES IT DEAL WITH MULTI EXPANDS in 1 node
+/**
+ * @brief	
+ * @param
+ * @return
+*/ 
 void	ft_check_expand(t_input *node)
 {
 	int	i;
@@ -139,7 +169,6 @@ int	ft_expander(t_central *central)
 			current = next;
 		}
 	}
-	printf("VVV\n");
 	ft_print_list_array(central->cmd);
 	return (0);
 }

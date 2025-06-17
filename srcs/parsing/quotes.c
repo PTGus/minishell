@@ -12,9 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-//TO-DO : expansions into spaced text needs to be broken apart into nodes 
-// 		: quote eraser
-
 /**
  * @brief Returns quoted status of an element 
  * 0 = unquoted, 1 = inside '', 2 = inside ""
@@ -45,7 +42,7 @@ int	ft_is_quoted(char *prompt, int end_pos)
 	return (quote_flag);
 }
 
-int ft_erase_node_quotes(t_input *node, int count)
+int	ft_erase_node_quotes(t_input *node, int count)
 {
 	int		len;
 	int		i;
@@ -61,10 +58,10 @@ int ft_erase_node_quotes(t_input *node, int count)
 		return (1);
 	while (i < len)
 	{
-		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1) ||
-			(node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
+		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1)
+			|| (node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
 			j++;
-		else 
+		else
 			new_val[i++] = node->value[j++];
 	}
 	temp = node->value;
@@ -76,21 +73,21 @@ int ft_erase_node_quotes(t_input *node, int count)
 int	ft_quote_checker(t_input *node)
 {
 	int	j;
-	int count;
+	int	count;
 
 	count = 0;
 	j = -1;
 	while (node->value[++j])
 	{
-		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1) ||
-			(node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
+		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1)
+			|| (node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
 		{
 			printf("%s quote pos %i\n", node->value, j);
 			count++;
 		}
 	}
 	if (count > 0)
-		return(ft_erase_node_quotes(node, count));
+		return (ft_erase_node_quotes(node, count));
 	return (0);
 }
 
@@ -108,7 +105,8 @@ void	ft_quote_eraser(t_central *central)
 		{
 			next = current->next;
 			if (current->value && current->token == 0)
-				ft_quote_checker(current);
+				if (ft_quote_checker(current) == 1)
+					ft_free_list_err(central, NULL, NULL);
 			current = next;
 		}
 	}

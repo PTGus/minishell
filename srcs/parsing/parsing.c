@@ -52,8 +52,6 @@ int	ft_parse(char *prompt, t_central *central)
 		ft_error("spacing");
 	if (ft_space_redirects(central) != 0)
 		ft_error("redirect");
-	ft_print_arr(central->pipe_matrix);
-	printf("\n");
 	ft_tokenizer(central);
 	ft_expander(central);
 	ft_quote_eraser(central);

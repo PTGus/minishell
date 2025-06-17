@@ -1,10 +1,14 @@
 
 TO-DO
+- document quotes, expander and spaced nodes
+- spaced expands mess with quotes for quote expander
+- certain invalid read of size 1 in expands/quotes
 - implement getenv for dupenv
 - after that check crazy testing from diogo
-- write $ when it has nothing after
+
 
 DONE
 - separate spaced expands into diff nodes
 - erase quotes
+- write $ when it has nothing after
 

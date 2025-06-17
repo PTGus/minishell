@@ -12,6 +12,11 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * @brief	Assigns the list per space-separated element into nodes, 
+ * creating and assigning them to the back
+ * @return	0 if all correct, 1 on malloc error
+*/ 
 int	ft_assign_list(t_central *central, int i, int l, int index)
 {
 	int		j;
@@ -40,13 +45,16 @@ int	ft_assign_list(t_central *central, int i, int l, int index)
 	return (0);
 }
 
+/**
+ * @brief	Allocates new array of list and iterates for assigment	
+ * @return	0 on no error, 1 on malloc error here or in assign_list 
+*/
 int	ft_make_list(t_central *central)
 {
 	int		i;
 	int		l;
 
 	central->cmd = malloc((central->matrix_len + 1) * sizeof(t_input *));
-	printf("matrix_len %i\n", central->matrix_len);
 	if (!central->cmd)
 		return (1);
 	i = -1;
@@ -64,6 +72,11 @@ int	ft_make_list(t_central *central)
 	return (0);
 }
 
+/**
+ * @brief	Used to check whether the element after a here_doc is quoted
+ * (because this affects expansion if content before delimiter can expand)
+ * @return	0 if no quotes, 1 if any quote is found
+*/ 
 int	ft_is_delimiter_quoted(t_input *current)
 {
 	int		i;
@@ -77,10 +90,13 @@ int	ft_is_delimiter_quoted(t_input *current)
 	return (0);
 }
 
-void	ft_assign_token(t_input *node)
+/**
+ * @brief	Assings a value to node token, for string or redirect type
+*/
+int	ft_assign_token(t_input *node)
 {
 	if (node->token != -1 || node->value == NULL)
-		return ;
+		return (1);
 	if (ft_strcmp("<", node->value) == 0)
 		node->token = REDIR_IN;
 	else if (ft_strcmp(">", node->value) == 0)
@@ -96,8 +112,17 @@ void	ft_assign_token(t_input *node)
 	}
 	else
 		node->token = ARGUMENT;
+	return (0);
 }
 
+/**
+ * @brief	Calls functions to transform matrix of command strings into
+ * matrix of lists, each node being a space separated element of the str, 
+ * and assigns a value to each node based on its typvid-fe/.zshrc:57: command not found: starship
+ srcs  parsing   spaced_nodes.c   ft_is_node_spaced                                       │df: autofs,nfe, string or redirect
+ * @return	0 on no error, 1 on malloc error of called functions, 
+ * 2 on assign token error
+*/
 int	ft_tokenizer(t_central *central)
 {
 	int		i;
@@ -111,7 +136,8 @@ int	ft_tokenizer(t_central *central)
 		temp = central->cmd[i];
 		while (temp)
 		{
-			ft_assign_token(temp);
+			if (ft_assign_token(temp) == 1)
+				return (ft_free_list_err(central, NULL, NULL), 2);
 			temp = temp->next;
 		}
 	}
