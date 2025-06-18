@@ -1,6 +1,6 @@
 
 TO-DO
-- document quotes, expander and spaced nodes
+- update minishell.h and rebase
 - spaced expands mess with quotes for quote expander
 - certain invalid read of size 1 in expands/quotes
 - implement getenv for dupenv
@@ -9,6 +9,7 @@ TO-DO
 
 DONE
 - separate spaced expands into diff nodes
+- document quotes, expander and spaced nodes
 - erase quotes
 - write $ when it has nothing after
 

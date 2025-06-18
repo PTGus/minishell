@@ -12,23 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_error(char *message)
-{
-	printf("%s ERROR! (no exit)\n", message);
-}
-	//exit(0);
-
-/**
- * @brief Initializes all parse related elements in central
- * @param Central struct
- */
-void	ft_init_parse(t_central *central)
-{
-	central->cmd = NULL;
-	central->pipe_matrix = NULL;
-	central->matrix_len = 0;
-}
-
 /**
  * @brief Central parsing function - inits, checks for open quotes
  * splits by pipes for further parsing, normalizes spacing, 
@@ -58,3 +41,20 @@ int	ft_parse(char *prompt, t_central *central)
 	printf("\nEOP\n");
 	return (0);
 }
+
+/**
+ * @brief Initializes all parse related elements in central
+ * @param Central struct
+ */
+void	ft_init_parse(t_central *central)
+{
+	central->cmd = NULL;
+	central->pipe_matrix = NULL;
+	central->matrix_len = 0;
+}
+
+void	ft_error(char *message)
+{
+	printf("%s ERROR! (no exit)\n", message);
+}
+	//exit(0);

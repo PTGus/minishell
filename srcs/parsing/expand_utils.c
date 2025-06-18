@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spaced_nodes.c                                     :+:      :+:    :+:   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,6 +11,53 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/**
+ * @brief	Gets value of expand from dupenv, with PID for $ (no getpid),
+ * and ? for exit value from most recent pipe
+*/
+char	*ft_get_dupenv_val(char *str) //SWAP GETENV WITH DUPENV
+{
+	if (ft_strncmp(str, "$", 1) == 0)
+		return ("PID");
+	else if (ft_strncmp(str, "?", 1) == 0)
+		return ("TEMP_EXIT");
+	else
+		return (getenv(str));
+}
+
+/**
+ * @brief	Checks for unquoted spaces and if found, assigns a new value for
+ * the current node and creates a new one of the rest
+ * @param	old_val - Buffer for entire old value of current node
+ * @param	split_node - New node to hold the rest of the value of old node
+*/
+int	ft_is_node_spaced(t_input *node)
+{
+	int		i;
+	char	*old_val;
+	t_input	*split_node;
+	int		len;
+
+	i = -1;
+	while (node->value[++i])
+	{
+		if (node->value[i] == ' ' && ft_is_quoted(node->value, i) == 0)
+		{
+			old_val = node->value;
+			node->value = ft_substr(old_val, 0, i);
+			len = ft_strlen(old_val + i + 1);
+			if (old_val[i + 1])
+			{
+				split_node = ft_input_new(
+						ft_substr(old_val, i + 1, len), node->index + 1);
+				ft_insert_split_node(node, split_node);
+				free(old_val);
+			}
+		}
+	}
+	return (0);
+}
 
 /**
  *	@brief	Inserts new node into the list and increments all indexes after
@@ -33,38 +80,5 @@ void	ft_insert_split_node(t_input *first, t_input *second)
 		next = current->next;
 		current->index += 1;
 		current = next;
-	}
-}
-
-/**
- * @brief	Checks for unquoted spaces and if found, assigns a new value for
- * the current node and creates a new one of the rest
- * @param	old_val - Buffer for entire old value of current node
- * @param	split_node - New node to hold the rest of the value of old node
-*/ 
-void	ft_is_node_spaced(t_input *node)
-{
-	int		i;
-	char	*old_val;
-	t_input	*split_node;
-	int		len;
-
-	old_val = NULL;
-	i = -1;
-	while (node->value[++i])
-	{
-		if (node->value[i] == ' ' && ft_is_quoted(node->value, i) == 0)
-		{
-			old_val = node->value;
-			node->value = ft_substr(old_val, 0, i);
-			len = ft_strlen(old_val + i + 1);
-			if (old_val[i + 1])
-			{
-				split_node = ft_input_new(
-					ft_substr(old_val, i + 1, len), node->index + 1);
-				ft_insert_split_node(node, split_node);
-				free(old_val);
-			}
-		}
 	}
 }

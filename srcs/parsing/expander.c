@@ -13,6 +13,66 @@
 #include "../../includes/minishell.h"
 
 /**
+ * @brief	Iterates through command array to expand environment vars, then
+ * checks if the expanded node has spaces to split it into further nodes
+ * @return	0 if all correct, >0 on malloc error 
+*/
+int	ft_expander(t_central *central)
+{
+	int		i;
+	t_input	*current;
+	t_input	*next;
+
+	i = -1;
+	while (central->cmd[++i])
+	{
+		current = central->cmd[i];
+		while (current)
+		{
+			if (current && current->token == 0)
+			{
+				if (ft_check_expand(current) == 1)
+					return (1);
+				ft_is_node_spaced(current);
+			}
+			next = current->next;
+			current = next;
+		}
+	}
+	ft_print_list_array(central->cmd);
+	return (0);
+}
+
+/**
+ * @brief	Checks if current node val at i pos is $, has a value after
+ * and is not inside '', and not immediately followed by a "
+ * @return	0 if correct, 1 on malloc error
+*/
+int	ft_check_expand(t_input *node)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (node->value[i])
+	{
+		j = 0;
+		if (node->value[i] == '$' && node->value[i + 1]
+			&& ft_is_quoted(node->value, i) != 1
+			&& (node->value[i + 1] != '\"'))
+		{
+			j = ft_get_expand_end(node->value, i + 1);
+			if (ft_execute_expand(&node->value, i, j) == 1)
+				return (1);
+			i = 0;
+		}
+		else
+			i++;
+	}
+	return (0);
+}
+
+/**
  * @brief	Obtains the position at which the current expansion ends
  * @param	first -  1= first position checked, important for numbers and
  * special characters
@@ -48,7 +108,7 @@ int	ft_get_expand_end(char *str, int j)
  * @param	vals - Array with ints: start(0) and end(1) pos for 
  * expand in str, and new len(2)
  * @return
-*/ 
+*/
 void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 {
 	int		i;
@@ -71,27 +131,13 @@ void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 }
 
 /**
- * @brief	Gets value of expand from dupenv, with PID for $ (no getpid),
- * and ? for exit value from most recent pipe
-*/ 
-char	*ft_get_dupenv_val(char *str) //SWAP GETENV WITH DUPENV
-{
-	if (ft_strncmp(str, "$", 1) == 0)
-		return ("PID");
-	else if (ft_strncmp(str, "?", 1) == 0)
-		return ("TEMP_EXIT");
-	else
-		return (getenv(str));
-}
-
-/**
  * @brief	Obtains and sets up values for doing expansions in assign_expand
  * @param	null_expand - Flag for expand=NULL, to avoid segfault in free 
  * because getenv can't be freed, but empty substr must be
  * @param	vals - Array with ints: start(0) and end(1) pos for 
  * expand in str, and new len(2)
  * @return	0 if correct, 1 on malloc error
-*/ 
+*/
 int	ft_execute_expand(char **str, int start, int end)
 {
 	char	*temp;
@@ -117,65 +163,5 @@ int	ft_execute_expand(char **str, int start, int end)
 		return (1);
 	ft_assign_expand(str, vals, new_str, expand);
 	ft_free_strings(temp, expand, null_exp);
-	return (0);
-}
-
-/**
- * @brief	Checks if current node val at i pos is $, has a value after
- * and is not inside '', and not immediately followed by a "
- * @return	0 if correct, 1 on malloc error
-*/ 
-int	ft_check_expand(t_input *node)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (node->value[i])
-	{
-		j = 0;
-		if (node->value[i] == '$' && node->value[i + 1]
-			&& ft_is_quoted(node->value, i) != 1
-			&& (node->value[i + 1] != '\"'))
-		{
-			j = ft_get_expand_end(node->value, i + 1);
-			if (ft_execute_expand(&node->value, i, j) == 1)
-				return (1);
-			i = 0;
-		}
-		else
-			i++;
-	}
-	return (0);
-}
-
-/**
- * @brief	Iterates through command array to expand environment vars, then
- * checks if the expanded node has spaces to split it into further nodes
- * @return	0 if all correct, >0 on malloc error 
-*/ 
-int	ft_expander(t_central *central)
-{
-	int		i;
-	t_input	*current;
-	t_input	*next;
-
-	i = -1;
-	while (central->cmd[++i])
-	{
-		current = central->cmd[i];
-		while (current)
-		{
-			if (current && current->token == 0)
-			{
-				if (ft_check_expand(current) == 1)
-					return(1);
-				ft_is_node_spaced(current);
-			}
-			next = current->next;
-			current = next;
-		}
-	}
-	ft_print_list_array(central->cmd);
 	return (0);
 }

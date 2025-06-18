@@ -162,7 +162,7 @@ void	ctrl_c(int sig);
 void	ctrl_d(t_central *central);
 void	handle_signals(void);
 
-//-------------------------------------------------Body language-------------//
+//--------------------------------------------------------------//
 // UTILS //
 
 // cd_utils //
@@ -211,12 +211,14 @@ int		ft_strcmp(char *s1, char *s2);
 
 // parsing //
 int		ft_parse(char *prompt, t_central *central);
+void	ft_init_parse(t_central *central);
 void	ft_error(char *message);
-void	ft_tokenize(char *prompt);
 
 // quotes //
 int		ft_is_quoted(char *prompt, int end_pos);
 void	ft_quote_eraser(t_central *central);
+int		ft_quote_checker(t_input *node);
+int		ft_erase_node_quotes(t_input *node, int count);
 
 // split //
 char	**ft_split_pipes(char *prompt, t_central *central);
@@ -244,9 +246,11 @@ int		ft_input_size(t_input *lst);
 void	ft_input_iter(t_input *lst, void (*f)(void *));
 
 // tokenizer //
+int		ft_tokenizer(t_central *central);
 int		ft_make_list(t_central *central);
 int		ft_assign_list(t_central *central, int i, int l, int index);
-int		ft_tokenizer(t_central *central);
+int		ft_assign_token(t_input *node);
+int		ft_is_delimiter_quoted(t_input *current);
 
 // frees //
 void	ft_free_split(char **split);
@@ -255,9 +259,15 @@ void	ft_free_strings(char *temp, char *expand, int null_exp);
 
 // expander //
 int		ft_expander(t_central *central);
+int		ft_check_expand(t_input *node);
+int		ft_get_expand_end(char *str, int j);
+void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand);
+int		ft_execute_expand(char **str, int start, int end);
 
-// spaced_nodes //
-void	ft_is_node_spaced(t_input *node);
+// expand_utils.c //
+char	*ft_get_dupenv_val(char *str);
+int		ft_is_node_spaced(t_input *node);
+void	ft_insert_split_node(t_input *first, t_input *second);
 
 // print_utils //
 void	ft_print_arr(char **str_arr);

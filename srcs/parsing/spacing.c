@@ -47,8 +47,8 @@ int	ft_remove_extra_spaces(t_central *central)
 }
 
 /**
- * @brief	Takes a string and counts len excluding starting, ending and extra spaces,
- * except quoted spaces
+ * @brief	Takes a string and counts len excluding starting, ending and
+ * extra spaces, except quoted spaces
  * @param	String to count
  * @return	New len value
  */
