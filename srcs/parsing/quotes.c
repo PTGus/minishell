@@ -42,21 +42,28 @@ int	ft_is_quoted(char *prompt, int end_pos)
 	return (quote_flag);
 }
 
+/**
+ * @brief	Alloc's and assigns new value to node with len - count of
+ * unquoted quotes
+ * @param	new_val - new node value with unquoted quotes erased
+ * @param	new_len - length of new val without the quotes to erase
+ * @return	0 if correct, 1 on malloc error
+ */
 int	ft_erase_node_quotes(t_input *node, int count)
 {
-	int		len;
 	int		i;
 	int		j;
+	int		new_len;
 	char	*new_val;
 	char	*temp;
 
 	i = 0;
 	j = 0;
-	len = ft_strlen(node->value) - count;
-	new_val = ft_calloc((len + 1), sizeof(char));
+	new_len = ft_strlen(node->value) - count;
+	new_val = ft_calloc((new_len + 1), sizeof(char));
 	if (!new_val)
 		return (1);
-	while (i < len)
+	while (i < new_len)
 	{
 		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1)
 			|| (node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
@@ -70,6 +77,11 @@ int	ft_erase_node_quotes(t_input *node, int count)
 	return (0);
 }
 
+/**
+ * @brief	Iterates throught the node value and counts unquoted quotes
+ * to erase, if >0 calls to erase
+ * @return	0 if correct, 1 on malloc error from erase_node_quotes
+ */
 int	ft_quote_checker(t_input *node)
 {
 	int	j;
@@ -81,16 +93,17 @@ int	ft_quote_checker(t_input *node)
 	{
 		if ((node->value[j] == '\"' && ft_is_quoted(node->value, j) != 1)
 			|| (node->value[j] == '\'' && ft_is_quoted(node->value, j) != 2))
-		{
-			printf("%s quote pos %i\n", node->value, j);
 			count++;
-		}
 	}
 	if (count > 0)
 		return (ft_erase_node_quotes(node, count));
 	return (0);
 }
 
+/**
+ * @brief	Iterates through the command nodes of ARG type 
+ * and call quote check to erase unquoted quotes 
+ */
 void	ft_quote_eraser(t_central *central)
 {
 	int		i;
@@ -110,5 +123,4 @@ void	ft_quote_eraser(t_central *central)
 			current = next;
 		}
 	}
-	ft_print_list_array(central->cmd);
 }

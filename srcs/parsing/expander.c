@@ -46,7 +46,7 @@ int	ft_get_expand_end(char *str, int j)
  * @param	new_str - Previously alloc'ed to hold result
  * @param	expand - Result of expansion to copy into new_str
  * @param	vals - Array with ints: start(0) and end(1) pos for 
- * expand in str, * and new len(2)
+ * expand in str, and new len(2)
  * @return
 */ 
 void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
@@ -71,9 +71,8 @@ void	ft_assign_expand(char **str, int *vals, char *new_str, char *expand)
 }
 
 /**
- * @brief	
- * @param
- * @return
+ * @brief	Gets value of expand from dupenv, with PID for $ (no getpid),
+ * and ? for exit value from most recent pipe
 */ 
 char	*ft_get_dupenv_val(char *str) //SWAP GETENV WITH DUPENV
 {
@@ -86,9 +85,12 @@ char	*ft_get_dupenv_val(char *str) //SWAP GETENV WITH DUPENV
 }
 
 /**
- * @brief	
- * @param
- * @return
+ * @brief	Obtains and sets up values for doing expansions in assign_expand
+ * @param	null_expand - Flag for expand=NULL, to avoid segfault in free 
+ * because getenv can't be freed, but empty substr must be
+ * @param	vals - Array with ints: start(0) and end(1) pos for 
+ * expand in str, and new len(2)
+ * @return	0 if correct, 1 on malloc error
 */ 
 int	ft_execute_expand(char **str, int start, int end)
 {
@@ -119,11 +121,11 @@ int	ft_execute_expand(char **str, int start, int end)
 }
 
 /**
- * @brief	
- * @param
- * @return
+ * @brief	Checks if current node val at i pos is $, has a value after
+ * and is not inside '', and not immediately followed by a "
+ * @return	0 if correct, 1 on malloc error
 */ 
-void	ft_check_expand(t_input *node)
+int	ft_check_expand(t_input *node)
 {
 	int	i;
 	int	j;
@@ -136,18 +138,22 @@ void	ft_check_expand(t_input *node)
 			&& ft_is_quoted(node->value, i) != 1
 			&& (node->value[i + 1] != '\"'))
 		{
-			printf("found $-> %s @[%i]\n", node->value, i);
 			j = ft_get_expand_end(node->value, i + 1);
 			if (ft_execute_expand(&node->value, i, j) == 1)
-				return ;
+				return (1);
 			i = 0;
-			printf("node val is: '%s'\n", node->value);
 		}
 		else
 			i++;
 	}
+	return (0);
 }
 
+/**
+ * @brief	Iterates through command array to expand environment vars, then
+ * checks if the expanded node has spaces to split it into further nodes
+ * @return	0 if all correct, >0 on malloc error 
+*/ 
 int	ft_expander(t_central *central)
 {
 	int		i;
@@ -162,7 +168,8 @@ int	ft_expander(t_central *central)
 		{
 			if (current && current->token == 0)
 			{
-				ft_check_expand(current);
+				if (ft_check_expand(current) == 1)
+					return(1);
 				ft_is_node_spaced(current);
 			}
 			next = current->next;

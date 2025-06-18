@@ -12,6 +12,11 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ *	@brief	Inserts new node into the list and increments all indexes after
+ *	@param	first - node with the first part of old val
+ *	@param	second - node with the remainder of old val
+*/
 void	ft_insert_split_node(t_input *first, t_input *second)
 {
 	t_input	*next;
@@ -31,6 +36,12 @@ void	ft_insert_split_node(t_input *first, t_input *second)
 	}
 }
 
+/**
+ * @brief	Checks for unquoted spaces and if found, assigns a new value for
+ * the current node and creates a new one of the rest
+ * @param	old_val - Buffer for entire old value of current node
+ * @param	split_node - New node to hold the rest of the value of old node
+*/ 
 void	ft_is_node_spaced(t_input *node)
 {
 	int		i;
