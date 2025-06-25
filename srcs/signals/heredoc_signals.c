@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 14:23:54 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 14:08:04 by gumendes         ###   ########.fr       */
+/*   Created: 2025/06/25 14:10:36 by gumendes          #+#    #+#             */
+/*   Updated: 2025/06/25 14:11:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void ctrl_c(int sig)
+static void	heredoc_sigint(int sig)
 {
 	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+	close(STDIN_FILENO);
 	g_signal = 130;
-	write(STDERR_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 }
 
-void	ctrl_d(t_central *central)
+// Call this before reading your heredoc lines
+void	setup_heredoc_signals(void)
 {
-	clean_all(central);
-	printf("exit\n");
-	rl_clear_history();
-	exit(0);
-}
+	struct sigaction sa;
 
-void	handle_signals(void)
-{
-	struct sigaction sa_int;
-
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART;
-	sa_int.sa_handler = ctrl_c;
-	sigaction(SIGINT, &sa_int, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	sa.sa_handler = &heredoc_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 }

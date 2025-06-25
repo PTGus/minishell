@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/06/04 14:02:59 by gumendes         ###   ########.fr        #
+#    Updated: 2025/06/25 13:45:31 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,9 +78,10 @@ $(LIBFT):
 	@if [ ! -d "libft" ]; then make get_libft; fi
 
 get_libft:
-	@git clone git@github.com:PTGus/libft.git
-	@echo "$(GRN)[LIBFT CLONED]$(END)"
-	@$(MAKE) -C $(LIBFT_PATH)
+	@echo "$(CYA)Cloning libft...$(D)"
+	@git clone --quiet git@github.com:PTGus/libft.git
+	@echo "$(GRN)[LIBFT CLONED]$(D)"
+	@$(MAKE) --no-print-directory -s -C $(LIBFT_PATH)
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
@@ -90,6 +91,7 @@ $(NAME): $(LIBFT) $(OBJ)
 # Rule to create object files in the .build folder
 $(BUILD_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@)
+	@echo "$(CYA)Compiling $(notdir $<)...$(D)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean object files
@@ -116,8 +118,12 @@ fclean: clean
 # Rebuild the project
 re: fclean all
 
+# Rebuilds the project and clears the output
+clear: re
+	@clear
+
 # Phony targets
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re clear
 
 #==============================================================================#
 #                                  UTILS                                       #

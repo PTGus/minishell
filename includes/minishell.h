@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 12:04:26 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:08:04 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 extern int g_signal;
 
+# define _POSIX_C_SOURCE 200809L
+
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
@@ -22,6 +24,7 @@ extern int g_signal;
 # include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <dirent.h>
@@ -30,7 +33,6 @@ extern int g_signal;
 # include <curses.h>
 # include <term.h>
 # include <errno.h>
-# include <signal.h>
 # include "../libft/libft.h"
 
 # define COMMAND	0
