@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/16 16:45:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:08:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,11 @@ t_envp	*new_env(char *envp)
 	new = ft_calloc(1, sizeof(t_envp));
 	if (!new)
 		return (NULL);
+	new->value = NULL;
 	new->next = NULL;
 	new->prev = NULL;
 	new->visible_env = TRUE;
+	new->has_equal = TRUE;
 	if (envp[0] == '_')
 		new->index = -2;
 	else
@@ -74,8 +76,6 @@ t_envp	*new_env(char *envp)
 	free(tmp);
 	if (envp[i + 1] >= 33 && envp[i + 1] <= 126)
 		new->value = ft_strdup(envp + (1 + i));
-	else
-		new->value = ft_strdup("");
 	return (new);
 }
 

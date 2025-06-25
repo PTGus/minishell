@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 13:41:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:08:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char	**strip_redirs(char **tok)
 		if (!ft_strcmp(tok[i], "<") || !ft_strcmp(tok[i], ">")
 			|| !ft_strcmp(tok[i], ">>") || !ft_strcmp(tok[i], "<<"))
 		{
-			if (tok[i + 1])     /* skip operator + filename (if present) */
+			if (tok[i + 1])     // skip operator + filename (if present)
 				i += 2;
 			else
-				i += 1;         /* malformed: operator at end */
+				i += 1;         // malformed: operator at end
 		}
 		else
 			out[j++] = ft_strdup(tok[i++]);

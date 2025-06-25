@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 11:21:02 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:00:09 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	should_revalue(t_envp **dupenv, char**split)
 	var = ft_split(split[1], '=');
 	while (new)
 	{
-		if ((ft_strcmp(new->var, var[0]) == 0) && (new->has_equal == TRUE))
+		if ((ft_strcmp(new->var, var[0]) == 0)/*  && (new->has_equal == TRUE) */)
 		{
 			free(new->value);
 			new->value = NULL;
@@ -43,7 +43,7 @@ int	should_revalue(t_envp **dupenv, char**split)
 		new = new->next;
 	}
 	ft_freesplit(var);
-	exit(0);
+	return (0);
 }
 
 /**

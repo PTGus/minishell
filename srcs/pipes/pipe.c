@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 15:57:51 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:14:43 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	piper(t_central *central, char **split, int cmd_count)
 		if (pid[i] == 0)
 		{
 			execute_pipes(central, split, pipe_fd, i, cmd_count - 1);
-			exit(1);
+			exit(central->exit_val);
 		}
 	}
 	close_all_pipes(pipe_fd, cmd_count - 1);

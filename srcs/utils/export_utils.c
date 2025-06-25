@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 14:04:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:09:53 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	hidden_export(t_central *central, char **split, int has_equal)
 		new->visible_env = FALSE;
 		new->has_equal = has_equal;
 		insert_before_last(&central->dupenv, new);
-		printf("%s\n", new->var);
 	}
 }
 
