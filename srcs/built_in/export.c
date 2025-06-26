@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 11:00:09 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:29:05 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,8 @@ void	declarex(t_envp **dupenv)
 void	ft_export(t_central *central, char **split)
 {
 	t_envp	*new;
-	int		i;
 
 	new = central->dupenv;
-	i = -1;
 	if (!split[1])
 	{
 		declarex(&central->dupenv);
