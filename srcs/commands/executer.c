@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 14:28:52 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:54:49 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,30 @@
  *  all the neccessary variables and lists.
  * @param split An array of arrays with the prompt received from read line.
  */
-int	commander(t_central *central, char **split)
+int	commander(t_central *central, t_input *cmd)
 {
 	t_envp	*path;
+	t_input	*tmp_cmd;
 	char	*exec;
 
+	tmp_cmd = find_cmd(cmd);
 	path = ft_getenv(&central->dupenv, "PATH");
 	if (!path)
 	{
-		not_dir(split[0]);
+		not_dir(tmp_cmd->value);
 		clean_all(central);
 		exit(127);
 	}
 	else
-		exec = pather(path, split[0]);
+		exec = pather(path, tmp_cmd->value);
 	if (!exec)
 	{
-		comm_not_foud(split[0]);
+		comm_not_found(tmp_cmd->value);
 		free(exec);
 		clean_all(central);
 		exit(127);
 	}
-	executer(exec, central, split);
+	executer(exec, central, tmp_cmd);
 	free(exec);
 	return (0);
 }
@@ -52,14 +54,17 @@ int	commander(t_central *central, char **split)
  * @param central A struct that contains pointers to
  *  all the neccessary variables and lists.
  */
-void	executer(char *exec, t_central *central, char **split)
+void	executer(char *exec, t_central *central, t_input *cmd)
 {
+	char	**exec_flags;
 	char	**envp;
 
+	exec_flags = get_exec_flags(cmd);
 	envp = get_exec_env(&central->dupenv);
-	execve(exec, split, envp);
+	execve(exec, exec_flags, envp);
 	clean_all(central);
 	ft_free_split(envp);
+	ft_free_split(exec_flags);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:49:56 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 12:27:30 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:44:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,12 @@ void	init_pipes(int (*pipe_fd)[2], int pipe_count)
 	}
 }
 
-int	to_pipe(t_central *central, char **split)
+int	to_pipe(t_central *central)
 {
-	int	i;
-	int	pipe_count;
-
-	i = 0;
-	pipe_count = 0;
-	while (split[i])
-		if (ft_strcmp(split[i++], "|") == 0)
-			pipe_count++;
-	if (pipe_count)
+	if (central->matrix_len > 1)
 	{
-		piper(central, split, pipe_count + 1);
+		piper(central);
 		return (0);
 	}
-	return (i);
+	return (1);
 }

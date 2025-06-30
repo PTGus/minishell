@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:07:30 by david-fe          #+#    #+#             */
-/*   Updated: 2025/05/22 14:12:55 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:48:40 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	ft_make_list(t_central *central)
 	int		l;
 
 	central->cmd = malloc((central->matrix_len + 1) * sizeof(t_input *));
-	printf("matrix_len %i\n", central->matrix_len);
 	if (!central->cmd)
 		return (1);
 	i = -1;
@@ -118,7 +117,5 @@ int	ft_tokenizer(t_central *central)
 			temp = temp->next;
 		}
 	}
-	ft_print_list_array(central->cmd);
-	//ft_free_list_err(central, NULL, NULL);
 	return (0);
 }

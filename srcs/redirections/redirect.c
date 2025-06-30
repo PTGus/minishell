@@ -6,58 +6,60 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/04 10:49:31 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:00:20 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	has_to_redirect(t_central *central, char **split)
+int	has_to_redirect(t_central *central, t_input *cmd)
 {
-	int	i;
+	t_input *tmp;
 
-	i = 0;
-	while (split[i])
+	tmp = cmd;
+	while (tmp)
 	{
-		if (ft_strcmp(split[i], "<") == 0 || ft_strcmp(split[i], "<<") == 0
-			|| ft_strcmp(split[i], ">") == 0 || ft_strcmp(split[i], ">>") == 0)
-			return (set_redirections(central, split));
-		i++;
+		if (tmp->token == REDIR_IN || tmp->token == REDIR_OUT
+			|| tmp->token == APPEND_OUT || tmp->token == HERE_DOC
+			|| tmp->token == HERE_DOC_Q)
+			return (set_redirections(central, cmd));
+		tmp = tmp->next;
 	}
 	return (1);
 }
 
-int	set_redirections(t_central *central, char **split)
+int	set_redirections(t_central *central, t_input *cmd)
 {
-	int			i;
+	t_input *tmp;
 
-	i = 0;
-	while (split[i])
-    {
-        if (!ft_strcmp(split[i], "<")  || !ft_strcmp(split[i], "<<") ||
-            !ft_strcmp(split[i], ">")  || !ft_strcmp(split[i], ">>"))
-        {
-            if (do_redirection(split, i) == 2)
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->token == REDIR_IN || tmp->token == REDIR_OUT
+			|| tmp->token == APPEND_OUT || tmp->token == HERE_DOC
+			|| tmp->token == HERE_DOC_Q)
+		{
+			if (do_redirection(tmp) == 2)
 			{
 				central->exit_val = 1;
-                return (1);
+				return (1);
 			}
-            i++;
-        }
-        i++;
-    }
+			tmp = tmp->next;
+		}
+		tmp = tmp->next;
+	}
 	return (0);
 }
 
-int	do_redirection(char **split, int index)
+int	do_redirection(t_input *cmd)
 {
-	if (ft_strcmp(split[index], "<") == 0)
-		return (set_input(split[index + 1]));
-	else if (ft_strcmp(split[index], ">") == 0)
-		return (set_output(split[index + 1]));
-	else if (ft_strcmp(split[index], "<<") == 0)
-		return (ft_heredoc(split[index + 1]));
-	else if (ft_strcmp(split[index], ">>") == 0)
-		return (append_redir(split[index + 1]));
+	if (cmd->token == REDIR_IN)
+		return (set_input(cmd));
+	else if (cmd->token == REDIR_OUT)
+		return (set_output(cmd));
+	else if (cmd->token == HERE_DOC || cmd->token == HERE_DOC_Q)
+		return (ft_heredoc(cmd->next->value));
+	else if (cmd->token == APPEND_OUT)
+		return (append_redir(cmd));
 	return (1);
 }

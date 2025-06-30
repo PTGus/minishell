@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 12:13:49 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:42:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	main(int ac, char **av, char **env)
 void	rl_loop(t_central *central)
 {
 	char		*rl;
-	char		**split;
 
 	while (1)
 	{
@@ -70,9 +69,7 @@ void	rl_loop(t_central *central)
 		}
 		add_history(rl);
 		ft_parse(rl, central);
-		split = ft_split(rl, ' ');
-		has_shell_operator(central, split);
-		ft_freesplit(split);
+		has_shell_operator(central);
 		free(rl);
 		reset_fds(1);
 	}
@@ -85,31 +82,30 @@ void	rl_loop(t_central *central)
  *  all the neccessary variables and lists.
  * @param split An array of arrays with the prompt received from read line.
  */
-int	do_builtin(t_central *central, char **split)
+int	do_builtin(t_central *central, t_input *cmd)
 {
-	t_envp	*tmp;
+	t_input	*tmp;
 
-	tmp = central->dupenv;
-	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
+	tmp = cmd;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->value, "echo") == 0)
+			return (ft_echo(central, cmd), 0);
+		else if (ft_strcmp(tmp->value, "cd") == 0)
+			return (ft_cd(central, cmd), 0);
+		else if (ft_strcmp(tmp->value, "pwd") == 0)
+			return (ft_pwd(central), 0);
+		else if (ft_strcmp(tmp->value, "env") == 0) // doesnt work whithout PATH
+			return (ft_env(central, cmd), 0);
+		else if (ft_strcmp(tmp->value, "export") == 0)
+			return (ft_export(central, cmd), 0);
+		else if (ft_strcmp(tmp->value, "exit") == 0)
+			return (ft_exit(central, tmp->next->value), 0);
+		else if (ft_strcmp(tmp->value, "unset") == 0)
+			return (ft_unset(central, tmp->next->value), 0);
 		tmp = tmp->next;
-	if (!tmp)
-		return (127);
-	if (ft_strcmp(split[0], "echo") == 0) // works whithout PATH
-		return (ft_echo(central, split), 0);
-	else if (ft_strcmp(split[0], "cd") == 0) // works whithout PATH
-		return (ft_cd(central, split), 0);
-	else if (ft_strcmp(split[0], "pwd") == 0) // works whithout PATH
-		return (ft_pwd(central), 0);
-	else if (ft_strcmp(split[0], "env") == 0) // doesnt work whithout PATH
-		return (ft_env(central, split), 0);
-	else if (ft_strcmp(split[0], "export") == 0) // works whithout PATH
-		return (ft_export(central, split), 0);
-	else if (ft_strcmp(split[0], "exit") == 0) // works whithout PATH
-		return (ft_exit(central, split[1]), 0);
-	else if (ft_strcmp(split[0], "unset") == 0) // works whithout PATH
-		return (ft_unset(central, split[1]), 0);
-	else
-		return (1);
+	}
+	return (1);
 }
 
 /**
@@ -118,21 +114,13 @@ int	do_builtin(t_central *central, char **split)
  * @param central A struct that contains pointers to
  *  all the neccessary variables and lists.
  */
-void	do_cmd(t_central *central, char **split)
+void	do_cmd(t_central *central, t_input *cmd)
 {
-	t_envp	*tmp;
-
-	tmp = central->dupenv;
-	while (tmp != NULL && ft_strcmp(tmp->var, "PATH") != 0)
-		tmp = tmp->next;
-	if (!tmp)
+	if (is_built_in(cmd) == 0)
 	{
-		not_dir(split[0]);
-		central->exit_val = 127;
+		do_builtin(central, cmd);
 		return ;
 	}
-	if (do_builtin(central, split) == 0)
-		return ;
 	else
-		commander(central, split);
+		commander(central, cmd);
 }

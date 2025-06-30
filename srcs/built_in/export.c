@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 11:12:13 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:39:24 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
  *  and should be created,
  * and 1 when the variable already exists and was revalued.
  */
-int	should_revalue(t_envp **dupenv, char**split)
+int	should_revalue(t_envp **dupenv, char *exportion)
 {
 	char	**var;
 	t_envp	*new;
 
 	new = *dupenv;
-	var = ft_split(split[1], '=');
+	var = ft_split(exportion, '=');
 	while (new)
 	{
-		if ((ft_strcmp(new->var, var[0]) == 0)/*  && (new->has_equal == TRUE) */)
+		if ((ft_strcmp(new->var, var[0]) == 0))
 		{
 			free(new->value);
 			new->value = NULL;
@@ -81,22 +81,26 @@ void	declarex(t_envp **dupenv)
  * @param split An array of arrays with the prompt received from read line.
  * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
-void	ft_export(t_central *central, char **split)
+void	ft_export(t_central *central, t_input *cmd)
 {
 	t_envp	*new;
+	t_input	*tmp_cmd;
 
 	new = central->dupenv;
-	if (!split[1])
+	tmp_cmd = cmd;
+	while (ft_strcmp(tmp_cmd->value, "export") != 0)
+		tmp_cmd = tmp_cmd->next;
+	if (!tmp_cmd->next)
 	{
 		declarex(&central->dupenv);
 		central->exit_val = 0;
 		return ;
 	}
-	if (is_special_exportion(central, split) == 0)
+	if (is_special_exportion(central, tmp_cmd->next->value) == 0)
 	{
-		if (should_revalue(&central->dupenv, split) == 0)
+		if (should_revalue(&central->dupenv, tmp_cmd->next->value) == 0)
 		{
-			new = new_env(split[1]);
+			new = new_env(tmp_cmd->next->value);
 			insert_before_last(&central->dupenv, new);
 		}
 		reorder_dupenv(&central->dupenv);

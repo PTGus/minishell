@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:27:01 by david-fe          #+#    #+#             */
-/*   Updated: 2025/06/30 12:11:11 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:50:05 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_error(char *message)
 {
 	printf("%s ERROR! (no exit)\n", message);
 }
-	//exit(0);
 
 /**
  * @brief Initializes all parse related elements in central
@@ -38,8 +37,6 @@ void	ft_init_parse(t_central *central)
  */
 int	ft_parse(char *prompt, t_central *central)
 {
-	if (prompt[0] == 'x')
-		exit(0);
 	ft_init_parse(central);
 	if (!prompt)
 		return (0);
@@ -52,10 +49,7 @@ int	ft_parse(char *prompt, t_central *central)
 		ft_error("spacing");
 	if (ft_space_redirects(central) != 0)
 		ft_error("redirect");
-	// ft_print_arr(central->pipe_matrix);
-	// printf("\n");
 	ft_tokenizer(central);
 	ft_expander(central);
-	// printf("\nEOP\n");
 	return (0);
 }

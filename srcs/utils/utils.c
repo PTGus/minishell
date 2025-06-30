@@ -6,61 +6,57 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 12:06:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:58:32 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// temporary function to be deleted used only in testing
-char	**strip_redirs(char **tok)
+char	**get_exec_flags(t_input *cmd)
 {
-	int		i;
-	int		j;
-	int		count;
-	char	**out;
+	char	**ret_arr;
+	int		arg_amm;
+	t_input	*start;
+	t_input	*tmp;
 
-	i = 0;
-	while (tok[i])
-		i++;
-	count = i;
-	out = ft_calloc(count + 1, sizeof(char *));
-	if (!out)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (tok[i])
+	tmp = cmd;
+	arg_amm = 0;
+	while (tmp && tmp->token != ARGUMENT)
+		tmp = tmp->next;
+	start = tmp;
+	while (tmp && tmp->token == ARGUMENT)
 	{
-		if (!ft_strcmp(tok[i], "<") || !ft_strcmp(tok[i], ">")
-			|| !ft_strcmp(tok[i], ">>") || !ft_strcmp(tok[i], "<<"))
-		{
-			if (tok[i + 1])     // skip operator + filename (if present)
-				i += 2;
-			else
-				i += 1;         // malformed: operator at end
-		}
-		else
-			out[j++] = ft_strdup(tok[i++]);
+		tmp = tmp->next;
+		arg_amm++;
 	}
-	out[j] = NULL;
-	return (out);
+	ret_arr = ft_calloc(arg_amm, sizeof(char *));
+	arg_amm = 0;
+	while (start && start->token == ARGUMENT)
+	{
+		ret_arr[arg_amm] = start->value;
+		arg_amm++;
+		start = start->next;
+	}
+	return (ret_arr);
 }
 
-char	**segment_full(char **tok, int segment_idx);
-
-void	has_shell_operator(t_central *central, char **split)
+t_input	*find_cmd(t_input *cmd)
 {
-	char	**tmp;
-	char	**redir;
+	t_input	*tmp;
 
-	if (to_pipe(central, split) != 0)
+	tmp = cmd;
+	while (tmp->token != ARGUMENT)
+		tmp = tmp->next;
+	return (tmp);
+}
+
+void	has_shell_operator(t_central *central)
+{
+
+	if (to_pipe(central) != 0)
 	{
-		tmp = strip_redirs(split);
-		redir = segment_full(split, 0);
-		has_to_redirect(central, redir);
-		do_solo(central, tmp);
-		ft_freesplit(tmp);
-		ft_freesplit(redir);
+		has_to_redirect(central, central->cmd[0]);
+		do_solo(central, central->cmd[0]);
 	}
 }
 

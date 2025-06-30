@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 15:32:58 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:38:01 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,27 @@
  * @param home_path The path to the home directory in case the
  *  is called to travel to home.
  */
-void	ft_cd(t_central *central, char **split)
+void	ft_cd(t_central *central, t_input *cmd)
 {
-	t_envp	*temp;
+	t_envp	*tmp_env;
+	t_input	*tmp_cmd;
 
-	if ((split[1] == NULL && access(split[1], F_OK) != 0) \
-		|| (split[1][0] == '~' && split[1][1] == '\0'))
+	tmp_cmd = cmd;
+	while (ft_strcmp(tmp_cmd->value, "cd") != 0)
+		tmp_cmd = tmp_cmd->next;
+	if ((tmp_cmd->next == NULL && access(tmp_cmd->next->value, F_OK) != 0) \
+		|| (tmp_cmd->next->value[0] == '~' && tmp_cmd->next->value[1] == '\0')) // this has different behaviours deppending if its used as "cd" (doesnt work without HOME set) or "cd ~" (works without HOME set)
 	{
-		temp = central->dupenv;
 		set_old_pwd(&central->dupenv);
 		set_home(&central->dupenv);
-		while (ft_strcmp(temp->var, "HOME") != 0)
-			temp = temp->next;
-		chdir(temp->value);
+		tmp_env = ft_getenv(&central->dupenv, "HOME");
+		chdir(tmp_env->value);
 	}
-	else if (access(split[1], F_OK) == 0)
-		set_cd_values(&central->dupenv, split);
+	else if (access(tmp_cmd->next->value, F_OK) == 0)
+		set_cd_values(&central->dupenv, tmp_cmd);
 	else
 	{
-		not_dir(split[1]);
+		not_dir(tmp_cmd->next->value);
 		central->exit_val = 1;
 		return ;
 	}
@@ -49,19 +51,22 @@ void	ft_cd(t_central *central, char **split)
  * @param dupenv A linked list with the duplicated envp stored whitin it.
  * @param split An array of arrays with the prompt received from read line.
  */
-void	set_cd_values(t_envp **dupenv, char **split)
+void	set_cd_values(t_envp **dupenv, t_input *cmd)
 {
-	if (ft_strcmp("..", split[1]) == 0)
+	t_input	*tmp;
+
+	tmp = cmd;
+	if (ft_strcmp("..", tmp->next->value) == 0)
 	{
 		set_old_pwd(dupenv);
 		set_back(dupenv);
-		chdir(split[1]);
+		chdir(tmp->next->value);
 	}
 	else
 	{
 		set_old_pwd(dupenv);
-		set_pwd(dupenv, split[1]);
-		chdir(split[1]);
+		set_pwd(dupenv, tmp->next->value);
+		chdir(tmp->next->value);
 	}
 }
 

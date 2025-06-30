@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 15:32:58 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:28:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,58 @@
  *  flags or with the -n flag (no new line).
  * @param split An array of arrays with the prompt received from read line.
  */
-void	ft_echo(t_central *central, char **split)
+void	ft_echo(t_central *central, t_input *cmd)
 {
-	int	i;
+	t_input *tmp;
 
-	if (split[1] == NULL)
+	tmp = cmd;
+	while (ft_strcmp(tmp->value, "echo") != 0)
+		tmp = tmp->next;
+	if (tmp->next == NULL)
 		printf("\n");
-	else if ((ft_strcmp(split[1], "-n") == 0) && (split[2] == NULL))
-	{
-		central->exit_val = 0;
-		return ;
-	}
-	else if (ft_strncmp(split[1], "-n", 2) == 0)
-		echo_n(split);
+	else if ((ft_strcmp(tmp->next->value, "-n") == 0) && (tmp->next->next == NULL))
+		return (central->exit_val = 0, (void)0);
+	else if (ft_strncmp(tmp->next->value, "-n", 2) == 0)
+		echo_n(tmp->next);
 	else
 	{
-		i = 0;
-		while (split[++i])
+		tmp = tmp->next;
+		while (tmp)
 		{
-			printf("%s", split[i]);
-			if (split[i + 1] != NULL)
-				write(1, " ", 1);
+			if (tmp->token != ARGUMENT)
+				break ;
+			do_echo(tmp);
+			tmp = tmp->next;
 		}
 		printf("\n");
 	}
 	central->exit_val = 0;
 }
 
-void	echo_n(char **split)
+void	do_echo(t_input *cmd)
 {
-	int	i;
+	t_input *tmp;
 
-	i = 1;
-	while (split[++i])
+	tmp = cmd;
+	if (tmp->token == ARGUMENT)
+		printf("%s", tmp->value);
+	if (tmp->next != NULL && tmp->next->token == ARGUMENT)
+		write(1, " ", 1);
+}
+
+void	echo_n(t_input *cmd)
+{
+	t_input	*tmp;
+
+	tmp = cmd;
+	while (tmp)
 	{
-		printf("%s", split[i]);
-		if (split[i + 1] != NULL)
+		if (tmp->token != ARGUMENT)
+			break ;
+		if (tmp->token == ARGUMENT)
+			printf("%s", tmp->value);
+		if (tmp->next != NULL && tmp->next->token == ARGUMENT)
 			write(1, " ", 1);
+		tmp = tmp->next;
 	}
 }

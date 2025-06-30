@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 11:08:14 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:38:22 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,30 @@
  * @brief Built-in function that behaves just like
  *  the env command, prints all the current environmental variables.
  */
-void	ft_env(t_central *central, char **split)
+void	ft_env(t_central *central, t_input *cmd)
 {
-	t_envp	*tmp;
+	t_envp	*tmp_env;
+	t_input	*tmp_cmd;
 
-	tmp = central->dupenv;
-	while (tmp && ft_strcmp(tmp->var, "PATH") != 0)
-		tmp = tmp->next;
-	if (!tmp)
+	tmp_cmd = cmd;
+	tmp_env = ft_getenv(&central->dupenv, "PATH");
+	while (ft_strcmp(tmp_cmd->value, "env") != 0)
+		tmp_cmd = tmp_cmd->next;
+	if (!tmp_env)
 		return (central->exit_val = 127, (void)0);
-	if (split[1] != NULL)
+	if (tmp_cmd->next != NULL)
+		return (ft_putstr_fd("Invalid arguments\n", 2), central->exit_val = 1, (void)0);
+	tmp_env = central->dupenv;
+	while (tmp_env != NULL)
 	{
-		central->exit_val = 1;
-		return (ft_putstr_fd("invalid arguments\n", 2), (void)0);
-	}
-	tmp = central->dupenv;
-	while (tmp != NULL)
-	{
-		if (tmp->visible_env == TRUE)
+		if (tmp_env->visible_env == TRUE)
 		{
-			if (tmp->value == NULL)
-				printf("%s=\n", tmp->var);
+			if (tmp_env->value == NULL)
+				printf("%s=\n", tmp_env->var);
 			else
-				printf("%s=%s\n", tmp->var, tmp->value);
+				printf("%s=%s\n", tmp_env->var, tmp_env->value);
 		}
-		tmp = tmp->next;
+		tmp_env = tmp_env->next;
 	}
 	central->exit_val = 0;
 }

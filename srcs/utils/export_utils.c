@@ -6,33 +6,33 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 11:15:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:50:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_special_exportion(t_central *central, char **split)
+int	is_special_exportion(t_central *central, char *exportion)
 {
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(split[1][0]) == 0)
+	if (ft_isalpha(exportion[0]) == 0)
 	{
-		bad_export(split[1]);
+		bad_export(exportion);
 		central->exit_val = 1;
 		return (2);
 	}
-	while (split[1][i])
+	while (exportion[i])
 	{
-		if (split[1][i] == '=')
+		if (exportion[i] == '=')
 			break ;
 		i++;
 	}
-	if (split[1][i] == '=' && split[1][i + 1] == '\0')
-		return (hidden_export(central, split, TRUE), 1);
-	else if (split[1][i] != '=')
-		return (hidden_export(central, split, FALSE), 1);
+	if (exportion[i] == '=' && exportion[i + 1] == '\0')
+		return (hidden_export(central, exportion, TRUE), 1);
+	else if (exportion[i] != '=')
+		return (hidden_export(central, exportion, FALSE), 1);
 	return (0);
 }
 
@@ -46,13 +46,13 @@ void	print_declaration(t_envp *curr)
 		printf("declare -x %s=\"%s\"\n", curr->var, curr->value);
 }
 
-void	hidden_export(t_central *central, char **split, int has_equal)
+void	hidden_export(t_central *central, char *exportion, int has_equal)
 {
 	t_envp	*new;
 
-	if (should_revalue(&central->dupenv, split) == 0)
+	if (should_revalue(&central->dupenv, exportion) == 0)
 	{
-		new = new_valuesless_env(split[1]);
+		new = new_valuesless_env(exportion);
 		new->visible_env = FALSE;
 		new->has_equal = has_equal;
 		insert_before_last(&central->dupenv, new);

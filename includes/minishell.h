@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 11:10:51 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:54:49 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_central
 	struct s_input	**cmd;
 	char			**pipe_matrix;
 	int				matrix_len;
+	int				curr_cmd;
 }	t_central;
 
 typedef struct s_envp
@@ -80,18 +81,19 @@ typedef struct s_envp
 // BUILT-IN //
 
 // cd //
-void	ft_cd(t_central *central, char **split);
-void	set_cd_values(t_envp **dupenv, char **split);
+void	ft_cd(t_central *central, t_input *cmd);
+void	set_cd_values(t_envp **dupenv, t_input *cmd);
+void	set_home(t_envp **dupenv);
 void	set_pwd(t_envp **dupenv, char *path);
 void	set_old_pwd(t_envp **dupenv);
-void	set_home(t_envp **dupenv);
 
 // echo //
-void	ft_echo(t_central *central, char **split);
-void	echo_n(char **split);
+void	ft_echo(t_central *central, t_input *cmd);
+void	do_echo(t_input *cmd);
+void	echo_n(t_input *cmd);
 
 // env //
-void	ft_env(t_central *central, char **split);
+void	ft_env(t_central *central, t_input *cmd);
 t_envp	*new_env(char *envp);
 int		init_env(t_envp **dupenv, char **envp);
 int		duplicate_env(t_envp **dupenv, char **envp);
@@ -100,9 +102,9 @@ int		duplicate_env(t_envp **dupenv, char **envp);
 void	ft_exit(t_central *central, char *exit_val);
 
 // export //
-int		should_revalue(t_envp **dupenv, char**split);
+int		should_revalue(t_envp **dupenv, char *exportion);
 void	declarex(t_envp **dupenv);
-void	ft_export(t_central *central, char **split);
+void	ft_export(t_central *central, t_input *cmd);
 
 // pwd //
 void	ft_pwd(t_central *central);
@@ -126,8 +128,8 @@ void	ft_freesplit(char **split);
 // COMMANDS //
 
 // executer //
-int		commander(t_central *central, char **split);
-void	executer(char *exec, t_central *central, char **split);
+int		commander(t_central *central, t_input *cmd);
+void	executer(char *exec, t_central *central, t_input *cmd);
 char	*pather(t_envp *path, char *cmd);
 
 //--------------------------------------------------------------//
@@ -138,7 +140,7 @@ char	*pather(t_envp *path, char *cmd);
 void	bad_export(char *str);
 void	bad_doc(char *str);
 void	no_perms(char *str);
-void	comm_not_foud(char *str);
+void	comm_not_found(char *str);
 void	not_dir(char *str);
 
 //--------------------------------------------------------------//
@@ -147,40 +149,40 @@ void	not_dir(char *str);
 
 // minishell //
 int		main(int ac, char **av, char **env);
-void	do_cmd(t_central *central, char **split);
+void	do_cmd(t_central *central, t_input *cmd);
 void	rl_loop(t_central *central);
-int		do_builtin(t_central *central, char **split);
+int		do_builtin(t_central *central, t_input *cmd);
 
 //--------------------------------------------------------------//
 
 // PIPES //
 
 // pipe //
-void	execute_pipes(t_central *central, char **split,
-			int (*pipe_fd)[2], int curr_index, int pipe_amm);
-void	piper(t_central *central, char **split, int cmd_count);
+void	execute_pipes(t_central *central, t_input *cmd, \
+			int (*pipe_fd)[2], int curr_index);
+void	piper(t_central *central);
 
 //--------------------------------------------------------------//
 
 // REDIRECTIONS //
 
 // append_redir //
-int	append_redir(char *to_set);
+int	append_redir(t_input *cmd);
 
 // heredoc //
 int		ft_heredoc(char *delimiter);
 void	redirect_to_doc(int fd);
 
 // input_redir //
-int		set_input(char *to_set);
+int		set_input(t_input *cmd);
 
 // output_redir //
-int		set_output(char *to_set);
+int		set_output(t_input *cmd);
 
 // redirect //
-int		has_to_redirect(t_central *central, char **split);
-int		set_redirections(t_central *central, char **split);
-int		do_redirection(char **split, int index);
+int		has_to_redirect(t_central *central, t_input *cmd);
+int		set_redirections(t_central *central, t_input *cmd);
+int		do_redirection(t_input *cmd);
 
 //--------------------------------------------------------------//
 // SIGNALS //
@@ -209,21 +211,21 @@ t_envp	*ft_getenv(t_envp **dupenv, char *to_find);
 char	*get_line(t_envp *dupenv);
 char	**get_exec_env(t_envp **dupenv);
 int		is_relative(char *cmd);
-void	do_solo(t_central *central, char **split);
+void	do_solo(t_central *central, t_input *cmd);
 
 // export utils //
-int		is_special_exportion(t_central *central, char **split);
+int		is_special_exportion(t_central *central, char *exportion);
 void	print_declaration(t_envp *curr);
-void	hidden_export(t_central *central, char **split, int has_equal);
+void	hidden_export(t_central *central, char *exportion, int has_equal);
 t_envp	*new_valuesless_env(char *envp);
-int		to_pipe(t_central *central, char **split);
+int		to_pipe(t_central *central);
 
 // list_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
 t_envp	*lstlast(t_envp **dupenv);
 
 // pipe_utils //
-int		to_pipe(t_central *central, char **split);
+int		to_pipe(t_central *central);
 void	init_pipes(int (*pipe_fd)[2], int pipe_amm);
 void	close_unused_pipes(int (*pipe_fd)[2], int pipe_amm, int current_index);
 void	set_pipe_fds(int (*pipe_fd)[2], int pipe_amm, int current_index);
@@ -233,10 +235,12 @@ void	close_all_pipes(int (*pipe_fd)[2], int pipe_amm);
 void	reset_fds(int status);
 
 // utils //
-void	has_shell_operator(t_central *central, char **split);
+char	**get_exec_flags(t_input *cmd);
+t_input	*find_cmd(t_input *cmd);
+void	has_shell_operator(t_central *central);
 int		ft_strcmp(char *s1, char *s2);
 void	increase_shlvl(t_envp **dupenv);
-int		is_built_in(char *str);
+int		is_built_in(t_input *cmd);
 
 //--------------------------------------------------------------//
 

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 11:25:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:43:50 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,17 @@ int	is_relative(char *cmd)
 
 char	**strip_redirs(char **tok);
 
-void	do_solo(t_central *central, char **split)
+void	do_solo(t_central *central, t_input *cmd)
 {
 	pid_t	pid;
+	t_input	*tmp;
 	int		status;
 	int		pipe_fd[2];
 
-	if (is_built_in(split[0]) == 0)
+	tmp = cmd;
+	if (is_built_in(cmd) == 0)
 	{
-		do_builtin(central, split);
+		do_builtin(central, cmd);
 		return ;
 	}
 	pipe(pipe_fd);
@@ -92,30 +94,36 @@ void	do_solo(t_central *central, char **split)
 	status = 0;
 	if (pid == 0)
 	{
-		has_to_redirect(central, split);
-		do_cmd(central, strip_redirs(split));
+		has_to_redirect(central, cmd);
+		do_cmd(central, cmd);
 	}
 	else
 		waitpid(-1, &status, 0);
 	central->exit_val = (status >> 8) & 0xFF;;
 }
 
-int	is_built_in(char *cmd)
+int	is_built_in(t_input *cmd)
 {
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "cd") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "pwd") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "env") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (0);
-	else
-		return (1);
+	t_input *tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->value, "echo") == 0)
+			return (0);
+		else if (ft_strcmp(tmp->value, "cd") == 0)
+			return (0);
+		else if (ft_strcmp(tmp->value, "pwd") == 0)
+			return (0);
+		else if (ft_strcmp(tmp->value, "env") == 0)
+			return (0);
+		else if (ft_strcmp(tmp->value, "export") == 0)
+			return (0);
+		else if (ft_strcmp(tmp->value, "exit") == 0)
+			return (0);
+		else if (ft_strcmp(tmp->value, "unset") == 0)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
 }
