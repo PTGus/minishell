@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   spacing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:10:09 by david-fe          #+#    #+#             */
-/*   Updated: 2025/05/15 17:10:53 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:32:48 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief Allocates an array to accomodate respaced commands,
+ *  removing at edges and extras
+ * @return 0 if no issues, >0 on malloc error
  */
 int	ft_remove_extra_spaces(t_central *central)
 {
@@ -47,9 +47,10 @@ int	ft_remove_extra_spaces(t_central *central)
 }
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief	Takes a string and counts len excluding starting, ending and
+ * extra spaces, except quoted spaces
+ * @param	String to count
+ * @return	New len value
  */
 int	ft_new_spaced_len(char *command)
 {
@@ -78,9 +79,10 @@ int	ft_new_spaced_len(char *command)
 }
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief	Assigns the new string skipping extra spaces
+ * @param	new_split - newly alloc'ed split to assign
+ * @param	matrix - previous matrix, to copy from
+ * @param	i - passed for singling out one string at a time
  */
 void	ft_assign_new_split(char **new_split, char **matrix, int i)
 {
@@ -112,9 +114,9 @@ void	ft_assign_new_split(char **new_split, char **matrix, int i)
 }
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief	Iterates string to check if rest is space
+ * @param	str - string to check
+ * @return	1 all space, 0 if non-space is found
  */
 int	ft_rest_is_space(char *str, int j)
 {

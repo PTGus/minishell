@@ -1,0 +1,15 @@
+
+TO-DO
+- spaced expands mess with quotes for quote expander
+- certain invalid read of size 1 in expands/quotes
+- need getenv for dupenv
+- after that check crazy testing from diogo
+
+
+DONE
+- update minishell.h and rebase
+- separate spaced expands into diff nodes
+- document quotes, expander and spaced nodes
+- erase quotes
+- write $ when it has nothing after
+

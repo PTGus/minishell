@@ -6,37 +6,23 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:27:01 by david-fe          #+#    #+#             */
-/*   Updated: 2025/06/30 15:50:05 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:32:45 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_error(char *message)
-{
-	printf("%s ERROR! (no exit)\n", message);
-}
-
-/**
- * @brief Initializes all parse related elements in central
- * @param Central struct
- */
-void	ft_init_parse(t_central *central)
-{
-	central->cmd = NULL;
-	central->pipe_matrix = NULL;
-	central->matrix_len = 0;
-}
-
 /**
  * @brief Central parsing function - inits, checks for open quotes
- * splits by pipes for further parsing, normalizes spacing,
- *  tranforms input into list of tokens
+ * splits by pipes for further parsing, normalizes spacing, 
+ * tranforms input into list of tokens
  * @param prompt Full input from readline
  * @param central Struct with pointers to all relevant structs/data
  */
 int	ft_parse(char *prompt, t_central *central)
 {
+	if (prompt[0] == 'x')
+		exit(0);
 	ft_init_parse(central);
 	if (!prompt)
 		return (0);
@@ -51,5 +37,23 @@ int	ft_parse(char *prompt, t_central *central)
 		ft_error("redirect");
 	ft_tokenizer(central);
 	ft_expander(central);
+	ft_quote_eraser(central);
 	return (0);
 }
+
+/**
+ * @brief Initializes all parse related elements in central
+ * @param Central struct
+ */
+void	ft_init_parse(t_central *central)
+{
+	central->cmd = NULL;
+	central->pipe_matrix = NULL;
+	central->matrix_len = 0;
+}
+
+void	ft_error(char *message)
+{
+	printf("%s ERROR! (no exit)\n", message);
+}
+	//exit(0);

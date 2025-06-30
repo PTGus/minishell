@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:32:39 by david-fe          #+#    #+#             */
-/*   Updated: 2025/05/26 13:44:10 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:52:54 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ void	ft_free_list_err(t_central *central, char *str, t_input *current)
 	central->cmd = NULL;
 }
 
-void	ft_free_strings(char *temp, char *expand, int null_exp)
+void	ft_free_strings(char *temp, char *expand)
 {
 	if (temp)
 	{
 		free(temp);
 		temp = NULL;
 	}
-	if (null_exp == 1)
+	if (expand)
 	{
 		free(expand);
 		expand = NULL;

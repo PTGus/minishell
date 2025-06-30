@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:21:14 by david-fe          #+#    #+#             */
-/*   Updated: 2025/05/30 10:21:39 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:32:46 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,9 @@ void	ft_print_list_array(t_input **array)
 		temp = array[i];
 		while (temp)
 		{
-			printf("l%i:'%s'(t:%i)\n", temp->index, temp->value, temp->token);
+			printf("l%i:%s(t:%i)\n", temp->index, temp->value, temp->token);
 			temp = temp->next;
 		}
 		printf("\n");
 	}
 }
-

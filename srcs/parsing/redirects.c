@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:21:41 by david-fe          #+#    #+#             */
-/*   Updated: 2025/05/19 15:22:19 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:32:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief	Caller function for adding space to unspaced redirects < > << >>
+ * @param	to_space - Amount of extra spaces to allocate for 
+ * @return	0 all correct, >0 on invalid redirects or malloc errors
  */
 int	ft_space_redirects(t_central *central)
 {
@@ -46,9 +46,9 @@ int	ft_space_redirects(t_central *central)
 }
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief	Iterates through the matrix, on finding < or >
+ * calls for a validity check
+ * @return	0 all correct, 1 if redirect_check return error
  */
 int	ft_are_redirects_invalid(t_central *central)
 {
@@ -74,9 +74,11 @@ int	ft_are_redirects_invalid(t_central *central)
 }
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief	Checks for illegal combinations for redirs <<, >>, <>, >>>, <<<
+ * and for redirects at the end, erroring
+ * @param	str - String to check for valid redirects
+ * @param	j - Position of previously found '<' or '>'
+ * @return	0 if valid redirect, 1 otherwise
  */
 int	ft_redirect_check(char *str, int j)
 {
@@ -93,9 +95,11 @@ int	ft_redirect_check(char *str, int j)
 }
 
 /**
- * @brief 
- * @param
- * @return
+ * @brief	Counts how many extra spaces are needed for the redirects
+ * @param	str - String to check at position j
+ * @param	extra_space - continuously receives and updates amount of 
+ * needed space
+ * @return	Amount of extra spaces needed
  */
 int	ft_count_unspaced_redirects(char *str, int j, int extra_space)
 {
@@ -110,10 +114,10 @@ int	ft_count_unspaced_redirects(char *str, int j, int extra_space)
 }
 
 /**
- * @brief 
- * @param
- * @return
- */
+ * @brief	Allocates and assigns spaced version of the string
+ * @param	str - pipe being currently respaced
+ * @return	Newly alloc'ed, spaced string
+*/
 char	*ft_realloc_redir_str(char *str, int to_space)
 {
 	char	*new_str;
