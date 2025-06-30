@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/26 09:29:05 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:12:13 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ft_export(t_central *central, char **split)
 			new = new_env(split[1]);
 			insert_before_last(&central->dupenv, new);
 		}
+		reorder_dupenv(&central->dupenv);
+		central->exit_val = 0;
 	}
-	reorder_dupenv(&central->dupenv);
-	central->exit_val = 0;
 }

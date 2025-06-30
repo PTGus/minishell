@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 14:08:04 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:10:51 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ char	*pather(t_envp *path, char *cmd);
 // ERR_HANDLING //
 
 // errors //
+void	bad_export(char *str);
 void	bad_doc(char *str);
 void	no_perms(char *str);
 void	comm_not_foud(char *str);

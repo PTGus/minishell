@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 11:09:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:15:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int	is_special_exportion(t_central *central, char **split)
 	int	i;
 
 	i = 0;
+	if (ft_isalpha(split[1][0]) == 0)
+	{
+		bad_export(split[1]);
+		central->exit_val = 1;
+		return (2);
+	}
 	while (split[1][i])
 	{
 		if (split[1][i] == '=')

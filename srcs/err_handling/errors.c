@@ -6,11 +6,18 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/02 13:56:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:10:22 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	bad_export(char *str)
+{
+	ft_putstr_fd("bash: export: \'", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+}
 
 void	bad_doc(char *str)
 {
