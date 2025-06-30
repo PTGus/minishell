@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 13:35:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:25:53 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	do_solo(t_central *central, char **split)
 	}
 	else
 		waitpid(-1, &status, 0);
-	central->exit_val = status;
+	central->exit_val = (status >> 8) & 0xFF;;
 }
 
 int	is_built_in(char *cmd)

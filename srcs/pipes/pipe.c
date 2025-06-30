@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 10:14:43 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:26:48 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	piper(t_central *central, char **split, int cmd_count)
 	i = -1;
 	while (++i < cmd_count)
 		waitpid(pid[i], &status, 0);
-	central->exit_val = status;
+	central->exit_val = (status >> 8) & 0xFF;
 	free(pid);
 	free(pipe_fd);
 }
