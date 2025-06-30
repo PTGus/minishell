@@ -37,7 +37,6 @@ int	ft_tokenizer(t_central *central)
 			temp = temp->next;
 		}
 	}
-	ft_print_list_array(central->cmd);
 	return (0);
 }
 //ft_free_list_err(central, NULL, NULL);

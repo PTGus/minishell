@@ -38,6 +38,7 @@ int	ft_parse(char *prompt, t_central *central)
 	ft_tokenizer(central);
 	ft_expander(central);
 	ft_quote_eraser(central);
+	ft_print_list_array(central->cmd);
 	printf("\nEOP\n");
 	return (0);
 }

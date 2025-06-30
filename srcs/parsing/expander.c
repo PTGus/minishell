@@ -39,7 +39,6 @@ int	ft_expander(t_central *central)
 			current = next;
 		}
 	}
-	ft_print_list_array(central->cmd);
 	return (0);
 }
 
