@@ -6,18 +6,62 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:41:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:06:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// temporary function to be deleted used only in testing
+char	**strip_redirs(char **tok)
+{
+	int		i;
+	int		j;
+	int		count;
+	char	**out;
+
+	i = 0;
+	while (tok[i])
+		i++;
+	count = i;
+	out = ft_calloc(count + 1, sizeof(char *));
+	if (!out)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (tok[i])
+	{
+		if (!ft_strcmp(tok[i], "<") || !ft_strcmp(tok[i], ">")
+			|| !ft_strcmp(tok[i], ">>") || !ft_strcmp(tok[i], "<<"))
+		{
+			if (tok[i + 1])     // skip operator + filename (if present)
+				i += 2;
+			else
+				i += 1;         // malformed: operator at end
+		}
+		else
+			out[j++] = ft_strdup(tok[i++]);
+	}
+	out[j] = NULL;
+	return (out);
+}
+
+char	**segment_full(char **tok, int segment_idx);
+
 void	has_shell_operator(t_central *central, char **split)
 {
-	if (to_pipe(central, split) == 0)
-		return ;
-	else
-		do_cmd(central, split);
+	char	**tmp;
+	char	**redir;
+
+	if (to_pipe(central, split) != 0)
+	{
+		tmp = strip_redirs(split);
+		redir = segment_full(split, 0);
+		has_to_redirect(central, redir);
+		do_solo(central, tmp);
+		ft_freesplit(tmp);
+		ft_freesplit(redir);
+	}
 }
 
 /**
@@ -35,4 +79,24 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (s1[i] - s2[i]);
+}
+
+void	increase_shlvl(t_envp **dupenv)
+{
+	t_envp	*tmp;
+	int		tmp_val;
+
+	tmp = ft_getenv(dupenv, "SHLVL");
+	if (!tmp)
+	{
+		tmp = new_env("SHLVL=0");
+		insert_before_last(dupenv, tmp);
+		reorder_dupenv(dupenv);
+		return ;
+	}
+	tmp_val = ft_atoi(tmp->value);
+	tmp_val++;
+	free(tmp->value);
+	tmp->value = NULL;
+	tmp->value = ft_itoa(tmp_val);
 }

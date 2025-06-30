@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:29:16 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:28:52 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ int	commander(t_central *central, char **split)
 	t_envp	*path;
 	char	*exec;
 
-	path = central->dupenv;
-	while (ft_strcmp(path->var, "PATH") != 0 && path != NULL)
-		path = path->next;
+	path = ft_getenv(&central->dupenv, "PATH");
 	if (!path)
 	{
-		central->exit_val = 127;
-		return (not_dir(split[0]), 1);
+		not_dir(split[0]);
+		clean_all(central);
+		exit(127);
 	}
 	else
 		exec = pather(path, split[0]);
 	if (!exec)
 	{
 		comm_not_foud(split[0]);
-		central->exit_val = 127;
-		return (free(exec), 1);
+		free(exec);
+		clean_all(central);
+		exit(127);
 	}
 	executer(exec, central, split);
 	free(exec);
@@ -55,28 +55,12 @@ int	commander(t_central *central, char **split)
 void	executer(char *exec, t_central *central, char **split)
 {
 	char	**envp;
-	int		status;
-	pid_t	pid;
 
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("pid");
-		exit (1);
-	}
-	if (pid == 0)
-	{
-		envp = get_exec_env(&central->dupenv);
-		execve(exec, split, envp);
-		perror("execve");
-		clean_all(central);
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		waitpid(-1, &status, 0);
-		central->exit_val = status;
-	}
+	envp = get_exec_env(&central->dupenv);
+	execve(exec, split, envp);
+	clean_all(central);
+	ft_free_split(envp);
+	exit(1);
 }
 
 /**
@@ -94,6 +78,8 @@ char	*pather(t_envp *path, char *cmd)
 	char	**all_paths;
 	char	*path_part;
 
+	if (is_relative(cmd) == 0)
+		return (ft_strdup(cmd));
 	all_paths = ft_split(path->value, ':');
 	i = -1;
 	while (all_paths[++i])

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:49:56 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/26 15:49:52 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/11 12:27:30 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ void	close_all_pipes(int (*pipe_fd)[2], int pipe_amm)
 void	set_pipe_fds(int (*pipe_fd)[2], int pipe_count, int idx)
 {
 	if (idx > 0)
+	{
 		dup2(pipe_fd[idx - 1][0], STDIN_FILENO);
+		close(pipe_fd[idx - 1][0]);
+	}
 	if (idx < pipe_count)
+	{
 		dup2(pipe_fd[idx][1], STDOUT_FILENO);
+		close(pipe_fd[idx][1]);
+	}
 }
 
 void	close_unused_pipes(int (*pipe_fd)[2], int pipe_count, int idx)

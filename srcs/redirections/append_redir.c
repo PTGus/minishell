@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_redir.c                                      :+:      :+:    :+:   */
+/*   append_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 12:11:52 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/29 13:29:33 by gumendes         ###   ########.fr       */
+/*   Created: 2025/05/28 11:10:23 by gumendes          #+#    #+#             */
+/*   Updated: 2025/05/28 14:08:51 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_input(char *to_set)
+int	append_redir(char *to_set)
 {
 	int	fd;
 
-	if (access(to_set, F_OK) == 0)
-	{
-		if (access(to_set, R_OK) == 0)
-		{
-			fd = open(to_set, O_RDONLY | O_APPEND);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-			return (0);
-		}
-		else
-		{
-			no_perms(to_set);
-			return (2);
-		}
-	}
+	if ((access(to_set, F_OK) != 0) || (access(to_set,  W_OK) != 0))
+		return (no_perms(to_set), 2);
 	else
 	{
-		not_dir(to_set);
-		return (2);
+		fd = open(to_set, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		return (0);
 	}
 }

@@ -6,12 +6,16 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/27 14:40:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:10:51 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+extern int g_signal;
+
+# define _POSIX_C_SOURCE 200809L
 
 # include <readline/readline.h>
 #include <readline/history.h>
@@ -20,6 +24,7 @@
 # include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <dirent.h>
@@ -28,7 +33,6 @@
 # include <curses.h>
 # include <term.h>
 # include <errno.h>
-# include <signal.h>
 # include "../libft/libft.h"
 
 # define ARGUMENT	0
@@ -111,11 +115,11 @@ void	ft_unset(t_central *central, char *to_unset);
 // CLEAN_UP //
 
 // free //
+void	clean_doc(char *rl_doc);
 void	clean_all(t_central *central);
 void	ft_envfreeone(t_envp *dupenv);
 void	free_env(t_envp **dupenv);
 void	ft_freesplit(char **split);
-void	free_int_arr(int (*pipe_fd)[2], int elems);
 
 //--------------------------------------------------------------//
 
@@ -131,6 +135,9 @@ char	*pather(t_envp *path, char *cmd);
 // ERR_HANDLING //
 
 // errors //
+void	bad_export(char *str);
+void	bad_doc(char *str);
+void	no_perms(char *str);
 void	comm_not_foud(char *str);
 void	not_dir(char *str);
 
@@ -142,19 +149,40 @@ void	not_dir(char *str);
 int		main(int ac, char **av, char **env);
 void	do_cmd(t_central *central, char **split);
 void	rl_loop(t_central *central);
-int		is_built_in(t_central *central, char **split);
+int		do_builtin(t_central *central, char **split);
 
 //--------------------------------------------------------------//
 
 // PIPES //
 
 // pipe //
-// void	execute_pipes(t_central *central, char **split,
-// 			int (*pipe_fd)[2], int curr_index, int pipe_amm);
+void	execute_pipes(t_central *central, char **split,
+			int (*pipe_fd)[2], int curr_index, int pipe_amm);
 void	piper(t_central *central, char **split, int cmd_count);
 
 //--------------------------------------------------------------//
 
+// REDIRECTIONS //
+
+// append_redir //
+int	append_redir(char *to_set);
+
+// heredoc //
+int		ft_heredoc(char *delimiter);
+void	redirect_to_doc(int fd);
+
+// input_redir //
+int		set_input(char *to_set);
+
+// output_redir //
+int		set_output(char *to_set);
+
+// redirect //
+int		has_to_redirect(t_central *central, char **split);
+int		set_redirections(t_central *central, char **split);
+int		do_redirection(char **split, int index);
+
+//--------------------------------------------------------------//
 // SIGNALS //
 
 // signals //
@@ -175,10 +203,13 @@ void	organise_env(t_envp **dupenv);
 void	reorder_dupenv(t_envp **dupenv);
 void	env_delone(t_envp *to_del);
 void	insert_before_last(t_envp **dupenv, t_envp *curr);
+t_envp	*ft_getenv(t_envp **dupenv, char *to_find);
 
 // exec_utils //
 char	*get_line(t_envp *dupenv);
 char	**get_exec_env(t_envp **dupenv);
+int		is_relative(char *cmd);
+void	do_solo(t_central *central, char **split);
 
 // export utils //
 int		is_special_exportion(t_central *central, char **split);
@@ -204,6 +235,8 @@ void	reset_fds(int status);
 // utils //
 void	has_shell_operator(t_central *central, char **split);
 int		ft_strcmp(char *s1, char *s2);
+void	increase_shlvl(t_envp **dupenv);
+int		is_built_in(char *str);
 
 //--------------------------------------------------------------//
 

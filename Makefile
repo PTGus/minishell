@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/05/27 14:39:18 by gumendes         ###   ########.fr        #
+#    Updated: 2025/06/25 13:45:31 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ SRC_COMMAND	=	$(addprefix commands/, executer.c)
 SRC_ERRORS	=	$(addprefix err_handling/, errors.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_PIPES	=	$(addprefix pipes/, pipe.c)
-SRC_REDIR	=	$(addprefix redirections/, input_redir.c output_redir.c redirect.c)
+SRC_REDIR	=	$(addprefix redirections/, append_redir.c heredoc.c input_redir.c output_redir.c redirect.c)
 SRC_SIGNALS	=	$(addprefix signals/, signals.c)
 SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c export_utils.c list_utils.c pipe_utils.c redir_utils.c utils.c)
 SRC_PARSE	= 	$(addprefix parsing/, parsing.c quotes.c split.c spacing.c redirects.c \
@@ -79,9 +79,10 @@ $(LIBFT):
 	@if [ ! -d "libft" ]; then make get_libft; fi
 
 get_libft:
-	@git clone git@github.com:PTGus/libft.git
-	@echo "$(GRN)[LIBFT CLONED]$(END)"
-	@$(MAKE) -C $(LIBFT_PATH)
+	@echo "$(CYA)Cloning libft...$(D)"
+	@git clone --quiet git@github.com:PTGus/libft.git
+	@echo "$(GRN)[LIBFT CLONED]$(D)"
+	@$(MAKE) --no-print-directory -s -C $(LIBFT_PATH)
 
 # Build the minishell program
 $(NAME): $(LIBFT) $(OBJ)
@@ -91,6 +92,7 @@ $(NAME): $(LIBFT) $(OBJ)
 # Rule to create object files in the .build folder
 $(BUILD_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(dir $@)
+	@echo "$(CYA)Compiling $(notdir $<)...$(D)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean object files
@@ -117,8 +119,12 @@ fclean: clean
 # Rebuild the project
 re: fclean all
 
+# Rebuilds the project and clears the output
+clear: re
+	@clear
+
 # Phony targets
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re clear
 
 #==============================================================================#
 #                                  UTILS                                       #

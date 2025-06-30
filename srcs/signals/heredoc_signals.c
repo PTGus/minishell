@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_redir.c                                      :+:      :+:    :+:   */
+/*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 12:11:52 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/29 13:29:33 by gumendes         ###   ########.fr       */
+/*   Created: 2025/06/25 14:10:36 by gumendes          #+#    #+#             */
+/*   Updated: 2025/06/26 09:28:18 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_input(char *to_set)
+static void	heredoc_sigint(int sig)
 {
-	int	fd;
+	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+	close(STDIN_FILENO);
+	g_signal = 130;
+}
 
-	if (access(to_set, F_OK) == 0)
-	{
-		if (access(to_set, R_OK) == 0)
-		{
-			fd = open(to_set, O_RDONLY | O_APPEND);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-			return (0);
-		}
-		else
-		{
-			no_perms(to_set);
-			return (2);
-		}
-	}
-	else
-	{
-		not_dir(to_set);
-		return (2);
-	}
+{
+// Call this before reading your heredoc lines
+void	setup_heredoc_signals(void)
+	struct sigaction sa;
+
+	sa.sa_handler = &heredoc_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/22 16:02:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:08:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ void	ft_env(t_central *central, char **split)
 {
 	t_envp	*tmp;
 
+	tmp = central->dupenv;
+	while (tmp && ft_strcmp(tmp->var, "PATH") != 0)
+		tmp = tmp->next;
+	if (!tmp)
+		return (central->exit_val = 127, (void)0);
 	if (split[1] != NULL)
 	{
-		ft_putstr_fd("invalid arguments\n", 2);
 		central->exit_val = 1;
-		return ;
+		return (ft_putstr_fd("invalid arguments\n", 2), (void)0);
 	}
 	tmp = central->dupenv;
 	while (tmp != NULL)
@@ -55,9 +59,11 @@ t_envp	*new_env(char *envp)
 	new = ft_calloc(1, sizeof(t_envp));
 	if (!new)
 		return (NULL);
+	new->value = NULL;
 	new->next = NULL;
 	new->prev = NULL;
 	new->visible_env = TRUE;
+	new->has_equal = TRUE;
 	if (envp[0] == '_')
 		new->index = -2;
 	else
@@ -70,8 +76,6 @@ t_envp	*new_env(char *envp)
 	free(tmp);
 	if (envp[i + 1] >= 33 && envp[i + 1] <= 126)
 		new->value = ft_strdup(envp + (1 + i));
-	else
-		new->value = ft_strdup("");
 	return (new);
 }
 
