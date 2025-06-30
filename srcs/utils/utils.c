@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 10:08:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:40:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,14 @@ void	increase_shlvl(t_envp **dupenv)
 	t_envp	*tmp;
 	int		tmp_val;
 
-	tmp = *dupenv;
-	while (ft_strcmp(tmp->var, "SHLVL") != 0)
-		tmp = tmp->next;
+	tmp = ft_getenv(dupenv, "SHLVL");
+	if (!tmp)
+	{
+		tmp = new_env("SHLVL=0");
+		insert_before_last(dupenv, tmp);
+		reorder_dupenv(dupenv);
+		return ;
+	}
 	tmp_val = ft_atoi(tmp->value);
 	tmp_val++;
 	free(tmp->value);
