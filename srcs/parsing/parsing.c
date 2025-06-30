@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:27:01 by david-fe          #+#    #+#             */
-/*   Updated: 2025/05/06 12:18:38 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:11:11 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_init_parse(t_central *central)
 
 /**
  * @brief Central parsing function - inits, checks for open quotes
- * splits by pipes for further parsing, normalizes spacing, 
- * tranforms input into list of tokens
+ * splits by pipes for further parsing, normalizes spacing,
+ *  tranforms input into list of tokens
  * @param prompt Full input from readline
  * @param central Struct with pointers to all relevant structs/data
  */
@@ -52,10 +52,10 @@ int	ft_parse(char *prompt, t_central *central)
 		ft_error("spacing");
 	if (ft_space_redirects(central) != 0)
 		ft_error("redirect");
-	ft_print_arr(central->pipe_matrix);
-	printf("\n");
+	// ft_print_arr(central->pipe_matrix);
+	// printf("\n");
 	ft_tokenizer(central);
 	ft_expander(central);
-	printf("\nEOP\n");
+	// printf("\nEOP\n");
 	return (0);
 }

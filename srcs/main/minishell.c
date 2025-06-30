@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/25 14:12:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:13:49 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	rl_loop(t_central *central)
 	while (1)
 	{
 		rl = readline("minishell$ ");
-		printf("%i\n", central->exit_val);
 		if (rl == NULL)
 			ctrl_d(central);
 		if (rl[0] == '\0')
