@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/06/30 16:33:54 by gumendes         ###   ########.fr        #
+#    Updated: 2025/07/01 14:59:39 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ NAME		=	minishell
 #==============================================================================#
 
 SRC_BUILTIN	=	$(addprefix built_in/, cd.c echo.c env.c exit.c export.c pwd.c unset.c)
-SRC_CLEANUP	=	$(addprefix clean_up/, free.c)
+SRC_CLEANUP	=	$(addprefix clean_up/, free.c free2.c)
 SRC_COMMAND	=	$(addprefix commands/, executer.c)
 SRC_ERRORS	=	$(addprefix err_handling/, errors.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
@@ -95,6 +95,23 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.c
 	@echo "$(CYA)Compiling $(notdir $<)...$(D)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+leaks: all readline.supp
+	@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all -s ./minishell
+
+readline.supp:
+	@echo "{" > readline.supp
+	@echo "    leak readline" >> readline.supp
+	@echo "    Memcheck:Leak" >> readline.supp
+	@echo "    ..." >> readline.supp
+	@echo "    fun:readline" >> readline.supp
+	@echo "}" >> readline.supp
+	@echo "{" >> readline.supp
+	@echo "    leak add_history" >> readline.supp
+	@echo "    Memcheck:Leak" >> readline.supp
+	@echo "    ..." >> readline.supp
+	@echo "    fun:add_history" >> readline.supp
+	@echo "}" >> readline.supp
+
 # Clean object files
 clean:
 	@if [ -d "$(BUILD_PATH)" ]; \
@@ -114,6 +131,9 @@ fclean: clean
 		then echo "$(RED)[REMOVED LIBFT]$(END)"; \
 		$(RM) $(LIBFT_PATH) ; \
 		else echo "$(YEL)[LIBFT ALREADY CLEANED]$(END)"; \
+	fi
+	@if [ -f "readline.supp" ]; \
+		then $(RM) readline.supp ; \
 	fi
 
 # Rebuild the project

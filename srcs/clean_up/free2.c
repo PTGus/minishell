@@ -1,30 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   append_redir.c                                     :+:      :+:    :+:   */
+/*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 11:10:23 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 10:32:55 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/01 14:50:38 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/01 16:28:49 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	append_redir(t_input *cmd)
+void	post_loop_cleanup(t_central *central, char *rl)
 {
-	int		fd;
+	free_central_cmd(central);
+	free(rl);
+}
+
+void	free_input_list(t_input *head)
+{
 	t_input	*tmp;
 
-	tmp = cmd->next;
-	if ((access(tmp->value, F_OK) == 0) && (access(tmp->value,  W_OK) != 0))
-		return (no_perms(tmp->value), 2);
-	else
+	while (head)
 	{
-		fd = open(tmp->value, O_WRONLY | O_APPEND | O_CREAT, 0644);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-		return (0);
+		tmp = head->next;
+		if (head->value)
+			free(head->value);
+		free(head);
+		head = tmp;
 	}
+}
+
+void	free_central_cmd(t_central *central)
+{
+	int	i;
+
+	if (!central->cmd)
+		return;
+	i = 0;
+	while (central->cmd[i])
+	{
+		free_input_list(central->cmd[i]);
+		i++;
+	}
+	free(central->cmd);
+	central->cmd = NULL;
 }

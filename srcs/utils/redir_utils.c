@@ -6,11 +6,18 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:25:10 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/12 15:39:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:27:29 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	check_for_bad_redir(char *to_redir)
+{
+	if (ft_strcmp(to_redir, ">") == 0 || ft_strcmp(to_redir, "<") == 0
+		|| ft_strcmp(to_redir, ">>") == 0 || ft_strcmp(to_redir, "<<") == 0)
+		return (1);
+}
 
 void	reset_fds(int status)
 {

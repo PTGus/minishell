@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:54:49 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:14:09 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	bad_doc(char *str)
 	ft_putstr_fd("bash: warning: here-document ", 2);
 	ft_putstr_fd("at line 1 delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd("')\n", 2);
+	ft_putendl_fd("')", 2);
 }
 
 void	no_perms(char *str)
 {
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": Permission denied\n", 2);
+	ft_putendl_fd(": Permission denied", 2);
 }
 
 /**
@@ -40,7 +40,7 @@ void	no_perms(char *str)
 void	comm_not_found(char *str)
 {
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	ft_putendl_fd(": command not found", 2);
 }
 
 /**
@@ -51,5 +51,5 @@ void	not_dir(char *str)
 {
 	ft_putstr_fd("bash: cd: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	ft_putendl_fd(": No such file or directory", 2);
 }

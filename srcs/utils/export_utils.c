@@ -6,11 +6,35 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 14:50:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:59:48 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	plus_export(t_central *central, char *exportion)
+{
+	t_envp	*var;
+	char	*tmp;
+	char	*tmp2;
+	int		i;
+
+	i = 0;
+	while (exportion[i] != '+')
+		i++;
+	tmp = ft_substr(exportion, 0, i);
+	var = ft_getenv(&central->dupenv, tmp);
+	free(tmp);
+	if (!var)
+		return (0);
+	tmp = ft_strdup(var->value);
+	free(var->value);
+	tmp2 = ft_substr(exportion, i + 2, ft_strlen(exportion) - (i + 1));
+	var->value = ft_strjoin(tmp, tmp2);
+	free(tmp);
+	free(tmp2);
+	return (1);
+}
 
 int	is_special_exportion(t_central *central, char *exportion)
 {
@@ -25,11 +49,13 @@ int	is_special_exportion(t_central *central, char *exportion)
 	}
 	while (exportion[i])
 	{
-		if (exportion[i] == '=')
+		if (exportion[i] == '=' || exportion[i] == '+')
 			break ;
 		i++;
 	}
-	if (exportion[i] == '=' && exportion[i + 1] == '\0')
+	if (exportion[i] == '+' && exportion[i + 1] == '=')
+		return (plus_export(central, exportion), 1);
+	else if (exportion[i] == '=' && exportion[i + 1] == '\0')
 		return (hidden_export(central, exportion, TRUE), 1);
 	else if (exportion[i] != '=')
 		return (hidden_export(central, exportion, FALSE), 1);

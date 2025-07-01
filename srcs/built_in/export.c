@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:39:24 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:50:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,26 @@ void	declarex(t_envp **dupenv)
 	}
 }
 
+static void	do_exportions(t_central *central, t_input *cmd)
+{
+	t_envp	*new;
+	t_input	*tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		if (is_special_exportion(central, tmp->value) == 0)
+		{
+			if (should_revalue(&central->dupenv, tmp->value) == 0)
+			{
+				new = new_env(tmp->value);
+				insert_before_last(&central->dupenv, new);
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
 /**
  * @brief Built-in function that behaves just like
  *  the export command.
@@ -96,14 +116,9 @@ void	ft_export(t_central *central, t_input *cmd)
 		central->exit_val = 0;
 		return ;
 	}
-	if (is_special_exportion(central, tmp_cmd->next->value) == 0)
-	{
-		if (should_revalue(&central->dupenv, tmp_cmd->next->value) == 0)
-		{
-			new = new_env(tmp_cmd->next->value);
-			insert_before_last(&central->dupenv, new);
-		}
-		reorder_dupenv(&central->dupenv);
-		central->exit_val = 0;
-	}
+	do_exportions(central, tmp_cmd->next);
+	reorder_dupenv(&central->dupenv);
+	central->exit_val = 0;
 }
+
+

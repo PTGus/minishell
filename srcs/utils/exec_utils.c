@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 16:58:49 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:30:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ void	do_solo(t_central *central, t_input *cmd)
 	pid = fork();
 	status = 0;
 	if (pid == 0)
-	{
-		has_to_redirect(central, cmd);
 		do_cmd(central, cmd);
-	}
 	else
 		waitpid(-1, &status, 0);
 	central->exit_val = (status >> 8) & 0xFF;;

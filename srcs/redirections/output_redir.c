@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 13:59:03 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:50:32 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ int	set_output(t_input *cmd)
 	t_input	*tmp;
 
 	tmp = cmd->next;
+	if (!tmp || ft_strcmp(tmp->value, "") == 0)
+		return (2);
 	if (access(tmp->value, F_OK) == 0)
 	{
 		if (access(tmp->value, W_OK) != 0)
-		{
-			no_perms(tmp->value);
-			return (1);
-		}
+			return (no_perms(tmp->value), 1);
 		else
 		{
 			fd = open(tmp->value, O_TRUNC | O_WRONLY, 0644);

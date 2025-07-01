@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 17:07:08 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:05:51 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	commander(t_central *central, t_input *cmd)
 	}
 	else
 		exec = pather(path, tmp_cmd->value);
-	if (!exec)
+	if (!exec || (access(exec, F_OK) == 0 && access(exec, X_OK) != 0))
 	{
-		clean_all(central);
 		check_exec_error(tmp_cmd->value);
+		clean_all(central);
 	}
 	executer(exec, central, tmp_cmd);
 	free(exec);
@@ -105,11 +105,18 @@ char	*pather(t_envp *path, char *cmd)
 
 static void	check_exec_error(char *cmd)
 {
+	struct stat sb;
+
 	if (access(cmd, F_OK) == 0)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": Is a directory", 2);
+		if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(cmd, 2);
+			ft_putendl_fd(": Is a directory", 2);
+		}
+		else
+			no_perms(cmd);
 		exit(126);
 	}
 	else

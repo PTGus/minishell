@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/04 10:35:42 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:58:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	clean_doc(char *rl_doc)
  */
 void	clean_all(t_central *central)
 {
-	free_env(&central->dupenv);
+	free_env(central->dupenv);
+	free_central_cmd(central);
 	free(central);
 }
 
@@ -68,17 +69,16 @@ void	ft_envfreeone(t_envp *to_free)
  *  dupenv linked list by freeing it node by node.
  * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
-void	free_env(t_envp **dupenv)
+void	free_env(t_envp *dupenv)
 {
 	t_envp	*tmp;
 
-	if (!dupenv || !*dupenv)
+	if (!dupenv)
 		return ;
-	while (*dupenv)
+	while (dupenv)
 	{
-		tmp = (*dupenv)->next;
-		ft_envfreeone(*dupenv);
-		*dupenv = tmp;
+		tmp = dupenv->next;
+		ft_envfreeone(dupenv);
+		dupenv = tmp;
 	}
-	*dupenv = NULL;
 }

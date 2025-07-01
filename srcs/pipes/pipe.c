@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:16:29 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:14:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	execute_pipes(t_central *central, t_input *cmd, \
 			int (*pipe_fd)[2], int curr_index)
 {
-	has_to_redirect(central, cmd);
+	if (has_to_redirect(central, cmd) == 2)
+		exit(central->exit_val);
 	close_unused_pipes(pipe_fd, central->matrix_len - 1, curr_index);
 	set_pipe_fds(pipe_fd, central->matrix_len - 1, curr_index);
 	do_cmd(central, cmd);
@@ -42,11 +43,11 @@ void	piper(t_central *central)
 			execute_pipes(central, central->cmd[i], pipe_fd, i);
 			exit(central->exit_val);
 		}
+		waitpid(pid[i], &status, 0);
 	}
 	close_all_pipes(pipe_fd, central->matrix_len - 1);
 	i = -1;
-	while (++i < central->matrix_len)
-		waitpid(pid[i], &status, 0);
+	// while (++i < central->matrix_len)
 	central->exit_val = (status >> 8) & 0xFF;
 	free(pid);
 	free(pipe_fd);

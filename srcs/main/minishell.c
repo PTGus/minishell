@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:42:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:38:28 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int ac, char **av, char **env)
 		rl_loop(central);
 		reset_fds(2);
 		clean_all(central);
+		free(dupenv);
 		return (0);
 	}
 	else
@@ -56,7 +57,7 @@ void	rl_loop(t_central *central)
 	{
 		rl = readline("minishell$ ");
 		if (rl == NULL)
-			ctrl_d(central);
+			return(ctrl_d(central), (void)0);
 		if (rl[0] == '\0')
 		{
 			free(rl);
@@ -70,7 +71,9 @@ void	rl_loop(t_central *central)
 		add_history(rl);
 		ft_parse(rl, central);
 		has_shell_operator(central);
-		free(rl);
+		if (central->has_exited == TRUE)
+			return ;
+		post_loop_cleanup(central, rl);
 		reset_fds(1);
 	}
 }

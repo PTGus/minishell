@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:58:32 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:39:17 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	**get_exec_flags(t_input *cmd)
 		tmp = tmp->next;
 		arg_amm++;
 	}
-	ret_arr = ft_calloc(arg_amm, sizeof(char *));
+	ret_arr = malloc(sizeof(char *) * (arg_amm + 1));
+	ret_arr[arg_amm] = NULL;
 	arg_amm = 0;
 	while (start && start->token == ARGUMENT)
 	{
@@ -55,7 +56,8 @@ void	has_shell_operator(t_central *central)
 
 	if (to_pipe(central) != 0)
 	{
-		has_to_redirect(central, central->cmd[0]);
+		if (has_to_redirect(central, central->cmd[0]) == 2)
+		 	return ;
 		do_solo(central, central->cmd[0]);
 	}
 }

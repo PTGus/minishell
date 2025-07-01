@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 17:11:40 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 11:33:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_echo(t_central *central, t_input *cmd)
 	while (ft_strcmp(tmp->value, "echo") != 0)
 		tmp = tmp->next;
 	if (tmp->next == NULL)
-		printf("\n");
+		write(1, "\n", 1);
 	else if ((ft_strcmp(tmp->next->value, "-n") == 0) && (tmp->next->next == NULL))
 		return (central->exit_val = 0, (void)0);
 	else if (ft_strncmp(tmp->next->value, "-n", 2) == 0)
@@ -40,7 +40,7 @@ void	ft_echo(t_central *central, t_input *cmd)
 			do_echo(tmp);
 			tmp = tmp->next;
 		}
-		printf("\n");
+		write(1, "\n", 1);
 	}
 	central->exit_val = 0;
 }
@@ -51,7 +51,7 @@ void	do_echo(t_input *cmd)
 
 	tmp = cmd;
 	if (tmp->token == ARGUMENT)
-		printf("%s", tmp->value);
+		ft_putstr_fd(tmp->value, 1);
 	if (tmp->next != NULL && tmp->next->token == ARGUMENT)
 		write(1, " ", 1);
 }

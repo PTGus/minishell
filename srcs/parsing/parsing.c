@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:27:01 by david-fe          #+#    #+#             */
-/*   Updated: 2025/06/30 16:32:45 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:23:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /**
  * @brief Central parsing function - inits, checks for open quotes
- * splits by pipes for further parsing, normalizes spacing, 
- * tranforms input into list of tokens
+ * splits by pipes for further parsing, normalizes spacing,
+ *  tranforms input into list of tokens
  * @param prompt Full input from readline
  * @param central Struct with pointers to all relevant structs/data
  */
@@ -31,10 +31,8 @@ int	ft_parse(char *prompt, t_central *central)
 	central->pipe_matrix = ft_split_pipes(prompt, central);
 	if (central->pipe_matrix == NULL)
 		ft_error("pipes");
-	if (ft_remove_extra_spaces(central) != 0)
-		ft_error("spacing");
-	if (ft_space_redirects(central) != 0)
-		ft_error("redirect");
+	ft_remove_extra_spaces(central);
+	ft_space_redirects(central);
 	ft_tokenizer(central);
 	ft_expander(central);
 	ft_quote_eraser(central);
@@ -56,4 +54,3 @@ void	ft_error(char *message)
 {
 	printf("%s ERROR! (no exit)\n", message);
 }
-	//exit(0);

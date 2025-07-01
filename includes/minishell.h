@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 16:52:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:39:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_central
 	char			**pipe_matrix;
 	int				matrix_len;
 	int				curr_cmd;
+	int				has_exited;
 }	t_central;
 
 typedef struct s_envp
@@ -116,12 +117,15 @@ void	ft_unset(t_central *central, char *to_unset);
 
 // CLEAN_UP //
 
-// free //
+// free/2 //
 void	clean_doc(char *rl_doc);
 void	clean_all(t_central *central);
 void	ft_envfreeone(t_envp *dupenv);
-void	free_env(t_envp **dupenv);
+void	free_env(t_envp *dupenv);
 void	ft_freesplit(char **split);
+void	free_input_list(t_input *head);
+void	free_central_cmd(t_central *central);
+void	post_loop_cleanup(t_central *central, char *rl);
 
 //--------------------------------------------------------------//
 
@@ -189,7 +193,7 @@ int		do_redirection(t_input *cmd);
 
 // signals //
 void	ctrl_c(int sig);
-void	ctrl_d(t_central *central);
+void	ctrl_d(void);
 void	handle_signals(void);
 
 //-------------------------------------------------Body language-------------//
