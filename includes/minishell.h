@@ -254,6 +254,7 @@ int		is_built_in(t_input *cmd);
 // PARSE //
 
 // expand_utils //
+int		ft_str_expand(t_central *central, char *str);
 char	*ft_get_dupenv_val(t_central *central, char *str);
 int		ft_is_node_spaced(t_input *node);
 void	ft_insert_split_node(t_input *first, t_input *second);
