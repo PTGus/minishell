@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:39:34 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:56:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ void	bad_doc(char *str);
 void	no_perms(char *str);
 void	comm_not_found(char *str);
 void	not_dir(char *str);
+void	event_not_found(char *str);
+void	bad_redir_token(char *str);
 
 //--------------------------------------------------------------//
 
@@ -174,7 +176,7 @@ void	piper(t_central *central);
 int		append_redir(t_input *cmd);
 
 // heredoc //
-int		ft_heredoc(char *delimiter);
+int		ft_heredoc(char *delimiter, int doc_type);
 void	redirect_to_doc(int fd);
 
 // input_redir //
@@ -196,7 +198,7 @@ void	ctrl_c(int sig);
 void	ctrl_d(void);
 void	handle_signals(void);
 
-//-------------------------------------------------Body language-------------//
+//--------------------------------------------------------------//
 // UTILS //
 
 // cd_utils //
@@ -236,6 +238,7 @@ void	set_pipe_fds(int (*pipe_fd)[2], int pipe_amm, int current_index);
 void	close_all_pipes(int (*pipe_fd)[2], int pipe_amm);
 
 // redir_utils //
+int		check_for_bad_redir(char *to_redir);
 void	reset_fds(int status);
 
 // utils //

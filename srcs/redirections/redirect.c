@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 10:59:44 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:56:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	has_to_redirect(t_central *central, t_input *cmd)
 int	set_redirections(t_central *central, t_input *cmd)
 {
 	t_input *tmp;
+	int		i;
 
 	tmp = cmd;
 	while (tmp)
@@ -39,12 +40,9 @@ int	set_redirections(t_central *central, t_input *cmd)
 			|| tmp->token == APPEND_OUT || tmp->token == HERE_DOC
 			|| tmp->token == HERE_DOC_Q)
 		{
-			if (do_redirection(tmp) == 2)
-			{
-				ft_putendl_fd("Invalid redirection", 2);
-				central->exit_val = 1;
-				return (2);
-			}
+			i = do_redirection(tmp);
+			if (i != 0)
+				return (central->exit_val = i, 2);
 		}
 		tmp = tmp->next;
 	}
@@ -58,7 +56,7 @@ int	do_redirection(t_input *cmd)
 	else if (cmd->token == REDIR_OUT)
 		return (set_output(cmd));
 	else if (cmd->token == HERE_DOC || cmd->token == HERE_DOC_Q)
-		return (ft_heredoc(cmd->next->value));
+		return (ft_heredoc(cmd->next->value, cmd->token));
 	else if (cmd->token == APPEND_OUT)
 		return (append_redir(cmd));
 	return (1);

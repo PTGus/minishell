@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:10:23 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 10:32:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:09:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ int	append_redir(t_input *cmd)
 	t_input	*tmp;
 
 	tmp = cmd->next;
+	if (check_for_bad_redir(tmp->value) == 1)
+		return (2);
 	if ((access(tmp->value, F_OK) == 0) && (access(tmp->value,  W_OK) != 0))
-		return (no_perms(tmp->value), 2);
+		return (no_perms(tmp->value), 1);
 	else
 	{
 		fd = open(tmp->value, O_WRONLY | O_APPEND | O_CREAT, 0644);

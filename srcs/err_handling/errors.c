@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 14:14:09 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:49:26 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	bad_export(char *str)
 void	bad_doc(char *str)
 {
 	ft_putstr_fd("bash: warning: here-document ", 2);
-	ft_putstr_fd("at line 1 delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd("delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd("')", 2);
 }

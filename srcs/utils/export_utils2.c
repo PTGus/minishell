@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_redir.c                                      :+:      :+:    :+:   */
+/*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 12:11:52 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 12:07:42 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/02 10:59:49 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/02 11:21:40 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_input(t_input *cmd)
+int	check_event(char *str)
 {
-	int		fd;
-	t_input	*tmp;
+	int	i;
 
-	tmp = cmd->next;
-	if (check_for_bad_redir(tmp->value) == 1)
-		return (2);
-	if (access(tmp->value, F_OK) == 0)
-	{
-		if (access(tmp->value, R_OK) == 0)
-		{
-			fd = open(tmp->value, O_RDONLY | O_APPEND);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-			return (0);
-		}
-		else
-			return (no_perms(tmp->value), 1);
-	}
-	else
-		return (not_dir(tmp->value), 1);
+	i = 0;
+	while (str[i] && str[i] != '=')
+		i++;
+	
 }

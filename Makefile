@@ -6,7 +6,7 @@
 #    By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 15:17:36 by gumendes          #+#    #+#              #
-#    Updated: 2025/07/01 14:59:39 by gumendes         ###   ########.fr        #
+#    Updated: 2025/07/02 10:45:41 by gumendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ NAME		=	minishell
 SRC_BUILTIN	=	$(addprefix built_in/, cd.c echo.c env.c exit.c export.c pwd.c unset.c)
 SRC_CLEANUP	=	$(addprefix clean_up/, free.c free2.c)
 SRC_COMMAND	=	$(addprefix commands/, executer.c)
-SRC_ERRORS	=	$(addprefix err_handling/, errors.c)
+SRC_ERRORS	=	$(addprefix err_handling/, errors.c errors2.c)
 SRC_MAIN	=	$(addprefix main/, minishell.c)
 SRC_PIPES	=	$(addprefix pipes/, pipe.c)
 SRC_REDIR	=	$(addprefix redirections/, append_redir.c heredoc.c input_redir.c output_redir.c redirect.c)

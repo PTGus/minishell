@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:38:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 10:31:45 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 		handle_signals();
 		rl_loop(central);
 		reset_fds(2);
+		rl_clear_history();
 		clean_all(central);
 		free(dupenv);
 		return (0);
@@ -57,7 +58,7 @@ void	rl_loop(t_central *central)
 	{
 		rl = readline("minishell$ ");
 		if (rl == NULL)
-			return(ctrl_d(central), (void)0);
+			return(ctrl_d(), (void)0);
 		if (rl[0] == '\0')
 		{
 			free(rl);

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:25:10 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 17:27:29 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:51:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	check_for_bad_redir(char *to_redir)
 {
 	if (ft_strcmp(to_redir, ">") == 0 || ft_strcmp(to_redir, "<") == 0
 		|| ft_strcmp(to_redir, ">>") == 0 || ft_strcmp(to_redir, "<<") == 0)
-		return (1);
+		return (bad_redir_token(to_redir), 1);
+	return (0);
 }
 
 void	reset_fds(int status)
