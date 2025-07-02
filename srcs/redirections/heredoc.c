@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:56:03 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:24:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:43:45 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ int	ft_heredoc(t_central *central, char *delimiter, int doc_type)
 			break ;
 		if (g_signal == 130)
 			return (130);
+		if (doc_type == HERE_DOC)
+			ft_str_expand(central, rl_doc);
 		ft_putendl_fd(rl_doc, fd);
 		free(rl_doc);
 	}
 	clean_doc(rl_doc);
 	if (!rl_doc)
 		return (unlink(".heredoc_tmp"), close(fd), bad_doc(delimiter), 0);
-	redirect_to_doc(fd);
-	return (0);
+	return (redirect_to_doc(fd), 0);
 }
 
 void	redirect_to_doc(int fd)

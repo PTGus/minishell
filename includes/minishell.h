@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:25:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:45:09 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ int		set_output(t_input *cmd);
 // redirect //
 int		has_to_redirect(t_central *central, t_input *cmd);
 int		set_redirections(t_central *central, t_input *cmd);
-int		do_redirection(t_input *cmd);
+int		do_redirection(t_central *central, t_input *cmd);
 
 //--------------------------------------------------------------//
 // SIGNALS //
