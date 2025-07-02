@@ -61,7 +61,7 @@ SRC_REDIR	=	$(addprefix redirections/, append_redir.c heredoc.c input_redir.c ou
 SRC_SIGNALS	=	$(addprefix signals/, signals.c heredoc_signals.c)
 SRC_UTILS	=	$(addprefix utils/, cd_utils.c central_utils.c env_utils.c exec_utils.c export_utils.c list_utils.c pipe_utils.c redir_utils.c utils.c)
 SRC_PARSE	= 	$(addprefix parsing/, expand_utils.c parsing.c quotes.c split.c spacing.c redirects.c \
-				tokenizer.c input_utils.c frees.c print_utils.c expander.c)
+				tokenizer.c input_utils.c frees.c print_utils.c expander.c expand_docs.c)
 
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_BUILTIN) $(SRC_CLEANUP) $(SRC_COMMAND) $(SRC_ERRORS) \
 				$(SRC_MAIN) $(SRC_PIPES) $(SRC_REDIR) $(SRC_SIGNALS) $(SRC_UTILS) $(SRC_PARSE))

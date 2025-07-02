@@ -256,8 +256,13 @@ int		is_built_in(t_input *cmd);
 
 // PARSE //
 
+// expand_docs //
+char	*ft_check_expand_doc(t_central *central, char *str);
+int		ft_get_expand_doc(char *str, int j);
+char	*ft_assign_expand_doc(char **str, int *vals, char *new_str, char *expand);
+char	*ft_execute_expand_doc(t_central *central, char **str, int start, int end);
+
 // expand_utils //
-int		ft_str_expand(t_central *central, char *str);
 char	*ft_get_dupenv_val(t_central *central, char *str);
 int		ft_is_node_spaced(t_input *node);
 void	ft_insert_split_node(t_input *first, t_input *second);
