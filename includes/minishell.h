@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 12:56:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:25:27 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void	piper(t_central *central);
 int		append_redir(t_input *cmd);
 
 // heredoc //
-int		ft_heredoc(char *delimiter, int doc_type);
+int		ft_heredoc(t_central *central, char *delimiter, int doc_type);
 void	redirect_to_doc(int fd);
 
 // input_redir //
@@ -192,6 +192,9 @@ int		do_redirection(t_input *cmd);
 
 //--------------------------------------------------------------//
 // SIGNALS //
+
+// heredoc_signals //
+void	setup_heredoc_signals(void);
 
 // signals //
 void	ctrl_c(int sig);

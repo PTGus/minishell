@@ -6,14 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:56:03 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 12:58:19 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:24:28 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // remember to check if prompt is quoted when you have the full project so you can call the expander accordingly
-int	ft_heredoc(char *delimiter, int doc_type)
+int	ft_heredoc(t_central *central, char *delimiter, int doc_type)
 {
 	int		fd;
 	char	*rl_doc;
@@ -27,6 +27,8 @@ int	ft_heredoc(char *delimiter, int doc_type)
 		rl_doc = readline("> ");
 		if (!rl_doc || ft_strcmp(rl_doc, delimiter) == 0)
 			break ;
+		if (g_signal == 130)
+			return (130);
 		ft_putendl_fd(rl_doc, fd);
 		free(rl_doc);
 	}
