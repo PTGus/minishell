@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 15:29:58 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:31:26 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	no_perms(char *str)
 /**
  * @brief A error message for when a command is not found.
  */
-void	comm_not_found(char *str) //20
+void	comm_not_found(char *str)
 {
 	int		err_len;
 	char	*err_msg;
