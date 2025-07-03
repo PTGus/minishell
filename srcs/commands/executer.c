@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 14:05:51 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:00:30 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*pather(t_envp *path, char *cmd)
 
 static void	check_exec_error(char *cmd)
 {
-	struct stat sb;
+	struct stat	sb;
 
 	if (access(cmd, F_OK) == 0)
 	{
