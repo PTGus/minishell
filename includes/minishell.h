@@ -6,19 +6,15 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:45:09 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:06:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-extern int g_signal;
-
-# define _POSIX_C_SOURCE 200809L
-
 # include <readline/readline.h>
-#include <readline/history.h>
+# include <readline/history.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
@@ -34,6 +30,10 @@ extern int g_signal;
 # include <term.h>
 # include <errno.h>
 # include "../libft/libft.h"
+
+extern int	g_signal;
+
+# define _POSIX_C_SOURCE 200809L
 
 # define ARGUMENT	0
 # define REDIR_IN	1
@@ -100,7 +100,7 @@ int		init_env(t_envp **dupenv, char **envp);
 int		duplicate_env(t_envp **dupenv, char **envp);
 
 // exit //
-void	ft_exit(t_central *central, char *exit_val);
+void	ft_exit(t_central *central, t_input *cmd);
 
 // export //
 int		should_revalue(t_envp **dupenv, char *exportion);
@@ -118,7 +118,7 @@ void	ft_unset(t_central *central, char *to_unset);
 // CLEAN_UP //
 
 // free/2 //
-void	clean_doc(char *rl_doc);
+void	clean_doc(char *rl_doc, char *tmp);
 void	clean_all(t_central *central);
 void	ft_envfreeone(t_envp *dupenv);
 void	free_env(t_envp *dupenv);
@@ -148,6 +148,7 @@ void	comm_not_found(char *str);
 void	not_dir(char *str);
 void	event_not_found(char *str);
 void	bad_redir_token(char *str);
+void	no_home(void);
 
 //--------------------------------------------------------------//
 
@@ -259,8 +260,10 @@ int		is_built_in(t_input *cmd);
 // expand_docs //
 char	*ft_check_expand_doc(t_central *central, char *str);
 int		ft_get_expand_doc(char *str, int j);
-char	*ft_assign_expand_doc(char **str, int *vals, char *new_str, char *expand);
-char	*ft_execute_expand_doc(t_central *central, char **str, int start, int end);
+char	*ft_assign_expand_doc(char **str, int *vals,
+			char *new_str, char *expand);
+char	*ft_execute_expand_doc(t_central *central, char **str,
+			int start, int end);
 
 // expand_utils //
 char	*ft_get_dupenv_val(t_central *central, char *str);
