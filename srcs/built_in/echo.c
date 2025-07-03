@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 11:33:00 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:59:13 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@
  */
 void	ft_echo(t_central *central, t_input *cmd)
 {
-	t_input *tmp;
+	t_input	*tmp;
 
 	tmp = cmd;
 	while (ft_strcmp(tmp->value, "echo") != 0)
 		tmp = tmp->next;
 	if (tmp->next == NULL)
 		write(1, "\n", 1);
-	else if ((ft_strcmp(tmp->next->value, "-n") == 0) && (tmp->next->next == NULL))
+	else if ((ft_strcmp(tmp->next->value, "-n") == 0)
+		&& (tmp->next->next == NULL))
 		return (central->exit_val = 0, (void)0);
 	else if (ft_strncmp(tmp->next->value, "-n", 2) == 0)
 		echo_n(tmp->next);
@@ -47,7 +48,7 @@ void	ft_echo(t_central *central, t_input *cmd)
 
 void	do_echo(t_input *cmd)
 {
-	t_input *tmp;
+	t_input	*tmp;
 
 	tmp = cmd;
 	if (tmp->token == ARGUMENT)
