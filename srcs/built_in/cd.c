@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:38:01 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:06:28 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,22 @@ void	ft_cd(t_central *central, t_input *cmd)
 	t_input	*tmp_cmd;
 
 	tmp_cmd = cmd;
-	while (ft_strcmp(tmp_cmd->value, "cd") != 0)
+	while (tmp_cmd && ft_strcmp(tmp_cmd->value, "cd") != 0)
 		tmp_cmd = tmp_cmd->next;
-	if ((tmp_cmd->next == NULL && access(tmp_cmd->next->value, F_OK) != 0) \
+	if (tmp_cmd->next == NULL \
 		|| (tmp_cmd->next->value[0] == '~' && tmp_cmd->next->value[1] == '\0')) // this has different behaviours deppending if its used as "cd" (doesnt work without HOME set) or "cd ~" (works without HOME set)
 	{
+		tmp_env = ft_getenv(&central->dupenv, "HOME");
+		if (!tmp_env)
+			return (no_home(), central->exit_val = 1, (void) 0);
 		set_old_pwd(&central->dupenv);
 		set_home(&central->dupenv);
-		tmp_env = ft_getenv(&central->dupenv, "HOME");
 		chdir(tmp_env->value);
 	}
 	else if (access(tmp_cmd->next->value, F_OK) == 0)
 		set_cd_values(&central->dupenv, tmp_cmd);
 	else
-	{
-		not_dir(tmp_cmd->next->value);
-		central->exit_val = 1;
-		return ;
-	}
+		return (not_dir(tmp_cmd->next->value), central->exit_val = 1, (void) 0);
 	central->exit_val = 0;
 }
 
@@ -76,17 +74,18 @@ void	set_cd_values(t_envp **dupenv, t_input *cmd)
  */
 void	set_home(t_envp **dupenv)
 {
-	t_envp	*pwd;
-	t_envp	*home;
+	t_envp		*pwd;
+	t_envp		*home;
 
 	pwd = *dupenv;
-	home = *dupenv;
-	while (ft_strcmp(pwd->var, "PWD") != 0)
-		pwd = pwd->next;
-	while (ft_strcmp(home->var, "HOME") != 0)
-		home = home->next;
-	free(pwd->value);
-	pwd->value = ft_strdup(home->value);
+	pwd = ft_getenv(dupenv, "PWD");
+	if (pwd != NULL)
+	{
+		home = *dupenv;
+		home = ft_getenv(dupenv, "HOME");
+		free(pwd->value);
+		pwd->value = ft_strdup(home->value);
+	}
 }
 
 /**
