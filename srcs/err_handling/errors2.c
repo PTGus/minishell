@@ -6,22 +6,32 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:45:06 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 11:47:54 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:29:54 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	event_not_found(char *str)
+void	no_home(void)
 {
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putendl_fd(": event not found", 2);
+	int	err_len;
+
+	err_len = ft_strlen("bash: cd: HOME not set\n");
+	write(2, "bash: cd: HOME not set\n", err_len);
 }
 
 void	bad_redir_token(char *str)
 {
-	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-	ft_putstr_fd(str, 2);
-	ft_putendl_fd("'", 2);
+	int		err_len;
+	char	*err_msg;
+	char	*tmp;
+
+	err_msg = "bash: syntax error near unexpected token `";
+	err_msg = ft_strjoin(err_msg, str);
+	tmp = err_msg;
+	err_msg = ft_strjoin(tmp, "'\n");
+	free(tmp);
+	err_len = ft_strlen(err_msg);
+	write(2, err_msg, err_len);
+	free(err_msg);
 }
