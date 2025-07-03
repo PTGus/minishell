@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:50:38 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:28:49 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:00:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_central_cmd(t_central *central)
 	int	i;
 
 	if (!central->cmd)
-		return;
+		return ;
 	i = 0;
 	while (central->cmd[i])
 	{
