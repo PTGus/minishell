@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:37:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:38:20 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,32 @@ static int	is_string_all_nums(char *str)
 
 static void	exit_err(char *str)
 {
-	ft_putstr_fd("bash: exit: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putendl_fd(": numeric argument required", 2);
+	int		err_len;
+	char	*err_msg;
+	char	*tmp;
+
+	err_msg = "bash: exit: ";
+	err_msg = ft_strjoin(err_msg, str);
+	tmp = err_msg;
+	err_msg = ft_strjoin(tmp, ": numeric argument required\n");
+	free(tmp);
+	err_len = ft_strlen(err_msg);
+	write(2, err_msg, err_len);
+	free(err_msg);
 }
 
 /**
  * @brief Built-in function that behaves just like
  *  the "exit" command.
  */
-void	ft_exit(t_central *central, char *exit_val)
+void	ft_exit(t_central *central, t_input *cmd)
 {
-	if (exit_val != NULL)
+	if (cmd->next != NULL)
 	{
-		if (is_string_all_nums(exit_val) == 1)
+		if (is_string_all_nums(cmd->next->value) == 1)
 		{
 			printf("exit\n");
-			exit_err(exit_val);
+			exit_err(cmd->next->value);
 			central->exit_val = 2;
 			central->has_exited = TRUE;
 			return ;
@@ -52,7 +61,7 @@ void	ft_exit(t_central *central, char *exit_val)
 		else
 		{
 			printf("exit\n");
-			central->exit_val = (ft_atoi(exit_val) % 256);
+			central->exit_val = (ft_atoi(cmd->next->value) % 256);
 			central->has_exited = TRUE;
 			return ;
 		}
