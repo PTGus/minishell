@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:38:22 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:13:53 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ void	ft_env(t_central *central, t_input *cmd)
 	t_envp	*tmp_env;
 	t_input	*tmp_cmd;
 
-	tmp_cmd = cmd;
 	tmp_env = ft_getenv(&central->dupenv, "PATH");
-	while (ft_strcmp(tmp_cmd->value, "env") != 0)
-		tmp_cmd = tmp_cmd->next;
 	if (!tmp_env)
 		return (central->exit_val = 127, (void)0);
+	tmp_cmd = cmd;
+	while (ft_strcmp(tmp_cmd->value, "env") != 0)
+		tmp_cmd = tmp_cmd->next;
 	if (tmp_cmd->next != NULL)
-		return (ft_putstr_fd("Invalid arguments\n", 2), central->exit_val = 1, (void)0);
+		return (ft_putstr_fd("Invalid arguments\n", 2),
+			central->exit_val = 1, (void)0);
 	tmp_env = central->dupenv;
 	while (tmp_env != NULL)
 	{
