@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:10:46 by david-fe          #+#    #+#             */
-/*   Updated: 2025/06/30 16:50:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:57:56 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_str_expand(t_central *central, char *str)
  * @brief	Gets value of expand from dupenv, with PID for $ (no getpid),
  * and ? for exit value from most recent pipe
 */
-char	*ft_get_dupenv_val(t_central *central, char *str) //SWAP GETENV WITH DUPENV
+char	*ft_get_dupenv_val(t_central *central, char *str)
 {
 	t_envp	*tmp;
 

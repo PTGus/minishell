@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:12:17 by david-fe          #+#    #+#             */
-/*   Updated: 2025/06/30 16:52:16 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:57:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int	ft_execute_expand(t_central *central, char **str, int start, int end)
 	char	*expand;
 	char	*new_str;
 	int		vals[3];
+
 	temp = ft_substr(*str, start + 1, end - start);
 	if (!temp)
 		return (1);

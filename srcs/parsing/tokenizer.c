@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:07:30 by david-fe          #+#    #+#             */
-/*   Updated: 2025/07/01 14:46:37 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:57:42 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	ft_assign_list(t_central *central, int i, int l, int index)
 			current = ft_input_new(str, index++);
 			if (!str || !current)
 				return (ft_free_list_err(central, str, current), 1);
-			// free(str);
 			ft_input_add_back(&central->cmd[l], current);
 			k = 2 + j++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_docs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david-fe <david-fe@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 14:04:55 by david-fe          #+#    #+#             */
-/*   Updated: 2025/07/02 14:05:05 by david-fe         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:50:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,37 @@
 char	*ft_check_expand_doc(t_central *central, char *str)
 {
 	int		i;
-	int		j;
-	char*	new_str;
+	char	*new_str;
+	char	*temp;
 
+	temp = str;
 	new_str = NULL;
 	i = 0;
-	while (str[i])
+	while (temp[i])
 	{
-		j = 0;
-		if (str[i] == '$' && str[i + 1]
-			&& ft_is_quoted(str, i) != 1
-			&& (str[i + 1] != '\"'))
+		if (temp[i] == '$' && temp[i + 1] && ft_is_quoted(temp, i) != 1
+			&& (temp[i + 1] != '\"'))
 		{
-			j = ft_get_expand_doc(str, i + 1);
-			new_str = ft_execute_expand_doc(central, &str, i, j);
-			if(!new_str)
+			new_str = ft_execute_expand_doc(central, &temp, i,
+					ft_get_expand_doc(temp, i + 1));
+			if (!new_str)
 				return (NULL);
 			i = 0;
 		}
 		else
 			i++;
 	}
-	return (0);
+	if (!new_str)
+		return (ft_strdup(temp));
+	else
+		return (new_str);
 }
 
 /**
- * @brief	Obtains the position at which the current expansion ends
- * @param	first -  1= first position checked, important for numbers and
- * special characters
- * @return	Position of the last element of string to expand
+ * @brief Obtains the position at which the current expansion ends.
+ * @param first 1 = first position checked, important for numbers and
+ * special characters.
+ * @return Position of the last element of string to expand.
 */
 int	ft_get_expand_doc(char *str, int j)
 {
@@ -81,10 +83,12 @@ int	ft_get_expand_doc(char *str, int j)
  * expand in str, and new len(2)
  * @return
 */
-char	*ft_assign_expand_doc(char **str, int *vals, char *new_str, char *expand)
+char	*ft_assign_expand_doc(char **str, int *vals,
+	char *new_str, char *expand)
 {
 	int		i;
 	int		j;
+	char	*temp;
 
 	i = 0;
 	j = 0;
@@ -96,7 +100,9 @@ char	*ft_assign_expand_doc(char **str, int *vals, char *new_str, char *expand)
 	j = vals[1] + 1;
 	while ((*str)[j])
 		new_str[i++] = (*str)[j++];
-	return(new_str);
+	temp = *str;
+	*str = new_str;
+	return (new_str);
 }
 
 /**
@@ -107,12 +113,14 @@ char	*ft_assign_expand_doc(char **str, int *vals, char *new_str, char *expand)
  * expand in str, and new len(2)
  * @return	0 if correct, 1 on malloc error
 */
-char	*ft_execute_expand_doc(t_central *central, char **str, int start, int end)
+char	*ft_execute_expand_doc(t_central *central,
+		char **str, int start, int end)
 {
 	char	*temp;
 	char	*expand;
 	char	*new_str;
 	int		vals[3];
+
 	temp = ft_substr(*str, start + 1, end - start);
 	if (!temp)
 		return (NULL);
