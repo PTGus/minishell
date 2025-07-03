@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:01:44 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:20:03 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:26:02 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 void	execute_pipes(t_central *central, t_input *cmd, \
 			int (*pipe_fd)[2], int curr_index)
 {
+	set_pipe_fds(pipe_fd, central->matrix_len - 1, curr_index);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	close_unused_pipes(pipe_fd, central->matrix_len - 1, curr_index);
 	if (has_to_redirect(central, cmd) != 0)
 		exit(central->exit_val);
-	close_unused_pipes(pipe_fd, central->matrix_len - 1, curr_index);
-	set_pipe_fds(pipe_fd, central->matrix_len - 1, curr_index);
 	do_cmd(central, cmd);
 	reset_fds(1);
 	exit(central->exit_val);
@@ -43,11 +44,11 @@ void	piper(t_central *central)
 			execute_pipes(central, central->cmd[i], pipe_fd, i);
 			exit(central->exit_val);
 		}
-		waitpid(pid[i], &status, 0);
 	}
 	close_all_pipes(pipe_fd, central->matrix_len - 1);
 	i = -1;
-	// while (++i < central->matrix_len)
+	while (++i < central->matrix_len)
+		waitpid(pid[i], &status, 0);
 	central->exit_val = (status >> 8) & 0xFF;
 	free(pid);
 	free(pipe_fd);
