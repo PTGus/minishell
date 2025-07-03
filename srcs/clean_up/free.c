@@ -6,14 +6,16 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 15:58:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:11:57 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	clean_doc(char *rl_doc)
+void	clean_doc(char *rl_doc, char *tmp)
 {
+	if (tmp && tmp != rl_doc)
+		free(tmp);
 	if (!rl_doc)
 		return ;
 	free(rl_doc);
