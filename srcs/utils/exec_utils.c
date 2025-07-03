@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 10:30:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:08:13 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ void	do_solo(t_central *central, t_input *cmd)
 	int		status;
 	int		pipe_fd[2];
 
-	tmp = cmd;
 	if (is_built_in(cmd) == 0)
 	{
 		do_builtin(central, cmd);
 		return ;
 	}
+	tmp = cmd;
 	pipe(pipe_fd);
 	pid = fork();
 	status = 0;

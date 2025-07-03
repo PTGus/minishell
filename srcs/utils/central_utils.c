@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:15:36 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:36:04 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:06:30 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
  */
 void	init_central(t_central *central, t_envp **dupenv)
 {
+	t_envp	*tmp;
+
+	tmp = *dupenv;
 	central->exit_val = 0;
 	central->curr_cmd = 0;
 	central->dupenv = *dupenv;
