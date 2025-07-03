@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 10:31:45 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:09:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_envp		**dupenv;
 	t_central	*central;
+	int	exit_v;
 
 	if (ac == 1)
 	{
@@ -33,9 +34,9 @@ int	main(int ac, char **av, char **env)
 		rl_loop(central);
 		reset_fds(2);
 		rl_clear_history();
+		exit_v = central->exit_val;
 		clean_all(central);
-		free(dupenv);
-		return (0);
+		return (free(dupenv), exit_v);
 	}
 	else
 	{
@@ -58,7 +59,7 @@ void	rl_loop(t_central *central)
 	{
 		rl = readline("minishell$ ");
 		if (rl == NULL)
-			return(ctrl_d(), (void)0);
+			return (ctrl_d(), (void)0);
 		if (rl[0] == '\0')
 		{
 			free(rl);
@@ -104,7 +105,7 @@ int	do_builtin(t_central *central, t_input *cmd)
 		else if (ft_strcmp(tmp->value, "export") == 0)
 			return (ft_export(central, cmd), 0);
 		else if (ft_strcmp(tmp->value, "exit") == 0)
-			return (ft_exit(central, tmp->next->value), 0);
+			return (ft_exit(central, tmp), 0);
 		else if (ft_strcmp(tmp->value, "unset") == 0)
 			return (ft_unset(central, tmp->next->value), 0);
 		tmp = tmp->next;
