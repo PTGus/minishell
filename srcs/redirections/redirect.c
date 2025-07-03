@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:44:09 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:25:32 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	has_to_redirect(t_central *central, t_input *cmd)
 			return (set_redirections(central, cmd));
 		tmp = tmp->next;
 	}
-	return (1);
+	return (0);
 }
 
 int	set_redirections(t_central *central, t_input *cmd)
