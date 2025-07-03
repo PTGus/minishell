@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:10:36 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:22:54 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:44:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	heredoc_sigint(int sig)
 	g_signal = 130;
 }
 
-// Call this before reading your heredoc lines
 void	setup_heredoc_signals(void)
 {
 	struct sigaction sa;
