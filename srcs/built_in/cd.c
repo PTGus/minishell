@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:53:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:37:18 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ void	ft_cd(t_central *central, t_input *cmd)
 	while (tmp_cmd && ft_strcmp(tmp_cmd->value, "cd") != 0)
 		tmp_cmd = tmp_cmd->next;
 	if (tmp_cmd->next->next != NULL)
-		return (central->exit_val = 1, (void) 0);
-	if (tmp_cmd->next == NULL \
-		|| (tmp_cmd->next->value[0] == '~' && tmp_cmd->next->value[1] == '\0')) // this has different behaviours deppending if its used as "cd" (doesnt work without HOME set) or "cd ~" (works without HOME set)
+		return (central->exit_val = 1,
+			excessive_args(tmp_cmd->next->next->value), (void) 0);
+	if (tmp_cmd->next == NULL
+		|| (tmp_cmd->next->value[0] == '~' && tmp_cmd->next->value[1] == '\0'))
 	{
 		tmp_env = ft_getenv(&central->dupenv, "HOME");
 		if (!tmp_env)
@@ -101,9 +102,9 @@ void	set_pwd(t_envp **dupenv, char *path)
 	char	*tmp;
 	int		i;
 
-	pwd = *dupenv;
-	while (ft_strcmp(pwd->var, "PWD") != 0)
-		pwd = pwd->next;
+	pwd = ft_getenv(dupenv, "PWD");
+	if (ft_strcmp(pwd->value, path) == 0)
+		return ;
 	tmp = ft_strdup(pwd->value);
 	free(pwd->value);
 	if (strcmp(path, "..") == 0)
@@ -133,9 +134,7 @@ void	set_old_pwd(t_envp **dupenv)
 {
 	t_envp		*old_pwd;
 
-	old_pwd = *dupenv;
-	while (ft_strcmp(old_pwd->var, "OLDPWD") != 0)
-		old_pwd = old_pwd->next;
+	old_pwd = ft_getenv(dupenv, "OLDPWD");
 	free(old_pwd->value);
 	old_pwd->value = ft_strdup(getcwd(NULL, 0));
 }

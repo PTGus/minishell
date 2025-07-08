@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:09:59 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:37:05 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ static void	do_exportions(t_central *central, t_input *cmd)
 	t_envp	*new;
 	t_input	*tmp;
 	int		i;
-	int		fail_flag = FALSE;
+	int		fail_flag;
 
 	tmp = cmd;
+	fail_flag = FALSE;
 	while (tmp)
 	{
 		i = is_special_exportion(central, tmp->value);
@@ -98,10 +99,9 @@ static void	do_exportions(t_central *central, t_input *cmd)
 		}
 		tmp = tmp->next;
 	}
+	central->exit_val = 0;
 	if (fail_flag == TRUE)
 		central->exit_val = 1;
-	else
-		central->exit_val = 0;
 }
 
 /**

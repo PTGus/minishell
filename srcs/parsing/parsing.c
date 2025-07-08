@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:27:01 by david-fe          #+#    #+#             */
-/*   Updated: 2025/07/01 17:23:34 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:40:53 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
  */
 int	ft_parse(char *prompt, t_central *central)
 {
-	if (prompt[0] == 'x')
-		exit(0);
 	ft_init_parse(central);
 	if (!prompt)
 		return (0);

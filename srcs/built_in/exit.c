@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 15:38:20 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 12:03:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@ static int	is_string_all_nums(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isdigit(str[i]) == 0)
+		if (i == 0)
+		{
+			if (str[i] != '+' && str[i] != '-' && ft_isdigit(str[i]) == 0)
+				return (1);
+			i++;
+		}
+		if (i > 0 && ft_isdigit(str[i]) == 0)
 			return (1);
 		i++;
 	}
@@ -42,13 +48,29 @@ static void	exit_err(char *str)
 	free(err_msg);
 }
 
+void	special_exit(t_central *central, t_input *cmd)
+{
+	if (!cmd)
+	{
+		printf("exit\n");
+		central->exit_val = 0;
+		central->has_exited = TRUE;
+	}
+	else
+	{
+		printf("exit\n");
+		excessive_args("exit");
+		central->exit_val = 1;
+	}
+}
+
 /**
  * @brief Built-in function that behaves just like
  *  the "exit" command.
  */
 void	ft_exit(t_central *central, t_input *cmd)
 {
-	if (cmd->next != NULL)
+	if (cmd->next != NULL && cmd->next->next == NULL)
 	{
 		if (is_string_all_nums(cmd->next->value) == 1)
 		{
@@ -66,7 +88,6 @@ void	ft_exit(t_central *central, t_input *cmd)
 			return ;
 		}
 	}
-	printf("exit\n");
-	central->exit_val = 0;
-	central->has_exited = TRUE;
+	else
+		special_exit(central, cmd->next);
 }

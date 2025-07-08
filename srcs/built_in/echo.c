@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 10:59:13 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:49:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ void	ft_echo(t_central *central, t_input *cmd)
 		tmp = tmp->next;
 		while (tmp)
 		{
-			if (tmp->token != ARGUMENT)
-				break ;
-			do_echo(tmp);
+			if (tmp->token == ARGUMENT)
+				do_echo(tmp);
 			tmp = tmp->next;
 		}
 		write(1, "\n", 1);
