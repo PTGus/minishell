@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:52:55 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 10:59:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:09:59 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	do_exportions(t_central *central, t_input *cmd)
 	t_envp	*new;
 	t_input	*tmp;
 	int		i;
-	int		fail_flag;
+	int		fail_flag = FALSE;
 
 	tmp = cmd;
 	while (tmp)

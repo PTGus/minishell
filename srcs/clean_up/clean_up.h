@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   clean_up.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 10:59:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:05:29 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/08 10:32:40 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/08 10:49:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef CLEAN_UP_H
+# define CLEAN_UP_H
 
-int	validity_check(char *str)
-{
-	size_t	i;
+// CLEAN_UP //
 
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_isalnum(str[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// free/2 //
+void	clean_doc(char *rl_doc, char *tmp);
+void	clean_all(t_central *central);
+void	ft_envfreeone(t_envp *dupenv);
+void	free_env(t_envp *dupenv);
+void	ft_freesplit(char **split);
+void	free_input_list(t_input *head);
+void	free_central_cmd(t_central *central);
+void	post_loop_cleanup(t_central *central, char *rl);
+
+#endif

@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   err_handling.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 10:59:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:05:29 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/08 10:36:40 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/08 10:49:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef ERR_HANDLING_H
+# define ERR_HANDLING_H
 
-int	validity_check(char *str)
-{
-	size_t	i;
+// ERR_HANDLING //
 
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_isalnum(str[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// errors //
+void	bad_export(char *str);
+void	bad_doc(char *str);
+void	no_perms(char *str);
+void	comm_not_found(char *str);
+void	not_dir(char *str);
+void	event_not_found(char *str);
+void	bad_redir_token(char *str);
+void	no_home(void);
+void	excessive_args(char *str);
+
+#endif

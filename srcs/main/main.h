@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 10:59:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:05:29 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/08 10:38:04 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/08 10:49:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef MAIN_H
+# define MAIN_H
 
-int	validity_check(char *str)
-{
-	size_t	i;
+// MAIN //
 
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_isalnum(str[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// minishell //
+int		main(int ac, char **av, char **env);
+void	do_cmd(t_central *central, t_input *cmd);
+void	rl_loop(t_central *central);
+int		do_builtin(t_central *central, t_input *cmd);
+
+#endif

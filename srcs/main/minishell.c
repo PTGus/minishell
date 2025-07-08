@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 13:09:00 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:15:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	do_builtin(t_central *central, t_input *cmd)
 		else if (ft_strcmp(tmp->value, "exit") == 0)
 			return (ft_exit(central, tmp), 0);
 		else if (ft_strcmp(tmp->value, "unset") == 0)
-			return (ft_unset(central, tmp->next->value), 0);
+			return (ft_unset(central, tmp->next), 0);
 		tmp = tmp->next;
 	}
 	return (1);

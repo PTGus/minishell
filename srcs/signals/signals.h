@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 10:59:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:05:29 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/08 10:50:28 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/08 10:51:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-int	validity_check(char *str)
-{
-	size_t	i;
+// SIGNALS //
 
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_isalnum(str[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// heredoc_signals //
+void	setup_heredoc_signals(void);
+
+// signals //
+void	ctrl_c(int sig);
+void	ctrl_d(void);
+void	handle_signals(void);
+
+#endif

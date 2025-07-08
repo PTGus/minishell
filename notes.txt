@@ -20,7 +20,10 @@ SIGTTIN		|	21		|	Background read from tty			|	Stop
 SIGTTOU		|	22		|	Background write to tty				|	Stop
 
 
-An environment variable's name must start with either an uppercase or lowercase letter (i.e., A–Z or a–z) or an underscore (_). If you try to assign a value to a name that starts with any other character—such as a digit or a special character—the bash will reject it as an invalid identifier. However, this restriction applies only to the name—not the value. However after the first character, you can also include digits (0–9) alongside letters and underscores but still no other characters other thatn these are allowed.
+An environment variable's name must start with either an uppercase or lowercase letter (i.e., A–Z or a–z) or an underscore (_).
+If you try to assign a value to a name that starts with any other character—such as a digit or a special character—the bash will reject it as an invalid identifier.
+However, this restriction applies only to the name—not the value. However after the first character, you can also include digits (0–9) alongside letters and
+underscores but still no other characters other thatn these are allowed.
 
 You can assign almost any string to an environment variable, including empty strings.
 

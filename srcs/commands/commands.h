@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils2.c                                    :+:      :+:    :+:   */
+/*   commands.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 10:59:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:05:29 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/08 10:34:04 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/08 10:49:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef COMMANDS_H
+# define COMMANDS_H
 
-int	validity_check(char *str)
-{
-	size_t	i;
+// COMMANDS //
 
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_isalnum(str[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// executer //
+int		commander(t_central *central, t_input *cmd);
+void	executer(char *exec, t_central *central, t_input *cmd);
+char	*pather(t_envp *path, char *cmd);
+
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 14:06:28 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:53:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_cd(t_central *central, t_input *cmd)
 	tmp_cmd = cmd;
 	while (tmp_cmd && ft_strcmp(tmp_cmd->value, "cd") != 0)
 		tmp_cmd = tmp_cmd->next;
+	if (tmp_cmd->next->next != NULL)
+		return (central->exit_val = 1, (void) 0);
 	if (tmp_cmd->next == NULL \
 		|| (tmp_cmd->next->value[0] == '~' && tmp_cmd->next->value[1] == '\0')) // this has different behaviours deppending if its used as "cd" (doesnt work without HOME set) or "cd ~" (works without HOME set)
 	{
