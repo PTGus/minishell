@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:45:06 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:25:35 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:28:08 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,38 @@ void	excessive_args(char *str)
 	err_msg = ft_strjoin(err_msg, str);
 	tmp = err_msg;
 	err_msg = ft_strjoin(tmp, ": too many arguments\n");
+	free(tmp);
+	err_len = ft_strlen(err_msg);
+	write(2, err_msg, err_len);
+	free(err_msg);
+}
+
+void	not_dir(char *str)
+{
+	int		err_len;
+	char	*err_msg;
+	char	*tmp;
+
+	err_msg = "bash: ";
+	err_msg = ft_strjoin(err_msg, str);
+	tmp = err_msg;
+	err_msg = ft_strjoin(tmp, ": No such file or directory\n");
+	free(tmp);
+	err_len = ft_strlen(err_msg);
+	write(2, err_msg, err_len);
+	free(err_msg);
+}
+
+void	is_dir(char *str)
+{
+	int		err_len;
+	char	*err_msg;
+	char	*tmp;
+
+	err_msg = "bash: ";
+	err_msg = ft_strjoin(err_msg, str);
+	tmp = err_msg;
+	err_msg = ft_strjoin(tmp, ": Is a directory\n");
 	free(tmp);
 	err_len = ft_strlen(err_msg);
 	write(2, err_msg, err_len);

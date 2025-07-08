@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:52:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:52:46 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:20:16 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	set_back(t_envp **pwd);
 
 // central_utils //
 void	init_central(t_central *central, t_envp **dupenv);
+
 // env_utils //
 void	organise_env(t_envp **dupenv);
 void	reorder_dupenv(t_envp **dupenv);
@@ -27,11 +28,13 @@ void	env_delone(t_envp *to_del);
 void	insert_before_last(t_envp **dupenv, t_envp *curr);
 t_envp	*ft_getenv(t_envp **dupenv, char *to_find);
 
-// exec_utils //
+// exec_utils\2 //
 char	*get_line(t_envp *dupenv);
 char	**get_exec_env(t_envp **dupenv);
 int		is_relative(char *cmd);
 void	do_solo(t_central *central, t_input *cmd);
+int		is_built_in(t_input *cmd);
+int		is_cmd_valid(char *cmd);
 
 // export utils //
 int		is_special_exportion(t_central *central, char *exportion);
@@ -62,6 +65,6 @@ t_input	*find_cmd(t_input *cmd);
 void	has_shell_operator(t_central *central);
 int		ft_strcmp(char *s1, char *s2);
 void	increase_shlvl(t_envp **dupenv);
-int		is_built_in(t_input *cmd);
+
 
 #endif

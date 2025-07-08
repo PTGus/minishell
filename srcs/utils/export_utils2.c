@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 10:59:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:05:29 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:53:02 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ int	validity_check(char *str)
 	while (str[i] && str[i] != '=')
 	{
 		if (ft_isalnum(str[i]) == 0)
-			return (1);
+			break;
 		i++;
 	}
-	return (0);
+	if (str[i] == '\0')
+		return (0);
+	if (str[i] == '+' && str[i + 1] == '=')
+		return (0);
+	if (str[i] == '=')
+		return (0);
+	return (1);
 }

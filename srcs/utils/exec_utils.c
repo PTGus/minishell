@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 13:30:32 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:52:43 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,8 @@ char	**get_exec_env(t_envp **dupenv)
 
 int	is_relative(char *cmd)
 {
-	char	*cwd;
-
 	if (ft_strncmp(cmd, "./", 2) == 0)
-	{
-		cwd = getcwd(NULL, 0);
-		if (!cwd)
-			return (1);
-	}
+		return (0);
 	return (1);
 }
 
@@ -108,23 +102,21 @@ int	is_built_in(t_input *cmd)
 	t_input *tmp;
 
 	tmp = cmd;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->value, "echo") == 0)
-			return (0);
-		else if (ft_strcmp(tmp->value, "cd") == 0)
-			return (0);
-		else if (ft_strcmp(tmp->value, "pwd") == 0)
-			return (0);
-		else if (ft_strcmp(tmp->value, "env") == 0)
-			return (0);
-		else if (ft_strcmp(tmp->value, "export") == 0)
-			return (0);
-		else if (ft_strcmp(tmp->value, "exit") == 0)
-			return (0);
-		else if (ft_strcmp(tmp->value, "unset") == 0)
-			return (0);
-		tmp = tmp->next;
-	}
+	while (tmp->token != ARGUMENT)
+		tmp = tmp->next->next;
+	if (ft_strcmp(tmp->value, "echo") == 0)
+		return (0);
+	else if (ft_strcmp(tmp->value, "cd") == 0)
+		return (0);
+	else if (ft_strcmp(tmp->value, "pwd") == 0)
+		return (0);
+	else if (ft_strcmp(tmp->value, "env") == 0)
+		return (0);
+	else if (ft_strcmp(tmp->value, "export") == 0)
+		return (0);
+	else if (ft_strcmp(tmp->value, "exit") == 0)
+		return (0);
+	else if (ft_strcmp(tmp->value, "unset") == 0)
+		return (0);
 	return (1);
 }

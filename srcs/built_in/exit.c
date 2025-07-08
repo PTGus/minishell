@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 12:03:14 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:25:09 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,22 @@ void	special_exit(t_central *central, t_input *cmd)
 	}
 }
 
+int	is_within_bounds(char *exit_val)
+{
+	const char	*max;
+	int			len;
+
+	max = "9223372036854775807";
+	len = ft_strlen(exit_val);
+	if (len > 19)
+		return (1);
+	if (len < 19)
+		return (0);
+	if (ft_strcmp(exit_val, max) > 0)
+		return (1);
+	return (0);
+}
+
 /**
  * @brief Built-in function that behaves just like
  *  the "exit" command.
@@ -72,7 +88,7 @@ void	ft_exit(t_central *central, t_input *cmd)
 {
 	if (cmd->next != NULL && cmd->next->next == NULL)
 	{
-		if (is_string_all_nums(cmd->next->value) == 1)
+		if (is_string_all_nums(cmd->next->value) == 1 || is_within_bounds(cmd->next->value) != 0)
 		{
 			printf("exit\n");
 			exit_err(cmd->next->value);

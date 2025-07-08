@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:04:47 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:03:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,16 @@ static int	plus_export(t_central *central, char *exportion)
 	var = ft_getenv(&central->dupenv, tmp);
 	free(tmp);
 	if (!var)
-		return (0);
+	{
+		var = new_env(exportion);
+		return (insert_before_last(&central->dupenv, var), 1);
+	}
 	tmp = ft_strdup(var->value);
 	free(var->value);
 	tmp2 = ft_substr(exportion, i + 2, ft_strlen(exportion) - (i + 1));
 	var->value = ft_strjoin(tmp, tmp2);
 	free(tmp);
-	free(tmp2);
-	return (1);
+	return (free(tmp2), 1);
 }
 
 int	is_special_exportion(t_central *central, char *exportion)

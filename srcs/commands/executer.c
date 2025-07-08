@@ -6,13 +6,13 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 11:00:30 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:34:58 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	check_exec_error(char *cmd);
+static void	check_exec_error(char *cmd, int type);
 
 /**
  * @brief Finds out whether the command exists
@@ -23,23 +23,25 @@ static void	check_exec_error(char *cmd);
  */
 int	commander(t_central *central, t_input *cmd)
 {
+	int		i;
 	t_envp	*path;
 	t_input	*tmp_cmd;
 	char	*exec;
+	char	*tmp;
 
 	tmp_cmd = find_cmd(cmd);
 	path = ft_getenv(&central->dupenv, "PATH");
-	if (!path)
+	if (is_relative(tmp_cmd->value) == 0)
 	{
-		not_dir(tmp_cmd->value);
-		clean_all(central);
-		exit(127);
+		tmp = getcwd(NULL, 0);
+		exec = ft_strjoin(tmp, cmd->value + 2);
 	}
 	else
 		exec = pather(path, tmp_cmd->value);
-	if (!exec || (access(exec, F_OK) == 0 && access(exec, X_OK) != 0))
+	i = is_cmd_valid(exec);
+	if (i != 0)
 	{
-		check_exec_error(tmp_cmd->value);
+		check_exec_error(tmp_cmd->value, i);
 		clean_all(central);
 	}
 	executer(exec, central, tmp_cmd);
@@ -83,8 +85,8 @@ char	*pather(t_envp *path, char *cmd)
 	char	**all_paths;
 	char	*path_part;
 
-	if (is_relative(cmd) == 0)
-		return (ft_strdup(cmd));
+	if (!path)
+		return (NULL);
 	all_paths = ft_split(path->value, ':');
 	i = -1;
 	while (all_paths[++i])
@@ -103,25 +105,21 @@ char	*pather(t_envp *path, char *cmd)
 	return (NULL);
 }
 
-static void	check_exec_error(char *cmd)
+static void	check_exec_error(char *cmd, int type)
 {
-	struct stat	sb;
-
-	if (access(cmd, F_OK) == 0)
-	{
-		if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
-		{
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(cmd, 2);
-			ft_putendl_fd(": Is a directory", 2);
-		}
-		else
-			no_perms(cmd);
-		exit(126);
-	}
-	else
+	if (type == 1)
 	{
 		comm_not_found(cmd);
 		exit(127);
+	}
+	else if (type == 2)
+	{
+		comm_not_found(cmd);
+		exit(126);
+	}
+	else if (type == 3)
+	{
+		no_perms(cmd);
+		exit(126);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:15:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:12:32 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	rl_loop(t_central *central)
 		if (central->has_exited == TRUE)
 			return ;
 		post_loop_cleanup(central, rl);
-		reset_fds(1);
 	}
 }
 
@@ -100,7 +99,7 @@ int	do_builtin(t_central *central, t_input *cmd)
 			return (ft_cd(central, cmd), 0);
 		else if (ft_strcmp(tmp->value, "pwd") == 0)
 			return (ft_pwd(central), 0);
-		else if (ft_strcmp(tmp->value, "env") == 0) // doesnt work whithout PATH
+		else if (ft_strcmp(tmp->value, "env") == 0)
 			return (ft_env(central, cmd), 0);
 		else if (ft_strcmp(tmp->value, "export") == 0)
 			return (ft_export(central, cmd), 0);

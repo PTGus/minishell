@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 15:31:26 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:10:54 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	comm_not_found(char *str)
  * @brief A error message for when the specified
  *  file/folder is not found.
  */
-void	not_dir(char *str)
+void	not_cd_dir(char *str)
 {
 	int		err_len;
 	char	*err_msg;

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 14:37:18 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:10:54 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_cd(t_central *central, t_input *cmd)
 	else if (access(tmp_cmd->next->value, F_OK) == 0)
 		set_cd_values(&central->dupenv, tmp_cmd);
 	else
-		return (not_dir(tmp_cmd->next->value), central->exit_val = 1, (void) 0);
+		return (not_cd_dir(tmp_cmd->next->value), central->exit_val = 1, (void) 0);
 	central->exit_val = 0;
 }
 

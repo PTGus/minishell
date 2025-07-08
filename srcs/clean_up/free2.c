@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:50:38 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 11:00:14 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:25:50 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	post_loop_cleanup(t_central *central, char *rl)
 {
 	free_central_cmd(central);
 	free(rl);
+	reset_fds(1);
 }
 
 void	free_input_list(t_input *head)

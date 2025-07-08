@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:21:33 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:37:40 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_input	*find_cmd(t_input *cmd)
 
 void	has_shell_operator(t_central *central)
 {
-
+	// if ()
 	if (to_pipe(central) != 0)
 	{
 		if (has_to_redirect(central, central->cmd[0]) != 0)

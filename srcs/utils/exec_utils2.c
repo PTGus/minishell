@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_handling.h                                     :+:      :+:    :+:   */
+/*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 10:36:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 16:28:08 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/08 15:42:47 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/08 17:10:20 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERR_HANDLING_H
-# define ERR_HANDLING_H
+#include "../../includes/minishell.h"
 
-// ERR_HANDLING //
+int	is_cmd_valid(char *cmd)
+{
+	struct stat	sb;
+	int	i;
 
-// errors //
-void	bad_export(char *str);
-void	bad_doc(char *str);
-void	no_perms(char *str);
-void	comm_not_found(char *str);
-void	not_cd_dir(char *str);
-void	event_not_found(char *str);
-void	bad_redir_token(char *str);
-void	no_home(void);
-void	excessive_args(char *str);
-void	not_dir(char *str);
-void	is_dir(char *str);
-
-#endif
+	i = 0;
+	if (!cmd)
+		return (1);
+	if (ft_strcmp(cmd, "") == 0)
+		return (1);
+	if (access(cmd, F_OK) == 0)
+	{
+		if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
+			return (2);
+		else
+			return (3);
+	}
+	return (0);
+}
