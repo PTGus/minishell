@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 16:34:58 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:20:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	commander(t_central *central, t_input *cmd)
 	char	*tmp;
 
 	tmp_cmd = find_cmd(cmd);
+	if (ft_strcmp(tmp_cmd->value, "") == 0)
+		exit(0);
 	path = ft_getenv(&central->dupenv, "PATH");
 	if (is_relative(tmp_cmd->value) == 0)
 	{
@@ -44,9 +46,7 @@ int	commander(t_central *central, t_input *cmd)
 		check_exec_error(tmp_cmd->value, i);
 		clean_all(central);
 	}
-	executer(exec, central, tmp_cmd);
-	free(exec);
-	return (0);
+	return (executer(exec, central, tmp_cmd), free(exec), 0);
 }
 
 /**
@@ -85,8 +85,10 @@ char	*pather(t_envp *path, char *cmd)
 	char	**all_paths;
 	char	*path_part;
 
-	if (!path)
+	if (!path || !cmd)
 		return (NULL);
+	if (access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
 	all_paths = ft_split(path->value, ':');
 	i = -1;
 	while (all_paths[++i])
@@ -114,7 +116,7 @@ static void	check_exec_error(char *cmd, int type)
 	}
 	else if (type == 2)
 	{
-		comm_not_found(cmd);
+		is_dir(cmd);
 		exit(126);
 	}
 	else if (type == 3)

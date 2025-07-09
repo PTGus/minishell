@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands.h                                         :+:      :+:    :+:   */
+/*   errors3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 10:34:04 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 16:18:54 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/09 13:49:16 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/09 13:52:16 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMANDS_H
-# define COMMANDS_H
+#include "../../includes/minishell.h"
 
-// COMMANDS //
+void	no_oldpwd(void)
+{
+	int	err_len;
 
-// executer //
-int		commander(t_central *central, t_input *cmd);
-void	executer(char *exec, t_central *central, t_input *cmd);
-char	*pather(t_envp *path, char *cmd);
-
-#endif
+	err_len = ft_strlen("bash: cd: OLDPWD not set\n");
+	write(2, "bash: cd: OLDPWD not set\n", err_len);
+}

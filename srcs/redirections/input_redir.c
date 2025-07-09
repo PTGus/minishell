@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:11:52 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/02 12:07:42 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:15:05 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	set_input(t_input *cmd)
 	{
 		if (access(tmp->value, R_OK) == 0)
 		{
-			fd = open(tmp->value, O_RDONLY | O_APPEND);
+			fd = open(tmp->value, O_RDONLY);
 			dup2(fd, STDIN_FILENO);
 			close(fd);
 			return (0);

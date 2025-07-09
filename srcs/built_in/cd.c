@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 16:10:54 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:05:03 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
  */
 void	ft_cd(t_central *central, t_input *cmd)
 {
-	t_envp	*tmp_env;
 	t_input	*tmp_cmd;
 
 	tmp_cmd = cmd;
@@ -31,14 +30,9 @@ void	ft_cd(t_central *central, t_input *cmd)
 			excessive_args(tmp_cmd->next->next->value), (void) 0);
 	if (tmp_cmd->next == NULL
 		|| (tmp_cmd->next->value[0] == '~' && tmp_cmd->next->value[1] == '\0'))
-	{
-		tmp_env = ft_getenv(&central->dupenv, "HOME");
-		if (!tmp_env)
-			return (no_home(), central->exit_val = 1, (void) 0);
-		set_old_pwd(&central->dupenv);
-		set_home(&central->dupenv);
-		chdir(tmp_env->value);
-	}
+		cd_to_home(central);
+	else if (ft_strcmp(tmp_cmd->next->value, "-") == 0)
+		cd_oldpwd(central);
 	else if (access(tmp_cmd->next->value, F_OK) == 0)
 		set_cd_values(&central->dupenv, tmp_cmd);
 	else
@@ -66,8 +60,8 @@ void	set_cd_values(t_envp **dupenv, t_input *cmd)
 	else
 	{
 		set_old_pwd(dupenv);
-		set_pwd(dupenv, tmp->next->value);
 		chdir(tmp->next->value);
+		set_pwd(dupenv);
 	}
 }
 
@@ -96,33 +90,27 @@ void	set_home(t_envp **dupenv)
  *  to the currently working directory (CWD).
  * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
-void	set_pwd(t_envp **dupenv, char *path)
+void	set_pwd(t_envp **dupenv)
 {
 	t_envp	*pwd;
 	char	*tmp;
-	int		i;
+	char	*new_val;
 
 	pwd = ft_getenv(dupenv, "PWD");
-	if (ft_strcmp(pwd->value, path) == 0)
+	if (!pwd)
 		return ;
-	tmp = ft_strdup(pwd->value);
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
+		return ;
+	new_val = ft_strdup(tmp);
+	if (!new_val)
+	{
+		free(tmp);
+		return ;
+	}
 	free(pwd->value);
-	if (strcmp(path, "..") == 0)
-	{
-		set_back(dupenv);
-		return ;
-	}
-	i = -1;
-	while (path[++i])
-	{
-		if (path[i] == '/')
-			break ;
-	}
-	path[i] = '\0';
-	path = ft_strjoin("/", path);
-	pwd->value = ft_strjoin(tmp, path);
+	pwd->value = new_val;
 	free(tmp);
-	free(path);
 }
 
 /**

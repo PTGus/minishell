@@ -6,11 +6,43 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:57:18 by gumendes          #+#    #+#             */
-/*   Updated: 2025/05/09 15:44:09 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:05:03 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	cd_oldpwd(t_central *central)
+{
+	t_envp	*tmp_env;
+	char	*tmp_str;
+
+	tmp_env = ft_getenv(&central->dupenv, "OLDPWD");
+	if (!tmp_env)
+	{
+		no_oldpwd();
+		central->exit_val = 1;
+		return ;
+	}
+	tmp_str = ft_strjoin(tmp_env->value, "\n");
+	write(1, tmp_str, ft_strlen(tmp_str));
+	free(tmp_str);
+	chdir(tmp_env->value);
+	set_old_pwd(&central->dupenv);
+	set_pwd(&central->dupenv);
+}
+
+void	cd_to_home(t_central *central)
+{
+	t_envp	*tmp_env;
+
+	tmp_env = ft_getenv(&central->dupenv, "HOME");
+	if (!tmp_env)
+		return (no_home(), central->exit_val = 1, (void) 0);
+	set_old_pwd(&central->dupenv);
+	set_home(&central->dupenv);
+	chdir(tmp_env->value);
+}
 
 /**
  * @brief Sets the PWD to the previous directory.

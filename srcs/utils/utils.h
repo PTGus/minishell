@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:52:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 16:20:16 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:25:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 // UTILS //
 
 // cd_utils //
+void	cd_oldpwd(t_central *central);
+void	cd_to_home(t_central *central);
+void	set_bpwd(t_envp **dupenv, int count);
 void	set_back(t_envp **pwd);
 
 // central_utils //
@@ -35,6 +38,10 @@ int		is_relative(char *cmd);
 void	do_solo(t_central *central, t_input *cmd);
 int		is_built_in(t_input *cmd);
 int		is_cmd_valid(char *cmd);
+char	**get_exec_flags(t_input *cmd);
+
+// exit_utils //
+int		is_all_signs(char *str);
 
 // export utils //
 int		is_special_exportion(t_central *central, char *exportion);
@@ -60,7 +67,6 @@ int		check_for_bad_redir(char *to_redir);
 void	reset_fds(int status);
 
 // utils //
-char	**get_exec_flags(t_input *cmd);
 t_input	*find_cmd(t_input *cmd);
 void	has_shell_operator(t_central *central);
 int		ft_strcmp(char *s1, char *s2);

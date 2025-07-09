@@ -6,40 +6,11 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 15:37:40 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:05:08 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	**get_exec_flags(t_input *cmd)
-{
-	char	**ret_arr;
-	int		arg_amm;
-	t_input	*start;
-	t_input	*tmp;
-
-	tmp = cmd;
-	arg_amm = 0;
-	while (tmp && tmp->token != ARGUMENT)
-		tmp = tmp->next;
-	start = tmp;
-	while (tmp && tmp->token == ARGUMENT)
-	{
-		tmp = tmp->next;
-		arg_amm++;
-	}
-	ret_arr = malloc(sizeof(char *) * (arg_amm + 1));
-	ret_arr[arg_amm] = NULL;
-	arg_amm = 0;
-	while (start && start->token == ARGUMENT)
-	{
-		ret_arr[arg_amm] = start->value;
-		arg_amm++;
-		start = start->next;
-	}
-	return (ret_arr);
-}
 
 t_input	*find_cmd(t_input *cmd)
 {
@@ -47,13 +18,12 @@ t_input	*find_cmd(t_input *cmd)
 
 	tmp = cmd;
 	while (tmp->token != ARGUMENT)
-		tmp = tmp->next;
+		tmp = tmp->next->next;
 	return (tmp);
 }
 
 void	has_shell_operator(t_central *central)
 {
-	// if ()
 	if (to_pipe(central) != 0)
 	{
 		if (has_to_redirect(central, central->cmd[0]) != 0)

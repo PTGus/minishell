@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 14:49:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:59:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,7 @@ void	ft_echo(t_central *central, t_input *cmd)
 	else
 	{
 		tmp = tmp->next;
-		while (tmp)
-		{
-			if (tmp->token == ARGUMENT)
-				do_echo(tmp);
-			tmp = tmp->next;
-		}
-		write(1, "\n", 1);
+		do_echo(tmp);
 	}
 	central->exit_val = 0;
 }
@@ -48,12 +42,29 @@ void	ft_echo(t_central *central, t_input *cmd)
 void	do_echo(t_input *cmd)
 {
 	t_input	*tmp;
+	int		first;
 
 	tmp = cmd;
-	if (tmp->token == ARGUMENT)
-		ft_putstr_fd(tmp->value, 1);
-	if (tmp->next != NULL && tmp->next->token == ARGUMENT)
-		write(1, " ", 1);
+	first = 1;
+	while (tmp)
+	{
+		if (tmp->token == ARGUMENT)
+		{
+			if (!first)
+				write(1, " ", 1);
+			ft_putstr_fd(tmp->value, 1);
+			first = 0;
+			tmp = tmp->next;
+		}
+		else
+		{
+			if (tmp->next)
+				tmp = tmp->next->next;
+			else
+				break;
+		}
+	}
+	write(1, "\n", 1);
 }
 
 void	echo_n(t_input *cmd)
