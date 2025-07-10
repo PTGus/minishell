@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:36:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 13:52:16 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:07:02 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void	excessive_args(char *str);
 void	not_dir(char *str);
 void	is_dir(char *str);
 void	no_oldpwd(void);
+void	no_file_dir(char *str);
 
 #endif
