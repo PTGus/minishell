@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:54 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:39:13 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:56:27 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void ctrl_c(int sig)
 
 void	ctrl_d(void)
 {
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 2);
 	rl_clear_history();
 }
 
