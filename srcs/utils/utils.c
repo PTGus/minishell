@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 16:05:08 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:33:53 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ t_input	*find_cmd(t_input *cmd)
 
 void	has_shell_operator(t_central *central)
 {
-	if (to_pipe(central) != 0)
+	if (to_pipe(central) == 1)
 	{
+		handle_all_heredocs(central);
+		central->curr_cmd_idx = 0;
+		central->curr_heredoc_idx = 0;
 		if (has_to_redirect(central, central->cmd[0]) != 0)
-		 	return ;
+			return ;
 		do_solo(central, central->cmd[0]);
+		free_heredoc_paths(central);
 	}
 }
 

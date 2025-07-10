@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:52:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 15:25:33 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:50:43 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ t_envp	*new_valuesless_env(char *envp);
 int		to_pipe(t_central *central);
 int		validity_check(char *str);
 
+// gnl //
+char	*get_next_line(int fd);
+void	ft_free(char **ptr);
+char	*set_line(char *str);
+char	*fill_line(int fd, char *nxt, char *buf);
+
 // list_utils //
 void	ft_lst_back(t_envp **dupenv, t_envp *curr);
 t_envp	*lstlast(t_envp **dupenv);
@@ -65,6 +71,7 @@ void	close_all_pipes(int (*pipe_fd)[2], int pipe_amm);
 // redir_utils //
 int		check_for_bad_redir(char *to_redir);
 void	reset_fds(int status);
+int		has_heredocs(t_central *central);
 
 // utils //
 t_input	*find_cmd(t_input *cmd);

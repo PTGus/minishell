@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:49:56 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/30 15:44:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:54:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ int	to_pipe(t_central *central)
 {
 	if (central->matrix_len > 1)
 	{
+		if (handle_all_heredocs(central) == 130)
+			return (130);
 		piper(central);
+		free_heredoc_paths(central);
 		return (0);
 	}
 	return (1);
