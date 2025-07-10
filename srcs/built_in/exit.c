@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 14:25:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:56:27 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	special_exit(t_central *central, t_input *cmd)
 {
 	if (!cmd)
 	{
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 2);
 		central->exit_val = 0;
 		central->has_exited = TRUE;
 	}
 	else
 	{
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 2);
 		excessive_args("exit");
 		central->exit_val = 1;
 	}
@@ -105,18 +105,18 @@ void	ft_exit(t_central *central, t_input *cmd)
 		if (ft_strcmp(cmd->next->value, "--") == 0)
 		{
 			central->has_exited = TRUE;
-			return (central->exit_val = 0, printf("exit\n"), (void) 0);
+			return (central->exit_val = 0, ft_putstr_fd("exit\n", 2), (void) 0);
 		}
 		if (is_string_all_nums(cmd->next->value) == 1
 			|| is_within_bounds(cmd->next->value) != 0)
 		{
 			exit_err(cmd->next->value);
 			central->has_exited = TRUE;
-			return (central->exit_val = 2, printf("exit\n"), (void) 0);
+			return (central->exit_val = 2, ft_putstr_fd("exit\n", 2), (void) 0);
 		}
 		else
 		{
-			printf("exit\n");
+			ft_putstr_fd("exit\n", 2);
 			central->exit_val = (ft_atoi(cmd->next->value) % 256);
 			central->has_exited = TRUE;
 			return ;
