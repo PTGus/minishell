@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:25:10 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 15:01:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:50:43 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,26 @@ void	reset_fds(int status)
 		close(org_stdout);
 		close(org_stderr);
 	}
+}
+
+int	has_heredocs(t_central *central)
+{
+	int		i;
+	t_input	*tmp;
+
+	if (!central || !central->cmd)
+		return (0);
+	i = 0;
+	while (i < central->matrix_len)
+	{
+		tmp = central->cmd[i];
+		while (tmp)
+		{
+			if (tmp->token == HERE_DOC || tmp->token == HERE_DOC_Q)
+				return (1);
+			tmp = tmp->next;
+		}
+		i++;
+	}
+	return (0);
 }
