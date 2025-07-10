@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 16:20:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:28:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	commander(t_central *central, t_input *cmd)
 	if (is_relative(tmp_cmd->value) == 0)
 	{
 		tmp = getcwd(NULL, 0);
-		exec = ft_strjoin(tmp, cmd->value + 2);
+		exec = ft_strjoin(tmp, cmd->value + 1);
 	}
 	else
 		exec = pather(path, tmp_cmd->value);
@@ -104,7 +104,7 @@ char	*pather(t_envp *path, char *cmd)
 		free(exec);
 	}
 	ft_freesplit(all_paths);
-	return (NULL);
+	return (ft_strdup(cmd));
 }
 
 static void	check_exec_error(char *cmd, int type)
@@ -123,5 +123,10 @@ static void	check_exec_error(char *cmd, int type)
 	{
 		no_perms(cmd);
 		exit(126);
+	}
+	else if (type == 4)
+	{
+		no_file_dir(cmd);
+		exit(127);
 	}
 }
