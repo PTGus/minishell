@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "parsing.h"
 
 /**
  * @brief	Checks if current node val at i pos is $, has a value after
@@ -137,3 +138,29 @@ char	*ft_execute_expand_doc(t_central *central,
 	ft_free_strings(temp, expand);
 	return (new_str);
 }
+/*
+void	ft_delete_empty_expands(t_input **array)
+{
+	int		i;
+	t_input *current;
+	t_input	*temp;
+	t_input *first;
+
+	i = -1;
+	while (array[++i])
+	{
+		first = array[i];
+		current = first;
+		while (current)
+		{
+			if (current->token == DELETE)
+			{
+
+				temp = ft_input_delete_node(current);
+				current = temp;
+			}
+			else 
+				current = current->next;
+		}
+	}
+}*/

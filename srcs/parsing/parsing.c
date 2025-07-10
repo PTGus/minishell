@@ -33,6 +33,7 @@ int	ft_parse(char *prompt, t_central *central)
 	ft_space_redirects(central);
 	ft_tokenizer(central);
 	ft_expander(central);
+	//ft_print_list_array(central->cmd);
 	ft_quote_eraser(central);
 	return (0);
 }

@@ -119,3 +119,9 @@ void	ft_insert_split_node(t_input *first, t_input *second)
 		current = next;
 	}
 }
+
+void	ft_mark_empty_expand(t_input *node)
+{
+	if (ft_strlen(node->value) == 0)
+		node->token = DELETE;
+}

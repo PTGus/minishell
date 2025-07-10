@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "parsing.h"
 
 /**
  * @brief	Iterates through command array to expand environment vars, then
@@ -64,6 +65,7 @@ int	ft_check_expand(t_central *central, t_input *node)
 			j = ft_get_expand_end(node->value, i + 1);
 			if (ft_execute_expand(central, &node->value, i, j) == 1)
 				return (1);
+			ft_mark_empty_expand(node);
 			i = 0;
 		}
 		else
