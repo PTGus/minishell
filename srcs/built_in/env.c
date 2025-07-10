@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 17:01:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:15:49 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_envp	*new_env(char *envp)
 	char	*tmp;
 	int		i;
 
-	new = ft_calloc(1, sizeof(t_envp));
+	new = malloc(1 * sizeof(t_envp));
 	if (!new)
 		return (NULL);
 	new->value = NULL;
