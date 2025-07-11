@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "parsing.h"
 
 /**
  * @brief	Iterates through command array to expand environment vars, then
@@ -34,7 +33,7 @@ int	ft_expander(t_central *central)
 			{
 				if (ft_check_expand(central, current) == 1)
 					return (1);
-				ft_is_node_spaced(current);
+				ft_is_node_spaced(central, current);
 			}
 			next = current->next;
 			current = next;

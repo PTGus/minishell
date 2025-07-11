@@ -32,9 +32,14 @@ int	ft_parse(char *prompt, t_central *central)
 	ft_remove_extra_spaces(central);
 	ft_space_redirects(central);
 	ft_tokenizer(central);
+	ft_print_list_array(central->cmd);
+	printf("\n");
 	ft_expander(central);
-	//ft_print_list_array(central->cmd);
+	ft_print_list_array(central->cmd);
+	printf("\n");
 	ft_quote_eraser(central);
+	ft_print_list_array(central->cmd);
+	printf("\n");
 	return (0);
 }
 

@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 		reset_fds(0);
 		handle_signals();
 		rl_loop(central);
+		//return (0); // DELETE ME
 		reset_fds(2);
 		rl_clear_history();
 		exit_v = central->exit_val;
@@ -72,6 +73,7 @@ void	rl_loop(t_central *central)
 		}
 		add_history(rl);
 		ft_parse(rl, central);
+		//return ; //DELETE ME
 		has_shell_operator(central);
 		if (central->has_exited == TRUE)
 			return ;
