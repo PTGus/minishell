@@ -26,7 +26,8 @@ char	*ft_execute_expand_doc(t_central *central, char **str,
 // expand_utils //
 char	*ft_get_dupenv_val(t_central *central, char *str);
 void	ft_is_node_spaced(t_central *central, t_input *node);
-void	ft_insert_split_node(t_central *central, t_input *first, t_input *second);
+void	ft_insert_split_node(t_central *central,
+			t_input *first, t_input *second);
 void	ft_mark_empty_expand(t_input *node);
 
 // expander //

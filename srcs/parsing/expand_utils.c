@@ -86,7 +86,6 @@ void	ft_is_node_spaced(t_central *central, t_input *node)
 			len = ft_strlen(old_val + i + 1);
 			if (old_val[i + 1])
 			{
-
 				split_node = ft_input_new(
 						ft_substr(old_val, i + 1, len), node->index + 1);
 				ft_insert_split_node(central, node, split_node);
@@ -103,7 +102,8 @@ void	ft_is_node_spaced(t_central *central, t_input *node)
  *	@param	first - node with the first part of old val
  *	@param	second - node with the remainder of old val
 */
-void	ft_insert_split_node(t_central *central, t_input *first, t_input *second)
+void	ft_insert_split_node(t_central *central,
+			t_input *first, t_input *second)
 {
 	t_input	*next;
 	t_input	*current;
