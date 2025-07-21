@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:51:22 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:16:46 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	handle_all_heredocs(t_central *central)
 
 static int	do_redirection(t_central *central, t_input *cmd)
 {
-	char **path;
+	char	**path;
 
 	if (cmd->token == REDIR_IN)
 		return (set_input(cmd));
@@ -82,7 +82,8 @@ static int	do_redirection(t_central *central, t_input *cmd)
 		return (append_redir(cmd));
 	else if (cmd->token == HERE_DOC || cmd->token == HERE_DOC_Q)
 	{
-		path = &central->heredoc_paths[central->curr_cmd_idx][central->curr_heredoc_idx];
+		path = &central->heredoc_paths[central->curr_cmd_idx]
+		[central->curr_heredoc_idx];
 		if (!*path)
 		{
 			ft_putstr_fd("minishell: heredoc path is missing\n", STDERR_FILENO);
@@ -96,7 +97,7 @@ static int	do_redirection(t_central *central, t_input *cmd)
 
 static int	set_redirections(t_central *central, t_input *cmd)
 {
-	t_input *tmp;
+	t_input	*tmp;
 	int		i;
 
 	tmp = cmd;
@@ -117,7 +118,7 @@ static int	set_redirections(t_central *central, t_input *cmd)
 
 int	has_to_redirect(t_central *central, t_input *cmd)
 {
-	t_input *tmp;
+	t_input	*tmp;
 
 	tmp = cmd;
 	while (tmp)

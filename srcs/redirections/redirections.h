@@ -6,12 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:47:58 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 15:49:17 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDIRECTIONS_H
 # define REDIRECTIONS_H
+
+# include "../../includes/types.h"
 
 // REDIRECTIONS //
 

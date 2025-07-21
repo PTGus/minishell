@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:56:03 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 15:54:24 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:15:07 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int	ft_heredoc(t_central *central, char *delimiter, int doc_type)
 	int		fd;
 	char	*line;
 
-	fd = doc_prep(central, delimiter, central->curr_cmd_idx, central->curr_heredoc_idx);
+	fd = doc_prep(central, delimiter, central->curr_cmd_idx,
+			central->curr_heredoc_idx);
 	if (fd < 0)
 		return (-1);
 	while (1)
@@ -115,10 +116,8 @@ int	ft_heredoc(t_central *central, char *delimiter, int doc_type)
 		treat_rl_doc(central, line, doc_type, fd);
 		clean_doc(line);
 	}
-	if (!line)
+	if (g_signal != 130 && !line)
 		return (bad_doc(delimiter), 0);
 	clean_doc(line);
-	close(fd);
-	return (0);
+	return (close(fd), 0);
 }
-
