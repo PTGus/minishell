@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 11:56:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:11:19 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ int	is_within_bounds(char *exit_val)
 	{
 		check = "-9223372036854775808";
 		if (len > 20)
-		return (1);
+			return (1);
 		if (len < 20)
-		return (0);
+			return (0);
 		if (ft_strcmp(exit_val, check) > 0)
-		return (1);
+			return (1);
 	}
 	else
 	{
@@ -92,7 +92,6 @@ int	is_within_bounds(char *exit_val)
 	}
 	return (0);
 }
-
 
 /**
  * @brief Built-in function that behaves just like

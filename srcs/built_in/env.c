@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:15:49 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:10:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_env(t_central *central, t_input *cmd)
 	tmp_env = ft_getenv(&central->dupenv, "PATH");
 	tmp_cmd = cmd;
 	if (!tmp_env)
-		return (central->exit_val = 127, not_dir("env"),(void)0);
+		return (central->exit_val = 127, not_dir("env"), (void)0);
 	while (ft_strcmp(tmp_cmd->value, "env") != 0)
 		tmp_cmd = tmp_cmd->next;
 	if (tmp_cmd->next != NULL)

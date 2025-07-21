@@ -6,13 +6,24 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 17:28:47 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:46:50 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void	check_exec_error(char *cmd, int type);
+
+static void	initial_checks(t_input *cmd)
+{
+	if (cmd->token == DELETE)
+		exit(0);
+	if (ft_strcmp(cmd->value, "") == 0)
+	{
+		comm_not_found("");
+		exit(127);
+	}
+}
 
 /**
  * @brief Finds out whether the command exists
@@ -23,15 +34,13 @@ static void	check_exec_error(char *cmd, int type);
  */
 int	commander(t_central *central, t_input *cmd)
 {
-	int		i;
 	t_envp	*path;
 	t_input	*tmp_cmd;
 	char	*exec;
 	char	*tmp;
 
 	tmp_cmd = find_cmd(cmd);
-	if (ft_strcmp(tmp_cmd->value, "") == 0)
-		exit(0);
+	initial_checks(tmp_cmd);
 	path = ft_getenv(&central->dupenv, "PATH");
 	if (is_relative(tmp_cmd->value) == 0)
 	{
@@ -40,10 +49,9 @@ int	commander(t_central *central, t_input *cmd)
 	}
 	else
 		exec = pather(path, tmp_cmd->value);
-	i = is_cmd_valid(exec);
-	if (i != 0)
+	if (is_cmd_valid(exec) != 0)
 	{
-		check_exec_error(tmp_cmd->value, i);
+		check_exec_error(tmp_cmd->value, is_cmd_valid(exec));
 		clean_all(central);
 	}
 	return (executer(exec, central, tmp_cmd), free(exec), 0);

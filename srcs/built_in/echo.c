@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 14:59:47 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:10:04 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	do_echo(t_input *cmd)
 			if (tmp->next)
 				tmp = tmp->next->next;
 			else
-				break;
+				break ;
 		}
 	}
 	write(1, "\n", 1);

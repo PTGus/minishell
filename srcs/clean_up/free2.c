@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:50:38 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:33:26 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:11:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	free_heredoc_paths(t_central *central)
 	int	j;
 
 	if (!central || !central->heredoc_paths)
-		return;
+		return ;
 	i = 0;
 	while (i < central->matrix_len && central->heredoc_paths[i])
 	{

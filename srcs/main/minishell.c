@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:42:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:12:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_envp		**dupenv;
 	t_central	*central;
-	int	exit_v;
+	int			exit_v;
 
 	if (ac == 1)
 	{

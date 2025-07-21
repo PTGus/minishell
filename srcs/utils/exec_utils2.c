@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:42:47 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 17:25:20 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:22:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	count_exec_flags(t_input *cmd)
 			if (tmp->next)
 				tmp = tmp->next->next;
 			else
-				break;
+				break ;
 		}
 		else
 		{
@@ -70,7 +70,7 @@ static void	fill_exec_flags(t_input *cmd, char **arr)
 			if (tmp->next)
 				tmp = tmp->next->next;
 			else
-				break;
+				break ;
 		}
 		else
 		{
