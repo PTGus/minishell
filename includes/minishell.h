@@ -44,6 +44,8 @@ extern int	g_signal;
 # define APPEND_OUT	3
 # define HERE_DOC	4
 # define HERE_DOC_Q	5
+# define DELETE		6
+
 
 # define UNQUOTED	0
 # define SINGLE_Q	1
