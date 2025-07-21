@@ -6,14 +6,12 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 14:37:31 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 10:35:58 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define _POSIX_C_SOURCE 200809L
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -32,6 +30,9 @@
 # include <term.h>
 # include <errno.h>
 # include "../libft/libft.h"
+
+# define _POSIX_C_SOURCE 200809L
+
 
 
 extern int	g_signal;
