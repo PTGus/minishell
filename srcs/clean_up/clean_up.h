@@ -6,12 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:32:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:35:51 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLEAN_UP_H
 # define CLEAN_UP_H
+
+# include "../../includes/types.h"
 
 // CLEAN_UP //
 

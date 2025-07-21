@@ -6,12 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:52:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:50:43 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
+
+# include "../../includes/types.h"
 
 // UTILS //
 
@@ -78,6 +80,5 @@ t_input	*find_cmd(t_input *cmd);
 void	has_shell_operator(t_central *central);
 int		ft_strcmp(char *s1, char *s2);
 void	increase_shlvl(t_envp **dupenv);
-
 
 #endif
