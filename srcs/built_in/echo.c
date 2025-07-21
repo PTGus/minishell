@@ -6,11 +6,27 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:10:04 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:04:27 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	check_flag(char *to_check)
+{
+	int	i;
+
+	if (to_check[0] != '-' || to_check[1] != 'n')
+		return (1);
+	i = 2;
+	while (to_check[i])
+	{
+		if (to_check[i] != 'n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 /**
  * @brief Built-in command that behaves like echo, can work without
@@ -20,22 +36,27 @@
 void	ft_echo(t_central *central, t_input *cmd)
 {
 	t_input	*tmp;
+	int		flag;
 
 	tmp = cmd;
-	while (ft_strcmp(tmp->value, "echo") != 0)
+	while (tmp && ft_strcmp(tmp->value, "echo") != 0)
 		tmp = tmp->next;
-	if (tmp->next == NULL)
-		write(1, "\n", 1);
-	else if ((ft_strcmp(tmp->next->value, "-n") == 0)
-		&& (tmp->next->next == NULL))
-		return (central->exit_val = 0, (void)0);
-	else if (ft_strncmp(tmp->next->value, "-n", 2) == 0)
-		echo_n(tmp->next);
-	else
+	if (!tmp || !tmp->next)
 	{
-		tmp = tmp->next;
-		do_echo(tmp);
+		write(1, "\n", 1);
+		central->exit_val = 0;
+		return;
 	}
+	tmp = tmp->next;
+	flag = 0;
+	while (tmp && check_flag(tmp->value) == 0)
+	{
+		flag = 1;
+		tmp = tmp->next;
+	}
+	do_echo(tmp);
+	if (!flag)
+		write(1, "\n", 1);
 	central->exit_val = 0;
 }
 
@@ -64,7 +85,6 @@ void	do_echo(t_input *cmd)
 				break ;
 		}
 	}
-	write(1, "\n", 1);
 }
 
 void	echo_n(t_input *cmd)
@@ -74,7 +94,7 @@ void	echo_n(t_input *cmd)
 	tmp = cmd;
 	while (tmp)
 	{
-		if (tmp->token != ARGUMENT)
+		if (tmp->token != ARGUMENT && tmp->token != DELETE)
 			break ;
 		if (tmp->token == ARGUMENT)
 			printf("%s", tmp->value);
