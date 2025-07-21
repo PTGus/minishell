@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:09:40 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:38:31 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	ft_cd(t_central *central, t_input *cmd)
 	tmp_cmd = cmd;
 	while (tmp_cmd && ft_strcmp(tmp_cmd->value, "cd") != 0)
 		tmp_cmd = tmp_cmd->next;
-	if (tmp_cmd->next->next != NULL)
-		return (central->exit_val = 1,
-			excessive_args(tmp_cmd->next->next->value), (void) 0);
 	if (tmp_cmd->next == NULL
 		|| (tmp_cmd->next->value[0] == '~' && tmp_cmd->next->value[1] == '\0'))
 		cd_to_home(central);
+	else if (tmp_cmd->next->next)
+		return (central->exit_val = 1,
+			excessive_args(tmp_cmd->next->next->value), (void) 0);
 	else if (ft_strcmp(tmp_cmd->next->value, "-") == 0)
 		cd_oldpwd(central);
 	else if (access(tmp_cmd->next->value, F_OK) == 0)

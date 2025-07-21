@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:16:46 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:29:08 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,7 @@ static int	do_redirection(t_central *central, t_input *cmd)
 		path = &central->heredoc_paths[central->curr_cmd_idx]
 		[central->curr_heredoc_idx];
 		if (!*path)
-		{
-			ft_putstr_fd("minishell: heredoc path is missing\n", STDERR_FILENO);
 			return (1);
-		}
 		return (redirect_doc_path(path));
 		central->curr_heredoc_idx++;
 	}

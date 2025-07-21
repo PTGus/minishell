@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:11:19 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:13:17 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,10 @@ void	ft_exit(t_central *central, t_input *cmd)
 		if (is_string_all_nums(cmd->next->value) == 1
 			|| is_within_bounds(cmd->next->value) != 0)
 		{
+			ft_putstr_fd("exit\n", 2);
 			exit_err(cmd->next->value);
 			central->has_exited = TRUE;
-			return (central->exit_val = 2, ft_putstr_fd("exit\n", 2), (void) 0);
+			return (central->exit_val = 2, (void) 0);
 		}
 		else
 		{

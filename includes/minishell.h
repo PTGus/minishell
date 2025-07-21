@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:57 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:27:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # define _POSIX_C_SOURCE 200809L
+# define _XOPEN_SOURCE 600
+# define _GNU_SOURCE
 
 # include <readline/readline.h>
 # include <readline/history.h>

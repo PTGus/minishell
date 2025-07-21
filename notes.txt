@@ -79,4 +79,32 @@ So:
 	- "status >> 8" → shifts the exit code down into the low byte.
 	- "& 0xFF" → masks out only the lower 8 bits (ensures we get values from 0–255).
 
-Thechnically "(status >> 8) & 0xFF" is the same as "WEXITSTATUS()" but we can't use it :/
+<
+<<
+>>
+> " "
+and err msg
+
+cd
+
+multi unset
+
+"""
+export c
+c$c
+"""
+tabs/espacos a guardar
+
+heredoc ctrl+c fecha td
+
+export +=
+
+exit aa 123 (n e "too many args")
+
+exit +MAXLONGLONG
+
+pipe sozinho |
+
+unset PATH deixa usar absolute paths (/bin/ls)
+
+$"USER" != $'USER'
