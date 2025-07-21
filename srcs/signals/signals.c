@@ -6,35 +6,52 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:54 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 11:56:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:17:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void ctrl_c(int sig)
+void	ctrl_c(int sig)
 {
-	(void)sig;
-	g_signal = 130;
-	write(STDERR_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		write(STDERR_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_signal = 130;
+	}
 }
 
 void	ctrl_d(void)
 {
-	ft_putstr_fd("exit\n", 2);
+	write(STDERR_FILENO, "exit\n", 5);
 	rl_clear_history();
 }
 
 void	handle_signals(void)
 {
-	struct sigaction sa_int;
+	struct sigaction	sa;
 
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART;
-	sa_int.sa_handler = ctrl_c;
-	sigaction(SIGINT, &sa_int, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	sa.sa_handler = ctrl_c;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	treat_status(t_central *central, int status)
+{
+	if (WIFSIGNALED(status))
+	{
+		central->exit_val = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 19);
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
+	}
+	else if (WIFEXITED(status))
+		central->exit_val = WEXITSTATUS(status);
 }
