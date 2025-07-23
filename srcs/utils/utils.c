@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 14:46:33 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:16:50 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_input	*find_cmd(t_input *cmd)
 			tmp = tmp->next->next;
 		else if (tmp_check != 0 && tmp->next->next == NULL)
 			tmp = NULL;
-		if (tmp->token == DELETE && tmp->next != NULL)
+		else if (tmp->token == DELETE && tmp->next != NULL)
 			tmp = tmp->next;
 		else if (tmp->token == DELETE && tmp->next == NULL)
 			return (tmp);
@@ -46,19 +46,23 @@ t_input	*find_cmd(t_input *cmd)
 	return (tmp);
 }
 
-void	has_shell_operator(t_central *central)
+void	has_shell_operator(t_central *central, char *rl)
 {
 	if (to_pipe(central) == 1)
 	{
 		if (handle_all_heredocs(central) == 130)
 			return ;
 		central->curr_cmd_idx = 0;
-		central->curr_heredoc_idx = 0;
+		central->curr_hdc_idx = 0;
 		if (has_to_redirect(central, central->cmd[0]) != 0)
+		{
+			post_loop_cleanup(central, rl);
 			return ;
+		}
 		do_solo(central, central->cmd[0]);
 		free_heredoc_paths(central);
 	}
+	post_loop_cleanup(central, rl);
 }
 
 /**

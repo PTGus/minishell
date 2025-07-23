@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 14:46:50 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:45:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	commander(t_central *central, t_input *cmd)
 	tmp_cmd = find_cmd(cmd);
 	initial_checks(tmp_cmd);
 	path = ft_getenv(&central->dupenv, "PATH");
+	if (!path)
+		return (do_absolute(central, cmd));
 	if (is_relative(tmp_cmd->value) == 0)
 	{
 		tmp = getcwd(NULL, 0);

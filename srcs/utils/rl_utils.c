@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_redir.c                                      :+:      :+:    :+:   */
+/*   rl_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 12:11:52 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 17:03:10 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/23 13:49:45 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/23 14:27:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_input(t_input *cmd)
+int	is_space_tab(char *str)
 {
-	int		fd;
-	t_input	*tmp;
+	int		i;
 
-	tmp = cmd->next;
-	if (check_for_bad_redir(tmp) == 1)
-		return (2);
-	if (access(tmp->value, F_OK) == 0)
+	i = 0;
+	while (str[i])
 	{
-		if (access(tmp->value, R_OK) == 0)
-		{
-			fd = open(tmp->value, O_RDONLY);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
+		if (str[i] != ' ' && (str[i] < 9 || str[i] > 13))
 			return (0);
-		}
-		else
-			return (no_perms(tmp->value), 1);
+		i++;
 	}
-	else
-		return (not_dir(tmp->value), 1);
+	return (1);
 }

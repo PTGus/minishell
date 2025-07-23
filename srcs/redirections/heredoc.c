@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:56:03 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 16:37:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:07:13 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,23 +93,24 @@ int	redirect_doc_path(char **path)
 	return (0);
 }
 
-int	ft_heredoc(t_central *central, char *delimiter, int doc_type)
+int	ft_heredoc(t_central *central, char *del, int doc_type)
 {
 	int		fd;
 	char	*line;
 
-	fd = doc_prep(central, delimiter, central->curr_cmd_idx,
-			central->curr_heredoc_idx);
+	if (g_signal == 130)
+		return (-1);
+	fd = doc_prep(central, del, central->curr_cmd_idx, central->curr_hdc_idx);
 	if (fd < 0)
 		return (-1);
 	while (1)
 	{
 		write(1, "> ", 2);
 		line = get_next_line(0);
-		if (!line || ft_strcmp(line, delimiter) == 0
+		if (!line || ft_strcmp(line, del) == 0
 			|| (line[ft_strlen(line) - 1] == '\n'
-				&& ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
-				&& (int)ft_strlen(line) - 1 == (int)ft_strlen(delimiter)))
+				&& ft_strncmp(line, del, ft_strlen(del)) == 0
+				&& (int)ft_strlen(line) - 1 == (int)ft_strlen(del)))
 			break ;
 		if (g_signal == 130)
 			return (clean_doc(line), 130);
@@ -117,7 +118,6 @@ int	ft_heredoc(t_central *central, char *delimiter, int doc_type)
 		clean_doc(line);
 	}
 	if (g_signal != 130 && !line)
-		return (bad_doc(delimiter), 0);
-	clean_doc(line);
-	return (close(fd), 0);
+		return (bad_doc(del), 0);
+	return (clean_doc(line), close(fd), 0);
 }

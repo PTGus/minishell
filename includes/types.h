@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:33:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:07:13 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_central
 	int				has_exited;
 	char			***heredoc_paths;
 	int				curr_cmd_idx;
-	int				curr_heredoc_idx;
+	int				curr_hdc_idx;
 }	t_central;
 
 typedef struct s_envp

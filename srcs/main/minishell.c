@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:12:00 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:41:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	rl_loop(t_central *central)
 {
 	char		*rl;
 
-	while (1)
+	while (1 && central->has_exited == FALSE)
 	{
 		rl = readline("minishell$ ");
 		if (rl == NULL)
@@ -70,12 +70,12 @@ void	rl_loop(t_central *central)
 			central->exit_val = g_signal;
 			g_signal = 0;
 		}
+		if (is_space_tab(rl) == 1)
+			continue ;
 		add_history(rl);
-		ft_parse(rl, central);
-		has_shell_operator(central);
-		if (central->has_exited == TRUE)
-			return ;
-		post_loop_cleanup(central, rl);
+		if (ft_parse(rl, central) != 0)
+			continue ;
+		has_shell_operator(central, rl);
 	}
 }
 

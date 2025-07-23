@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 16:27:37 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:27:06 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <curses.h>
 # include <term.h>
 # include <errno.h>
+# include <limits.h>
 # include "types.h"
 # include "../libft/libft.h"
 # include "../srcs/built_in/built_in.h"

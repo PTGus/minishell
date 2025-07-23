@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:23:54 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 16:24:05 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:35:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ctrl_c(int sig)
 void	ctrl_d(void)
 {
 	write(STDERR_FILENO, "exit\n", 5);
-	rl_clear_history();
 }
 
 void	handle_signals(void)

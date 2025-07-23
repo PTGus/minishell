@@ -6,19 +6,19 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:25:10 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 17:29:06 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:04:40 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_for_bad_redir(char *to_redir)
+int	check_for_bad_redir(t_input *cmd)
 {
-	if (!to_redir)
+	if (!cmd)
 		return (no_redir_err(), 1);
-	if (ft_strcmp(to_redir, ">") == 0 || ft_strcmp(to_redir, "<") == 0
-		|| ft_strcmp(to_redir, ">>") == 0 || ft_strcmp(to_redir, "<<") == 0)
-		return (bad_redir_token(to_redir), 2);
+	if (ft_strcmp(cmd->value, ">") == 0 || ft_strcmp(cmd->value, "<") == 0
+		|| ft_strcmp(cmd->value, ">>") == 0 || ft_strcmp(cmd->value, "<<") == 0)
+		return (bad_redir_token(cmd->value), 2);
 	return (0);
 }
 

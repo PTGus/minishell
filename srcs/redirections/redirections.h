@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:47:58 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:06:02 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		append_redir(t_input *cmd);
 
 // heredoc //
 int		redirect_doc_path(char **path);
-int		ft_heredoc(t_central *central, char *delimiter, int doc_type);
+int		ft_heredoc(t_central *central, char *del, int doc_type);
 
 // input_redir //
 int		set_input(t_input *cmd);
