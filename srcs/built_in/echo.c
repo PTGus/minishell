@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:09:31 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 16:04:27 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:45:53 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_echo(t_central *central, t_input *cmd)
 	{
 		write(1, "\n", 1);
 		central->exit_val = 0;
-		return;
+		return ;
 	}
 	tmp = tmp->next;
 	flag = 0;

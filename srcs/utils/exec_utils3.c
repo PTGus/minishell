@@ -6,13 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 15:52:08 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 16:52:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:46:39 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	cmd_remainder_cleanup(char **envp, char **exec_flags, t_central *central)
+static void	cmd_remainder_cleanup(char **envp,
+	char **exec_flags, t_central *central)
 {
 	ft_free_split(envp);
 	ft_free_split(exec_flags);

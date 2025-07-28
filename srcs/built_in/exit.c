@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 13:07:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:46:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_string_all_nums(char *str)
 	i = 0;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
-	if (str[i] == '\0') // sign alone is not valid
+	if (str[i] == '\0')
 		return (1);
 	while (str[i])
 	{
