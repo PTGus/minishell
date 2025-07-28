@@ -58,7 +58,7 @@ int	ft_check_expand(t_central *central, t_input *node)
 		j = 0;
 		if (node->value[i] == '$' && node->value[i + 1]
 			&& ft_is_quoted(node->value, i) != 1
-			&& (node->value[i + 1] != '\"')
+			&& !((node->value[i + 1] == '\"') && ft_is_quoted(node->value, i) == 2)
 			&& !((node->value[i + 1] == ' ')
 				&& ft_is_quoted(node->value, i) == 2))
 		{

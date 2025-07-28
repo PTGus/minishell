@@ -116,9 +116,10 @@ int	ft_assign_token(t_input *node)
 		node->token = APPEND_OUT;
 	else if (ft_strcmp("<<", node->value) == 0)
 	{
+	/*
 		if (ft_is_delimiter_quoted(node) == 0)
 			node->token = HERE_DOC;
-		else
+		else*/
 			node->token = HERE_DOC_Q;
 	}
 	else
@@ -133,13 +134,18 @@ int	ft_assign_token(t_input *node)
 */
 int	ft_is_delimiter_quoted(t_input *current)
 {
+	(void)current;
+	/*
 	int		i;
 	char	*next_val;
 
 	i = -1;
-	next_val = current->next->value;
-	while (next_val && next_val[++i])
-		if (next_val[i] == '\"' || next_val[i] == '\'')
-			return (1);
+	if (current->next)
+	{
+		next_val = current->next->value;
+		while (next_val && next_val[++i])
+			if (next_val[i] == '\"' || next_val[i] == '\'')
+				return (1);
+	}*/
 	return (0);
 }
