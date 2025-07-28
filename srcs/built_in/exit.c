@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:50:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 14:25:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:07:36 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@ static int	is_string_all_nums(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	if (str[i] == '\0') // sign alone is not valid
+		return (1);
 	while (str[i])
 	{
-		if (i == 0)
-		{
-			if (str[i] != '+' && str[i] != '-' && ft_isdigit(str[i]) == 0)
-				return (1);
-			i++;
-		}
-		if (i > 0 && ft_isdigit(str[i]) == 0)
+		if (!ft_isdigit(str[i]))
 			return (1);
 		i++;
 	}
@@ -52,13 +50,13 @@ void	special_exit(t_central *central, t_input *cmd)
 {
 	if (!cmd)
 	{
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 2);
 		central->exit_val = 0;
 		central->has_exited = TRUE;
 	}
 	else
 	{
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 2);
 		excessive_args("exit");
 		central->exit_val = 1;
 	}
@@ -66,33 +64,10 @@ void	special_exit(t_central *central, t_input *cmd)
 
 int	is_within_bounds(char *exit_val)
 {
-	char	*check;
-	int		len;
-
-	len = ft_strlen(exit_val);
 	if (exit_val[0] == '-')
-	{
-		check = "-9223372036854775808";
-		if (len > 20)
-		return (1);
-		if (len < 20)
-		return (0);
-		if (ft_strcmp(exit_val, check) > 0)
-		return (1);
-	}
-	else
-	{
-		check = "9223372036854775807";
-		if (len > 19)
-			return (1);
-		if (len < 19)
-			return (0);
-		if (ft_strcmp(exit_val, check) > 0)
-			return (1);
-	}
-	return (0);
+		return (is_under_min(exit_val));
+	return (is_over_max(exit_val));
 }
-
 
 /**
  * @brief Built-in function that behaves just like
@@ -100,28 +75,25 @@ int	is_within_bounds(char *exit_val)
  */
 void	ft_exit(t_central *central, t_input *cmd)
 {
-	if (cmd->next != NULL && cmd->next->next == NULL)
+	if (ft_strcmp(cmd->next->value, "--") == 0)
 	{
-		if (ft_strcmp(cmd->next->value, "--") == 0)
-		{
-			central->has_exited = TRUE;
-			return (central->exit_val = 0, printf("exit\n"), (void) 0);
-		}
-		if (is_string_all_nums(cmd->next->value) == 1
-			|| is_within_bounds(cmd->next->value) != 0)
-		{
-			exit_err(cmd->next->value);
-			central->has_exited = TRUE;
-			return (central->exit_val = 2, printf("exit\n"), (void) 0);
-		}
-		else
-		{
-			printf("exit\n");
-			central->exit_val = (ft_atoi(cmd->next->value) % 256);
-			central->has_exited = TRUE;
-			return ;
-		}
+		central->has_exited = TRUE;
+		return (central->exit_val = 0, ft_putstr_fd("exit\n", 2), (void) 0);
 	}
-	else
-		special_exit(central, cmd->next);
+	if (is_string_all_nums(cmd->next->value) == 1
+		|| is_within_bounds(cmd->next->value) != 0)
+	{
+		ft_putstr_fd("exit\n", 2);
+		exit_err(cmd->next->value);
+		central->has_exited = TRUE;
+		return (central->exit_val = 2, (void) 0);
+	}
+	else if (cmd->next->next == NULL)
+	{
+		ft_putstr_fd("exit\n", 2);
+		central->exit_val = (ft_atoi(cmd->next->value) % 256);
+		central->has_exited = TRUE;
+		return ;
+	}
+	special_exit(central, cmd->next);
 }

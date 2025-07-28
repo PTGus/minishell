@@ -6,30 +6,63 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 16:05:08 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:16:50 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static int	is_redir(t_input *cmd)
+{
+	if (cmd->token == REDIR_IN)
+		return (1);
+	if (cmd->token == REDIR_OUT)
+		return (2);
+	if (cmd->token == APPEND_OUT)
+		return (3);
+	if (cmd->token == HERE_DOC || cmd->token == HERE_DOC_Q)
+		return (4);
+	return (0);
+}
+
 t_input	*find_cmd(t_input *cmd)
 {
 	t_input	*tmp;
+	int		tmp_check;
 
 	tmp = cmd;
-	while (tmp->token != ARGUMENT)
-		tmp = tmp->next->next;
+	while (tmp && tmp->token != ARGUMENT)
+	{
+		tmp_check = is_redir(tmp);
+		if (tmp_check != 0 && tmp->next->next != NULL)
+			tmp = tmp->next->next;
+		else if (tmp_check != 0 && tmp->next->next == NULL)
+			tmp = NULL;
+		else if (tmp->token == DELETE && tmp->next != NULL)
+			tmp = tmp->next;
+		else if (tmp->token == DELETE && tmp->next == NULL)
+			return (tmp);
+	}
 	return (tmp);
 }
 
-void	has_shell_operator(t_central *central)
+void	has_shell_operator(t_central *central, char *rl)
 {
-	if (to_pipe(central) != 0)
+	if (to_pipe(central) == 1)
 	{
+		if (handle_all_heredocs(central) == 130)
+			return ;
+		central->curr_cmd_idx = 0;
+		central->curr_hdc_idx = 0;
 		if (has_to_redirect(central, central->cmd[0]) != 0)
-		 	return ;
+		{
+			post_loop_cleanup(central, rl);
+			return ;
+		}
 		do_solo(central, central->cmd[0]);
+		free_heredoc_paths(central);
 	}
+	post_loop_cleanup(central, rl);
 }
 
 /**

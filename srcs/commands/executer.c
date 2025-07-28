@@ -6,13 +6,24 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 16:20:55 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:45:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void	check_exec_error(char *cmd, int type);
+
+static void	initial_checks(t_input *cmd)
+{
+	if (cmd->token == DELETE)
+		exit(0);
+	if (ft_strcmp(cmd->value, "") == 0)
+	{
+		comm_not_found("");
+		exit(127);
+	}
+}
 
 /**
  * @brief Finds out whether the command exists
@@ -23,27 +34,26 @@ static void	check_exec_error(char *cmd, int type);
  */
 int	commander(t_central *central, t_input *cmd)
 {
-	int		i;
 	t_envp	*path;
 	t_input	*tmp_cmd;
 	char	*exec;
 	char	*tmp;
 
 	tmp_cmd = find_cmd(cmd);
-	if (ft_strcmp(tmp_cmd->value, "") == 0)
-		exit(0);
+	initial_checks(tmp_cmd);
 	path = ft_getenv(&central->dupenv, "PATH");
+	if (!path)
+		return (do_absolute(central, cmd));
 	if (is_relative(tmp_cmd->value) == 0)
 	{
 		tmp = getcwd(NULL, 0);
-		exec = ft_strjoin(tmp, cmd->value + 2);
+		exec = ft_strjoin(tmp, cmd->value + 1);
 	}
 	else
 		exec = pather(path, tmp_cmd->value);
-	i = is_cmd_valid(exec);
-	if (i != 0)
+	if (is_cmd_valid(exec) != 0)
 	{
-		check_exec_error(tmp_cmd->value, i);
+		check_exec_error(tmp_cmd->value, is_cmd_valid(exec));
 		clean_all(central);
 	}
 	return (executer(exec, central, tmp_cmd), free(exec), 0);
@@ -104,7 +114,7 @@ char	*pather(t_envp *path, char *cmd)
 		free(exec);
 	}
 	ft_freesplit(all_paths);
-	return (NULL);
+	return (ft_strdup(cmd));
 }
 
 static void	check_exec_error(char *cmd, int type)
@@ -123,5 +133,10 @@ static void	check_exec_error(char *cmd, int type)
 	{
 		no_perms(cmd);
 		exit(126);
+	}
+	else if (type == 4)
+	{
+		no_file_dir(cmd);
+		exit(127);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:57:18 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 14:05:03 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:14:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	set_back(t_envp **dupenv)
 		tmp = tmp->next;
 	i = 0;
 	count = 0;
-	while (tmp->value[i])
+	while (tmp && tmp->value[i])
 	{
 		if (tmp->value[i] == '/')
 			count++;

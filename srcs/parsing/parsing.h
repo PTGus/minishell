@@ -6,12 +6,26 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:39:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:49:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
+# include "../../includes/types.h"
+
+# define ARGUMENT	0
+# define REDIR_IN	1
+# define REDIR_OUT	2
+# define APPEND_OUT	3
+# define HERE_DOC	4
+# define HERE_DOC_Q	5
+# define DELETE		6
+
+# define UNQUOTED	0
+# define SINGLE_Q	1
+# define DOUBLE_Q	2
 
 // PARSING //
 

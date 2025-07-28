@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:28:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/06/11 10:46:26 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:22:25 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	organise_env(t_envp **dupenv)
 		smallest = NULL;
 		while (tmp)
 		{
-			if (tmp->index == -1 && \
-				(!smallest || ft_strcmp(tmp->var, smallest->var) < 0))
+			if (tmp->index == -1
+				&& (!smallest || ft_strcmp(tmp->var, smallest->var) < 0))
 				smallest = tmp;
 			tmp = tmp->next;
 		}
@@ -70,26 +70,20 @@ void	env_delone(t_envp *to_del)
 	t_envp	*tmp1;
 	t_envp	*tmp2;
 
-	if (to_del->prev != NULL && to_del->next != NULL)
+	if (!to_del)
+		return ;
+	if (to_del->prev && to_del->next)
 	{
 		tmp1 = to_del->prev;
 		tmp2 = to_del->next;
 		tmp1->next = tmp2;
 		tmp2->prev = tmp1;
-		ft_envfreeone(to_del);
 	}
-	else if (to_del->prev != NULL && to_del->next == NULL)
-	{
-		tmp1 = to_del->prev;
-		tmp1->next = NULL;
-		ft_envfreeone(to_del);
-	}
-	else if (to_del->prev == NULL && to_del->next != NULL)
-	{
-		tmp2 = to_del->next;
-		tmp2->prev = NULL;
-		ft_envfreeone(to_del);
-	}
+	else if (to_del->prev)
+		to_del->prev->next = NULL;
+	else if (to_del->next)
+		to_del->next->prev = NULL;
+	ft_envfreeone(to_del);
 }
 
 /**

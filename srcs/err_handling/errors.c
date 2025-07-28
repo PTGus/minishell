@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:46:42 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 16:10:54 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:36:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	bad_doc(char *str)
 	char	*err_msg;
 	char	*tmp;
 
-	err_msg = "bash: warning: here-document at line 1 delimited";
+	err_msg = "\nbash: warning: here-document at line 1 delimited";
 	err_msg = ft_strjoin(err_msg, "by end-of-file (wanted `");
 	tmp = err_msg;
 	err_msg = ft_strjoin(tmp, str);

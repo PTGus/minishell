@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 14:10:46 by david-fe          #+#    #+#             */
-/*   Updated: 2025/07/03 10:57:56 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:42:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	*ft_get_dupenv_val(t_central *central, char *str)
 	{
 		tmp = ft_getenv(&central->dupenv, str);
 		if (!tmp)
+			return (NULL);
+		if (!tmp->value)
 			return (NULL);
 		return (ft_strdup(tmp->value));
 	}

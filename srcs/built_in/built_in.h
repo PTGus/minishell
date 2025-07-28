@@ -6,12 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:26:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 14:04:44 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILT_IN_H
 # define BUILT_IN_H
+
+# include "../../includes/types.h"
 
 // BUILT-IN //
 

@@ -63,20 +63,34 @@ Ctrl+C-> defines code to 130
  ◦ If unquoted (e.g., << EOF), variables like $USER or $(date) will be expanded.
 ◦ >> should redirect output in append mode.
 
+TO FIX:
 
+< (X)
+<< (X)
+>> (X)
+> " " (X)
+and err msg (X)
 
-The integer status returned by waitpid() contains multiple pieces of information packed into a 16-bit number.
+cd (X)
 
-When a process exits normally, the exit code is stored in the high byte of status.
-Example:
-	- Exit code 127 → status = 127 << 8 = 32512
+multi unset (X)
 
-status:  00000000 01111111 00000000  (binary for 32512)
-              ^^       ^^
-             unused   exit code
+""" (X)
+export c (X)
+c$c (X)
+""" (X)
+tabs/espacos a guardar (X)
 
-So:
-	- "status >> 8" → shifts the exit code down into the low byte.
-	- "& 0xFF" → masks out only the lower 8 bits (ensures we get values from 0–255).
+heredoc ctrl+c fecha td (X)
 
-Thechnically "(status >> 8) & 0xFF" is the same as "WEXITSTATUS()" but we can't use it :/
+export += (X)
+
+exit aa 123 (n e "too many args") (X)
+
+exit +MAXLONGLONG (X)
+
+pipe/aspera sozinho tem mensagem estranha (X)
+
+qnd das unset PATH o bash usa absolute paths (/bin/ls) (X)
+
+--> $"USER" != $'USER' <--

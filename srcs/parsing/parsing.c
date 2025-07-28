@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 11:27:01 by david-fe          #+#    #+#             */
-/*   Updated: 2025/07/08 11:40:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:41:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,16 @@ int	ft_parse(char *prompt, t_central *central)
 	if (!prompt)
 		return (0);
 	if (ft_is_quoted(prompt, -1) != 0)
-		ft_error("quotes");
+	{
+		central->exit_val = 2;
+		return (ft_error("quotes"), 2);
+	}
 	central->pipe_matrix = ft_split_pipes(prompt, central);
 	if (central->pipe_matrix == NULL)
-		ft_error("pipes");
+	{
+		central->exit_val = 2;
+		return (ft_error("pipes"), 2);
+	}
 	ft_remove_extra_spaces(central);
 	ft_space_redirects(central);
 	ft_tokenizer(central);
@@ -50,5 +56,8 @@ void	ft_init_parse(t_central *central)
 
 void	ft_error(char *message)
 {
-	printf("%s ERROR! (no exit)\n", message);
+	if (ft_strcmp(message, "pipes") == 0)
+		bad_redir_token("|");
+	else if (ft_strcmp(message, "quotes") == 0)
+		bad_redir_token("\"");
 }

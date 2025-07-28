@@ -6,13 +6,24 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/07/21 10:35:58 by gumendes         ###   ########.fr       */
+=======
+/*   Updated: 2025/07/23 12:27:06 by gumendes         ###   ########.fr       */
+>>>>>>> bf5d3c09cd4db700d6833065dddea62a5f8892da
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+<<<<<<< HEAD
+=======
+# define _POSIX_C_SOURCE 200809L
+# define _XOPEN_SOURCE 600
+# define _GNU_SOURCE
+
+>>>>>>> bf5d3c09cd4db700d6833065dddea62a5f8892da
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
@@ -29,7 +40,10 @@
 # include <curses.h>
 # include <term.h>
 # include <errno.h>
+# include <limits.h>
+# include "types.h"
 # include "../libft/libft.h"
+<<<<<<< HEAD
 
 # define _POSIX_C_SOURCE 200809L
 
@@ -82,6 +96,8 @@ typedef struct s_envp
 	int				has_equal;
 }	t_envp;
 
+=======
+>>>>>>> bf5d3c09cd4db700d6833065dddea62a5f8892da
 # include "../srcs/built_in/built_in.h"
 # include "../srcs/clean_up/clean_up.h"
 # include "../srcs/commands/commands.h"
@@ -92,5 +108,7 @@ typedef struct s_envp
 # include "../srcs/redirections/redirections.h"
 # include "../srcs/signals/signals.h"
 # include "../srcs/utils/utils.h"
+
+extern int	g_signal;
 
 #endif

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands.h                                         :+:      :+:    :+:   */
+/*   rl_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 10:34:04 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
+/*   Created: 2025/07/23 13:49:45 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/23 14:27:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMANDS_H
-# define COMMANDS_H
+#include "../../includes/minishell.h"
 
-# include "../../includes/types.h"
+int	is_space_tab(char *str)
+{
+	int		i;
 
-// COMMANDS //
-
-// executer //
-int		commander(t_central *central, t_input *cmd);
-void	executer(char *exec, t_central *central, t_input *cmd);
-char	*pather(t_envp *path, char *cmd);
-
-#endif
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && (str[i] < 9 || str[i] > 13))
+			return (0);
+		i++;
+	}
+	return (1);
+}

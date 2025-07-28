@@ -6,12 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:38:04 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 10:49:36 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
+
+# include "../../includes/types.h"
 
 // MAIN //
 

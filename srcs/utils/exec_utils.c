@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:12:19 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 15:52:43 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:19:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,34 @@ void	do_solo(t_central *central, t_input *cmd)
 	int		pipe_fd[2];
 
 	if (is_built_in(cmd) == 0)
-	{
-		do_builtin(central, cmd);
-		return ;
-	}
+		return (do_builtin(central, cmd), (void)0);
 	tmp = cmd;
+	status = 0;
 	pipe(pipe_fd);
 	pid = fork();
-	status = 0;
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		do_cmd(central, cmd);
+	}
 	else
-		waitpid(-1, &status, 0);
-	central->exit_val = (status >> 8) & 0xFF;;
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+	}
+	handle_signals();
+	treat_status(central, status);
 }
 
 int	is_built_in(t_input *cmd)
 {
-	t_input *tmp;
+	t_input	*tmp;
 
 	tmp = cmd;
-	while (tmp->token != ARGUMENT)
-		tmp = tmp->next->next;
+	tmp = find_cmd(cmd);
+	if (!tmp)
+		return (1);
 	if (ft_strcmp(tmp->value, "echo") == 0)
 		return (0);
 	else if (ft_strcmp(tmp->value, "cd") == 0)

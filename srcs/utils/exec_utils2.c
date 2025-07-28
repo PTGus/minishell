@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:42:47 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 15:26:21 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:54:21 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,20 @@
 int	is_cmd_valid(char *cmd)
 {
 	struct stat	sb;
-	int			i;
 
-	i = 0;
-	if (!cmd)
+	if (!cmd || ft_strcmp(cmd, "") == 0)
 		return (1);
-	if (ft_strcmp(cmd, "") == 0)
-		return (1);
-	if (access(cmd, F_OK) == 0)
+	if (ft_strchr(cmd, '/'))
 	{
+		if (access(cmd, F_OK) != 0)
+			return (4);
 		if (stat(cmd, &sb) == 0 && S_ISDIR(sb.st_mode))
 			return (2);
-		else if (access(cmd, X_OK) != 0)
+		if (access(cmd, X_OK) != 0)
 			return (3);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 static int	count_exec_flags(t_input *cmd)
@@ -46,7 +45,7 @@ static int	count_exec_flags(t_input *cmd)
 			if (tmp->next)
 				tmp = tmp->next->next;
 			else
-				break;
+				break ;
 		}
 		else
 		{
@@ -71,7 +70,7 @@ static void	fill_exec_flags(t_input *cmd, char **arr)
 			if (tmp->next)
 				tmp = tmp->next->next;
 			else
-				break;
+				break ;
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 17:03:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:18:51 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ static int	plus_export(t_central *central, char *exportion)
 {
 	t_envp	*var;
 	char	*tmp;
-	char	*tmp2;
 	int		i;
 
 	i = 0;
-	while (exportion[i] != '+')
+	while (exportion[i] && exportion[i] != '+')
 		i++;
 	tmp = ft_substr(exportion, 0, i);
 	var = ft_getenv(&central->dupenv, tmp);
@@ -28,14 +27,11 @@ static int	plus_export(t_central *central, char *exportion)
 	if (!var)
 	{
 		var = new_env(exportion);
-		return (insert_before_last(&central->dupenv, var), 1);
+		insert_before_last(&central->dupenv, var);
+		return (1);
 	}
-	tmp = ft_strdup(var->value);
-	free(var->value);
-	tmp2 = ft_substr(exportion, i + 2, ft_strlen(exportion) - (i + 1));
-	var->value = ft_strjoin(tmp, tmp2);
-	free(tmp);
-	return (free(tmp2), 1);
+	trunc_export(var, exportion, i);
+	return (1);
 }
 
 int	is_special_exportion(t_central *central, char *exportion)
@@ -95,7 +91,7 @@ t_envp	*new_valuesless_env(char *envp)
 	t_envp	*new;
 	int		i;
 
-	new = ft_calloc(1, sizeof(t_envp));
+	new = malloc(1 * sizeof(t_envp));
 	if (!new)
 		return (NULL);
 	new->next = NULL;

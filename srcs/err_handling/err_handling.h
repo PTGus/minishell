@@ -6,12 +6,14 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:36:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 13:52:16 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERR_HANDLING_H
 # define ERR_HANDLING_H
+
+# include "../../includes/types.h"
 
 // ERR_HANDLING //
 
@@ -28,5 +30,7 @@ void	excessive_args(char *str);
 void	not_dir(char *str);
 void	is_dir(char *str);
 void	no_oldpwd(void);
+void	no_file_dir(char *str);
+void	no_redir_err(void);
 
 #endif

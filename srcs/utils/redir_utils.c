@@ -6,17 +6,19 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:25:10 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/03 15:01:53 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:04:52 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_for_bad_redir(char *to_redir)
+int	check_for_bad_redir(char *redir)
 {
-	if (ft_strcmp(to_redir, ">") == 0 || ft_strcmp(to_redir, "<") == 0
-		|| ft_strcmp(to_redir, ">>") == 0 || ft_strcmp(to_redir, "<<") == 0)
-		return (bad_redir_token(to_redir), 1);
+	if (!redir)
+		return (no_redir_err(), 1);
+	if (ft_strcmp(redir, ">") == 0 || ft_strcmp(redir, "<") == 0
+		|| ft_strcmp(redir, ">>") == 0 || ft_strcmp(redir, "<<") == 0)
+		return (bad_redir_token(redir), 2);
 	return (0);
 }
 
@@ -47,4 +49,26 @@ void	reset_fds(int status)
 		close(org_stdout);
 		close(org_stderr);
 	}
+}
+
+int	has_heredocs(t_central *central)
+{
+	int		i;
+	t_input	*tmp;
+
+	if (!central || !central->cmd)
+		return (0);
+	i = 0;
+	while (i < central->matrix_len)
+	{
+		tmp = central->cmd[i];
+		while (tmp)
+		{
+			if (tmp->token == HERE_DOC || tmp->token == HERE_DOC_Q)
+				return (1);
+			tmp = tmp->next;
+		}
+		i++;
+	}
+	return (0);
 }

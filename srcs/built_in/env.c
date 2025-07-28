@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/08 17:01:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:34:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_env(t_central *central, t_input *cmd)
 	tmp_env = ft_getenv(&central->dupenv, "PATH");
 	tmp_cmd = cmd;
 	if (!tmp_env)
-		return (central->exit_val = 127, not_dir("env"),(void)0);
+		return (central->exit_val = 127, not_dir("env"), (void)0);
 	while (ft_strcmp(tmp_cmd->value, "env") != 0)
 		tmp_cmd = tmp_cmd->next;
 	if (tmp_cmd->next != NULL)
@@ -45,6 +45,19 @@ void	ft_env(t_central *central, t_input *cmd)
 	central->exit_val = 0;
 }
 
+static int	is_new_plus(char *envp, t_envp *new, int i)
+{
+	if (envp[i] != '+')
+		return (1);
+	new->var = ft_substr(envp, 0, i);
+	if (envp[i + 1] == '=' && envp[i + 2] != '\0')
+		new->value = ft_strdup(envp + i + 2);
+	else
+		new->value = NULL;
+	new->visible_env = TRUE;
+	return (0);
+}
+
 /**
  * @brief Creates a new node with the given value.
  * @param nbr The value that this new node will assume.
@@ -56,7 +69,7 @@ t_envp	*new_env(char *envp)
 	char	*tmp;
 	int		i;
 
-	new = ft_calloc(1, sizeof(t_envp));
+	new = malloc(1 * sizeof(t_envp));
 	if (!new)
 		return (NULL);
 	new->value = NULL;
@@ -69,10 +82,10 @@ t_envp	*new_env(char *envp)
 	else
 		new->index = -1;
 	i = 0;
-	while (envp[i] != '=' && envp[i] != '+')
+	while (envp[i] && envp[i] != '+' && envp[i] != '=')
 		i++;
-	if (envp[i] == '+')
-		i++;
+	if (is_new_plus(envp, new, i) == 0)
+		return (new);
 	tmp = ft_substr(envp, 0, i);
 	if (envp[i + 1] >= 33 && envp[i + 1] <= 126)
 		new->value = ft_strdup(envp + (1 + i));

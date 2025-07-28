@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:11:52 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/09 15:15:05 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:17:50 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	set_input(t_input *cmd)
 	t_input	*tmp;
 
 	tmp = cmd->next;
-	if (check_for_bad_redir(tmp->value) == 1)
+	if (!tmp || !tmp->value)
+		return (no_redir_err(), 2);
+	if (check_for_bad_redir(tmp->value) != 0)
 		return (2);
 	if (access(tmp->value, F_OK) == 0)
 	{
