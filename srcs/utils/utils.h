@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:52:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 17:05:22 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:04:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	set_pipe_fds(int (*pipe_fd)[2], int pipe_amm, int current_index);
 void	close_all_pipes(int (*pipe_fd)[2], int pipe_amm);
 
 // redir_utils //
-int		check_for_bad_redir(t_input *cmd);
+int		check_for_bad_redir(char *cmd);
 void	reset_fds(int status);
 int		has_heredocs(t_central *central);
 

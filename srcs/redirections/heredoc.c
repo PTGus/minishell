@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:56:03 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 12:07:13 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:19:52 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	doc_prep(t_central *central, char *delimiter,
 {
 	int		fd;
 
+	if (!delimiter || ft_strcmp(delimiter, "") == 0)
+		return (-2);
 	if (check_for_bad_redir(delimiter) == 1)
 		return (-2);
 	setup_heredoc_signals();
