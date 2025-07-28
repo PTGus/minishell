@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 11:18:51 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:27:44 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int	is_special_exportion(t_central *central, char *exportion)
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(exportion[0]) == 0)
+	if (exportion[0] == '_' && exportion[1] == '=')
+		return (1);
+	if (exportion[0] != '_' && ft_isalpha(exportion[0]) == 0)
 		return (bad_export(exportion), 2);
 	if (validity_check(exportion) == 1)
 		return (bad_export(exportion), 2);

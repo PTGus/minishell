@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 17:16:50 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:01:33 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	has_shell_operator(t_central *central, char *rl)
 {
 	if (to_pipe(central) == 1)
 	{
-		if (handle_all_heredocs(central) == 130)
+		if (handle_all_heredocs(central) == 2)
 			return ;
 		central->curr_cmd_idx = 0;
 		central->curr_hdc_idx = 0;

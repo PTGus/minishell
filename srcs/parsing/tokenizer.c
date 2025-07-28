@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:07:30 by david-fe          #+#    #+#             */
-/*   Updated: 2025/07/03 10:57:42 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:20:52 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,9 @@ int	ft_assign_token(t_input *node)
 		node->token = APPEND_OUT;
 	else if (ft_strcmp("<<", node->value) == 0)
 	{
-	/*
 		if (ft_is_delimiter_quoted(node) == 0)
 			node->token = HERE_DOC;
-		else*/
+		else
 			node->token = HERE_DOC_Q;
 	}
 	else
@@ -134,8 +133,6 @@ int	ft_assign_token(t_input *node)
 */
 int	ft_is_delimiter_quoted(t_input *current)
 {
-	(void)current;
-	/*
 	int		i;
 	char	*next_val;
 
@@ -146,6 +143,6 @@ int	ft_is_delimiter_quoted(t_input *current)
 		while (next_val && next_val[++i])
 			if (next_val[i] == '\"' || next_val[i] == '\'')
 				return (1);
-	}*/
+	}
 	return (0);
 }

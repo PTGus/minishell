@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:49:56 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:54:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 12:50:43 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,13 @@ void	init_pipes(int (*pipe_fd)[2], int pipe_count)
 
 int	to_pipe(t_central *central)
 {
+	int	i;
+
 	if (central->matrix_len > 1)
 	{
-		if (handle_all_heredocs(central) == 130)
-			return (130);
+		i = handle_all_heredocs(central);
+		if (i != 0)
+			return (i);
 		piper(central);
 		free_heredoc_paths(central);
 		return (0);

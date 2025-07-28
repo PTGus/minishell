@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 15:12:17 by david-fe          #+#    #+#             */
-/*   Updated: 2025/07/03 10:57:14 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:19:56 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	ft_check_expand(t_central *central, t_input *node)
 		j = 0;
 		if (node->value[i] == '$' && node->value[i + 1]
 			&& ft_is_quoted(node->value, i) != 1
-			&& !((node->value[i + 1] == '\"') && ft_is_quoted(node->value, i) == 2)
+			&& !((node->value[i + 1] == '\"')
+				&& ft_is_quoted(node->value, i) == 2)
 			&& !((node->value[i + 1] == ' ')
 				&& ft_is_quoted(node->value, i) == 2))
 		{

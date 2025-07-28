@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 12:07:13 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:16:52 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ int	handle_all_heredocs(t_central *central)
 	t_input	*tmp;
 	int		i;
 
-	i = 0;
-	if (has_heredocs(central) == 0)
-		return (0);
+	i = has_heredocs(central);
+	if (i != 1)
+		return (i);
+	i = -1;
 	allocate_heredoc_paths(central);
-	while (i < central->matrix_len)
+	while (++i < central->matrix_len)
 	{
 		central->curr_cmd_idx = i;
 		central->curr_hdc_idx = 0;
@@ -65,7 +66,6 @@ int	handle_all_heredocs(t_central *central)
 			}
 			tmp = tmp->next;
 		}
-		i++;
 	}
 	return (0);
 }
@@ -86,8 +86,8 @@ static int	do_redirection(t_central *central, t_input *cmd)
 		[central->curr_hdc_idx];
 		if (!*path)
 			return (1);
-		return (redirect_doc_path(path));
 		central->curr_hdc_idx++;
+		return (redirect_doc_path(path));
 	}
 	return (1);
 }

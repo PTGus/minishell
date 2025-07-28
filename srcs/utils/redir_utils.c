@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:25:10 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 10:04:52 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:06:01 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,13 @@ int	has_heredocs(t_central *central)
 		while (tmp)
 		{
 			if (tmp->token == HERE_DOC || tmp->token == HERE_DOC_Q)
+			{
+				if (!tmp->next)
+					return (no_redir_err(), 2);
+				if (check_for_bad_redir(tmp->next->value) != 0)
+					return (2);
 				return (1);
+			}
 			tmp = tmp->next;
 		}
 		i++;
