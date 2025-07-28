@@ -5,25 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 15:42:20 by gumendes          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/07/21 10:35:58 by gumendes         ###   ########.fr       */
-=======
-/*   Updated: 2025/07/23 12:27:06 by gumendes         ###   ########.fr       */
->>>>>>> bf5d3c09cd4db700d6833065dddea62a5f8892da
+/*   Created: 2025/07/28 10:43:14 by gumendes          #+#    #+#             */
+/*   Updated: 2025/07/28 10:43:28 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-<<<<<<< HEAD
-=======
 # define _POSIX_C_SOURCE 200809L
 # define _XOPEN_SOURCE 600
 # define _GNU_SOURCE
 
->>>>>>> bf5d3c09cd4db700d6833065dddea62a5f8892da
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
@@ -43,61 +36,6 @@
 # include <limits.h>
 # include "types.h"
 # include "../libft/libft.h"
-<<<<<<< HEAD
-
-# define _POSIX_C_SOURCE 200809L
-
-
-
-extern int	g_signal;
-
-
-# define ARGUMENT	0
-# define REDIR_IN	1
-# define REDIR_OUT	2
-# define APPEND_OUT	3
-# define HERE_DOC	4
-# define HERE_DOC_Q	5
-# define DELETE		6
-
-
-# define UNQUOTED	0
-# define SINGLE_Q	1
-# define DOUBLE_Q	2
-
-typedef struct s_input
-{
-	struct s_input	*next;
-	struct s_input	*prev;
-	int				index;
-	char			*value;
-	int				token;
-}	t_input;
-
-typedef struct s_central
-{
-	struct s_envp	*dupenv;
-	int				exit_val;
-	struct s_input	**cmd;
-	char			**pipe_matrix;
-	int				matrix_len;
-	int				curr_cmd;
-	int				has_exited;
-}	t_central;
-
-typedef struct s_envp
-{
-	struct s_envp	*next;
-	struct s_envp	*prev;
-	char			*var;
-	char			*value;
-	int				index;
-	int				visible_env;
-	int				has_equal;
-}	t_envp;
-
-=======
->>>>>>> bf5d3c09cd4db700d6833065dddea62a5f8892da
 # include "../srcs/built_in/built_in.h"
 # include "../srcs/clean_up/clean_up.h"
 # include "../srcs/commands/commands.h"
