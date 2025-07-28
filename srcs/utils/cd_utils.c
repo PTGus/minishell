@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:57:18 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 11:14:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:27:24 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	cd_oldpwd(t_central *central)
 	chdir(tmp_env->value);
 	set_old_pwd(&central->dupenv);
 	set_pwd(&central->dupenv);
+	central->exit_val = 0;
 }
 
 void	cd_to_home(t_central *central)
@@ -42,6 +43,7 @@ void	cd_to_home(t_central *central)
 	set_old_pwd(&central->dupenv);
 	set_home(&central->dupenv);
 	chdir(tmp_env->value);
+	central->exit_val = 0;
 }
 
 /**

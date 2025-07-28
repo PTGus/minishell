@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 15:41:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:42:10 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	main(int ac, char **av, char **env)
 		reset_fds(2);
 		rl_clear_history();
 		exit_v = central->exit_val;
-		clean_all(central);
-		return (free(dupenv), exit_v);
+		return (clean_all(central), free(dupenv), exit_v);
 	}
 	else
 	{

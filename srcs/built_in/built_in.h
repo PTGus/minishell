@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:26:30 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 15:34:34 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:29:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 // cd //
 void	ft_cd(t_central *central, t_input *cmd);
-void	set_cd_values(t_envp **dupenv, t_input *cmd);
+void	set_cd_values(t_central *central, t_envp **dupenv, t_input *cmd);
 void	set_home(t_envp **dupenv);
 void	set_pwd(t_envp **dupenv);
 void	set_old_pwd(t_envp **dupenv);

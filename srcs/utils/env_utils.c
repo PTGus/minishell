@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:28:35 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 13:22:25 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:59:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,27 @@ void	insert_before_last(t_envp **dupenv, t_envp *curr)
 	t_envp	*last;
 	t_envp	*b_last;
 
-	if (!dupenv)
+	if (!*dupenv)
 	{
 		*dupenv = curr;
 		return ;
 	}
 	last = lstlast(dupenv);
 	b_last = last->prev;
+	if (!b_last)
+	{
+		curr->next = last;
+		curr->prev = NULL;
+		last->prev = curr;
+		*dupenv = curr;
+		return ;
+	}
 	b_last->next = curr;
 	curr->prev = b_last;
 	curr->next = last;
 	last->prev = curr;
 }
+
 
 t_envp	*ft_getenv(t_envp **dupenv, char *to_find)
 {

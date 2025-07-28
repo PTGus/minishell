@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/21 17:38:31 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:30:38 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_cd(t_central *central, t_input *cmd)
 	else if (ft_strcmp(tmp_cmd->next->value, "-") == 0)
 		cd_oldpwd(central);
 	else if (access(tmp_cmd->next->value, F_OK) == 0)
-		set_cd_values(&central->dupenv, tmp_cmd);
+		set_cd_values(central, &central->dupenv, tmp_cmd);
 	else
 		return (not_cd_dir(tmp_cmd->next->value),
 			central->exit_val = 1, (void) 0);
@@ -47,22 +47,29 @@ void	ft_cd(t_central *central, t_input *cmd)
  * @param dupenv A linked list with the duplicated envp stored whitin it.
  * @param split An array of arrays with the prompt received from read line.
  */
-void	set_cd_values(t_envp **dupenv, t_input *cmd)
+void	set_cd_values(t_central *central, t_envp **dupenv, t_input *cmd)
 {
 	t_input	*tmp;
 
-	tmp = cmd;
-	if (ft_strcmp("..", tmp->next->value) == 0)
+	tmp = cmd->next;
+	if (ft_strcmp("..", tmp->value) == 0)
 	{
 		set_old_pwd(dupenv);
 		set_back(dupenv);
-		chdir(tmp->next->value);
+		chdir(tmp->value);
+		central->exit_val = 0;
+	}
+	if (access(tmp->value, X_OK) == 0)
+	{
+		set_old_pwd(dupenv);
+		chdir(tmp->value);
+		set_pwd(dupenv);
+		central->exit_val = 0;
 	}
 	else
 	{
-		set_old_pwd(dupenv);
-		chdir(tmp->next->value);
-		set_pwd(dupenv);
+		no_perms("cd");
+		central->exit_val = 1;
 	}
 }
 
@@ -124,6 +131,10 @@ void	set_old_pwd(t_envp **dupenv)
 	t_envp		*old_pwd;
 
 	old_pwd = ft_getenv(dupenv, "OLDPWD");
+	if (!old_pwd)
+		return ;
 	free(old_pwd->value);
+	old_pwd->has_equal = TRUE;
+	old_pwd->visible_env = TRUE;
 	old_pwd->value = ft_strdup(getcwd(NULL, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 13:01:33 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:30:00 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	increase_shlvl(t_envp **dupenv)
 	tmp = ft_getenv(dupenv, "SHLVL");
 	if (!tmp)
 	{
-		tmp = new_env("SHLVL=0");
+		tmp = new_env("SHLVL=1");
 		insert_before_last(dupenv, tmp);
 		reorder_dupenv(dupenv);
 		return ;

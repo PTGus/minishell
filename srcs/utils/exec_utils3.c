@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 15:52:08 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 10:46:39 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:19:34 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,25 @@ static int	do_received_cmd(t_central *central, t_input *cmd)
 		return (127);
 }
 
-static int	do_local(t_central *central, t_input *cmd)
+static int	do_relative(t_central *central, t_input *cmd)
 {
 	char	*tmp;
+	char	*tmp2;
 	char	*exec;
 	char	**exec_flags;
 	char	**envp;
 
 	tmp = getcwd(NULL, 0);
-	exec = ft_strjoin(tmp, cmd->value + 1);
+	exec = ft_strjoin(tmp, "/");
+	tmp2 = ft_strjoin(exec, cmd->value);
 	free(tmp);
+	free(exec);
+	exec = tmp2;
 	if (access(exec, F_OK) == 0 && access(exec, X_OK) == 0)
 	{
 		exec_flags = get_exec_flags(cmd);
 		envp = get_exec_env(&central->dupenv);
 		execve(exec, exec_flags, envp);
-		clean_all(central);
 		cmd_remainder_cleanup(envp, exec_flags, central);
 		exit(1);
 	}
@@ -82,7 +85,7 @@ int	do_absolute(t_central *central, t_input *cmd)
 	if (ft_strchr(cmd->value, '/'))
 		i = do_received_cmd(central, cmd);
 	else
-		i = do_local(central, cmd);
+		i = do_relative(central, cmd);
 	if (i != 0)
 	{
 		not_dir(cmd->value);

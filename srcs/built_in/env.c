@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 11:34:47 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:02:22 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_envp	*new_env(char *envp)
 	new->prev = NULL;
 	new->visible_env = TRUE;
 	new->has_equal = TRUE;
-	if (envp[0] == '_')
+	if (ft_strcmp("_=/usr/bin/env", envp) == 0)
 		new->index = -2;
 	else
 		new->index = -1;
@@ -87,8 +87,7 @@ t_envp	*new_env(char *envp)
 	if (is_new_plus(envp, new, i) == 0)
 		return (new);
 	tmp = ft_substr(envp, 0, i);
-	if (envp[i + 1] >= 33 && envp[i + 1] <= 126)
-		new->value = ft_strdup(envp + (1 + i));
+	new->value = ft_strdup(envp + (1 + i));
 	return (new->var = ft_strdup(tmp), free(tmp), new);
 }
 
@@ -107,6 +106,11 @@ int	init_env(t_envp **dupenv, char **envp)
 	int		count;
 	int		i;
 
+	if (!envp || !envp[0])
+	{
+		init_empty_env(dupenv);
+		return (0);
+	}
 	i = 0;
 	count = 0;
 	while (envp[count])

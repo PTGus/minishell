@@ -65,32 +65,15 @@ Ctrl+C-> defines code to 130
 
 TO FIX:
 
-< (X)
-<< (X)
+> (X)
 >> (X)
-> " " (X)
-and err msg (X)
 
-cd (X)
+cd sem oldpwd (X)
 
-multi unset (X)
+export sem vars (X)
 
-""" (X)
-export c (X)
-c$c (X)
-""" (X)
-tabs/espacos a guardar (X)
+cd permission denied (X)
 
-heredoc ctrl+c fecha td (X)
+export com espaco no inicio (X)
 
-export += (X)
-
-exit aa 123 (n e "too many args") (X)
-
-exit +MAXLONGLONG (X)
-
-pipe/aspera sozinho tem mensagem estranha (X)
-
-qnd das unset PATH o bash usa absolute paths (/bin/ls) (X)
-
---> $"USER" != $'USER' <--
+export "_"

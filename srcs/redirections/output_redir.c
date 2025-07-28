@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:49 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 10:15:26 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:53:46 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	set_output(t_input *cmd)
 	t_input	*tmp;
 
 	tmp = cmd->next;
+	if (!tmp || !tmp->value)
+		return (no_redir_err(), 2);
 	if (check_for_bad_redir(tmp->value) != 0)
 		return (2);
 	if (ft_strcmp(tmp->value, "") == 0)
@@ -29,14 +31,12 @@ int	set_output(t_input *cmd)
 		else
 		{
 			fd = open(tmp->value, O_TRUNC | O_WRONLY, 0644);
-			dup2(fd, STDOUT_FILENO);
-			return (close(fd), 0);
+			return (dup2(fd, STDOUT_FILENO), close(fd), 0);
 		}
 	}
 	else
 	{
 		fd = open(tmp->value, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		dup2(fd, STDOUT_FILENO);
-		return (close(fd), 0);
+		return (dup2(fd, STDOUT_FILENO), close(fd), 0);
 	}
 }

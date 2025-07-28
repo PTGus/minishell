@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:05:25 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 13:27:44 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:12:06 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	is_special_exportion(t_central *central, char *exportion)
 	int	i;
 
 	i = 0;
-	if (exportion[0] == '_' && exportion[1] == '=')
-		return (1);
 	if (exportion[0] != '_' && ft_isalpha(exportion[0]) == 0)
 		return (bad_export(exportion), 2);
 	if (validity_check(exportion) == 1)
@@ -77,7 +75,7 @@ void	hidden_export(t_central *central, char *exportion, int has_equal)
 	if (should_revalue(&central->dupenv, exportion) == 0)
 	{
 		new = new_valuesless_env(exportion);
-		new->visible_env = FALSE;
+		new->visible_env = has_equal;
 		new->has_equal = has_equal;
 		insert_before_last(&central->dupenv, new);
 	}
@@ -98,10 +96,7 @@ t_envp	*new_valuesless_env(char *envp)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
-	if (envp[0] == '_')
-		new->index = -2;
-	else
-		new->index = -1;
+	new->index = -1;
 	i = 0;
 	while (envp[i])
 	{
