@@ -129,7 +129,6 @@ This project strictly follows the 42 Norm, ensuring clean, robust, and maintaina
 
 ## 📁 Project Structure
 
-```bash
 minishell/
 ├── srcs/
 │   ├── built_in/
