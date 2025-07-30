@@ -153,7 +153,7 @@ minishell/
 
 <h3>⚙️ Installation</h3>
 
-<pre><code>git clone https://github.com/yourusername/minishell.git
+<pre><code>git clone git@github.com:PTGus/minishell.git
 cd minishell
 make
 </code></pre>
