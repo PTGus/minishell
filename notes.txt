@@ -76,4 +76,4 @@ cd permission denied (X)
 
 export com espaco no inicio (X)
 
-export "_"
+export "_" (X)
