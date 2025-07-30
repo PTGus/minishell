@@ -227,13 +227,13 @@ make
   <tr>
     <td align="center">
       <a href="https://github.com/PTGus">
-        <img src="https://avatars.githubusercontent.com/u/103385767?v=4" width="100px;" alt="PTGus"/>
+        <img src="https://avatars.githubusercontent.com/u/177729576?s=400&v=4" width="100px;" alt="PTGus"/>
         <br /><sub><b>Gustavo Cunha</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/Vazalos">
-        <img src="https://avatars.githubusercontent.com/u/104868417?v=4" width="100px;" alt="Vazalos"/>
+        <img src="https://avatars.githubusercontent.com/u/23241859?v=4" width="100px;" alt="Vazalos"/>
         <br /><sub><b>David Roque</b></sub>
       </a>
     </td>
