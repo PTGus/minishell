@@ -230,12 +230,11 @@ make
         <img src="https://avatars.githubusercontent.com/u/103385767?v=4" width="100px;" alt="PTGus"/>
         <br /><sub><b>Gustavo Cunha</b></sub>
       </a>
-      <br /><a href="mailto:gumendes@student.42porto.com">📧 gumendes@student.42porto.com</a>
     </td>
     <td align="center">
       <a href="https://github.com/Vazalos">
         <img src="https://avatars.githubusercontent.com/u/104868417?v=4" width="100px;" alt="Vazalos"/>
-        <br /><sub><b>Vasco Silva</b></sub>
+        <br /><sub><b>David Roque</b></sub>
       </a>
     </td>
   </tr>
