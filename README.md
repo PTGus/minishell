@@ -116,7 +116,7 @@ This project strictly follows the 42 Norm, ensuring clean, robust, and maintaina
 
 ---
 
-## 🧠 What I Learned
+## 🧠 What We Learned
 
 - ✅ Deep understanding of process management: `fork`, `execve`, `waitpid`, etc.
 - ✅ Safe and correct use of file descriptors and pipes
