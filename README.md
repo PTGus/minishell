@@ -128,7 +128,7 @@ This project strictly follows the 42 Norm, ensuring clean, robust, and maintaina
 ---
 
 ## 📁 Project Structure
-
+```
 minishell/
 ├── srcs/
 │   ├── built_in/
@@ -148,7 +148,7 @@ minishell/
 ├── Makefile
 ├── notes.txt      # Some notes taken during the making of the project
 └── README.md
-
+```
 ---
 
 <h3>⚙️ Installation</h3>
