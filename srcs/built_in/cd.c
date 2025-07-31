@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:14:43 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 16:30:38 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:34:35 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,14 @@ void	set_cd_values(t_central *central, t_envp **dupenv, t_input *cmd)
 	t_input	*tmp;
 
 	tmp = cmd->next;
-	if (ft_strcmp("..", tmp->value) == 0)
-	{
-		set_old_pwd(dupenv);
-		set_back(dupenv);
-		chdir(tmp->value);
-		central->exit_val = 0;
-	}
-	if (access(tmp->value, X_OK) == 0)
-	{
-		set_old_pwd(dupenv);
-		chdir(tmp->value);
-		set_pwd(dupenv);
-		central->exit_val = 0;
-	}
-	else
+	set_old_pwd(dupenv);
+	if (chdir(tmp->value) == -1)
 	{
 		no_perms("cd");
 		central->exit_val = 1;
+		return ;
 	}
+	set_pwd(dupenv);
 }
 
 /**
@@ -133,8 +122,9 @@ void	set_old_pwd(t_envp **dupenv)
 	old_pwd = ft_getenv(dupenv, "OLDPWD");
 	if (!old_pwd)
 		return ;
-	free(old_pwd->value);
+	if (old_pwd->value)
+		free(old_pwd->value);
 	old_pwd->has_equal = TRUE;
 	old_pwd->visible_env = TRUE;
-	old_pwd->value = ft_strdup(getcwd(NULL, 0));
+	old_pwd->value = getcwd(NULL, 0);
 }

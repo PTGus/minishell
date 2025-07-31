@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:57:18 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 16:27:24 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:15:55 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,14 @@ void	set_bpwd(t_envp **dupenv, int count)
  */
 void	set_back(t_envp **dupenv)
 {
-	int		i;
-	int		count;
-	t_envp	*tmp;
+	t_envp	*pwd;
 
-	tmp = *dupenv;
-	while (ft_strcmp("PWD", tmp->var))
-		tmp = tmp->next;
-	i = 0;
-	count = 0;
-	while (tmp && tmp->value[i])
-	{
-		if (tmp->value[i] == '/')
-			count++;
-		i++;
-	}
-	if (ft_strcmp("/", tmp->value) == 0)
-		return ;
-	else if (count == 1 && tmp->value[1] != '\0')
-	{
-		free(tmp->value);
-		tmp->value = ft_strdup("/");
-	}
-	else
-		set_bpwd(dupenv, count);
+	pwd = ft_getenv(dupenv, "PWD");
+	if (!pwd)
+		return;
+	if (pwd->value)
+		free(pwd->value);
+	pwd->value = getcwd(NULL, 0);
+	pwd->has_equal = TRUE;
+	pwd->visible_env = TRUE;
 }
