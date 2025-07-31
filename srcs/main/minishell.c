@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:56:13 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 16:42:10 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:41:15 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,22 @@ void	rl_loop(t_central *central);
 
 int	main(int ac, char **av, char **env)
 {
-	t_envp		**dupenv;
 	t_central	*central;
 	int			exit_v;
 
 	if (ac == 1)
 	{
-		dupenv = ft_calloc(1, sizeof(t_envp *));
 		central = ft_calloc(1, sizeof(t_central));
-		duplicate_env(dupenv, env);
-		increase_shlvl(dupenv);
-		init_central(central, dupenv);
+		init_central(central);
+		duplicate_env(&central->dupenv, env);
+		increase_shlvl(&central->dupenv);
 		reset_fds(0);
 		handle_signals();
 		rl_loop(central);
 		reset_fds(2);
 		rl_clear_history();
 		exit_v = central->exit_val;
-		return (clean_all(central), free(dupenv), exit_v);
+		return (clean_all(central), exit_v);
 	}
 	else
 	{

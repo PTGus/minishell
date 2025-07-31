@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:52:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 16:48:52 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:41:15 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	set_bpwd(t_envp **dupenv, int count);
 void	set_back(t_envp **pwd);
 
 // central_utils //
-void	init_central(t_central *central, t_envp **dupenv);
+void	init_central(t_central *centralnv);
 
 // env_utils\2 //
 void	organise_env(t_envp **dupenv);

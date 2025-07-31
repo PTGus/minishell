@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:15:36 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 12:07:13 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:43:41 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@
  *  all the neccessary variables and lists.
  * @param dupenv A linked list with the duplicated envp stored whitin it.
  */
-void	init_central(t_central *central, t_envp **dupenv)
+void	init_central(t_central *central)
 {
-	t_envp	*tmp;
-
-	tmp = *dupenv;
-	central->dupenv = *dupenv;
+	central->dupenv = NULL;
 	central->exit_val = 0;
 	central->heredoc_paths = NULL;
 	central->has_exited = FALSE;

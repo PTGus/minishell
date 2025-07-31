@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:55:17 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/10 16:42:38 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:41:48 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	clean_doc(char *line)
  */
 void	clean_all(t_central *central)
 {
+	free_heredoc_paths(central);
 	free_central_cmd(central);
 	free_env(&central->dupenv);
 	free(central);
+	rl_clear_history();
 }
 
 /**
@@ -83,4 +85,5 @@ void	free_env(t_envp **dupenv)
 		ft_envfreeone(*dupenv);
 		(*dupenv) = tmp;
 	}
+	free(*dupenv);
 }

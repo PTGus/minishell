@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:42:47 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 15:54:21 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:25:47 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	fill_exec_flags(t_input *cmd, char **arr)
 		}
 		else
 		{
-			arr[i] = tmp->value;
+			arr[i] = ft_strdup(tmp->value);
 			i++;
 			tmp = tmp->next;
 		}

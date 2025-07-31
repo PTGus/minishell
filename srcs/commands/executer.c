@@ -6,16 +6,18 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/23 15:45:33 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:47:12 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	check_exec_error(char *cmd, int type);
+static void	check_exec_error(char *cmd, int type, t_central *central);
 
 static void	initial_checks(t_input *cmd)
 {
+	if (!cmd)
+		return ;
 	if (cmd->token == DELETE)
 		exit(0);
 	if (ft_strcmp(cmd->value, "") == 0)
@@ -40,6 +42,11 @@ int	commander(t_central *central, t_input *cmd)
 	char	*tmp;
 
 	tmp_cmd = find_cmd(cmd);
+	if (!tmp_cmd || !tmp_cmd->value)
+	{
+		clean_all(central);
+		exit(0);
+	}
 	initial_checks(tmp_cmd);
 	path = ft_getenv(&central->dupenv, "PATH");
 	if (!path)
@@ -48,14 +55,12 @@ int	commander(t_central *central, t_input *cmd)
 	{
 		tmp = getcwd(NULL, 0);
 		exec = ft_strjoin(tmp, cmd->value + 1);
+		free(tmp);
 	}
 	else
 		exec = pather(path, tmp_cmd->value);
 	if (is_cmd_valid(exec) != 0)
-	{
-		check_exec_error(tmp_cmd->value, is_cmd_valid(exec));
-		clean_all(central);
-	}
+		check_exec_error(tmp_cmd->value, is_cmd_valid(exec), central);
 	return (executer(exec, central, tmp_cmd), free(exec), 0);
 }
 
@@ -73,8 +78,9 @@ void	executer(char *exec, t_central *central, t_input *cmd)
 
 	exec_flags = get_exec_flags(cmd);
 	envp = get_exec_env(&central->dupenv);
-	execve(exec, exec_flags, envp);
 	clean_all(central);
+	rl_clear_history();
+	execve(exec, exec_flags, envp);
 	ft_free_split(envp);
 	ft_free_split(exec_flags);
 	exit(1);
@@ -98,7 +104,7 @@ char	*pather(t_envp *path, char *cmd)
 	if (!path || !cmd)
 		return (NULL);
 	if (access(cmd, F_OK) == 0)
-		return (ft_strdup(cmd));
+		return (cmd);
 	all_paths = ft_split(path->value, ':');
 	i = -1;
 	while (all_paths[++i])
@@ -114,29 +120,33 @@ char	*pather(t_envp *path, char *cmd)
 		free(exec);
 	}
 	ft_freesplit(all_paths);
-	return (ft_strdup(cmd));
+	return (cmd);
 }
 
-static void	check_exec_error(char *cmd, int type)
+static void	check_exec_error(char *cmd, int type, t_central *central)
 {
 	if (type == 1)
 	{
 		comm_not_found(cmd);
+		clean_all(central);
 		exit(127);
 	}
 	else if (type == 2)
 	{
 		is_dir(cmd);
+		clean_all(central);
 		exit(126);
 	}
 	else if (type == 3)
 	{
 		no_perms(cmd);
+		clean_all(central);
 		exit(126);
 	}
 	else if (type == 4)
 	{
 		no_file_dir(cmd);
+		clean_all(central);
 		exit(127);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:49:56 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 12:50:43 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 14:53:16 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	to_pipe(t_central *central)
 		if (i != 0)
 			return (i);
 		piper(central);
+		handle_signals();
 		free_heredoc_paths(central);
 		return (0);
 	}

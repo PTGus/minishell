@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:04:40 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 15:30:00 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:13:06 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ t_input	*find_cmd(t_input *cmd)
 	while (tmp && tmp->token != ARGUMENT)
 	{
 		tmp_check = is_redir(tmp);
-		if (tmp_check != 0 && tmp->next->next != NULL)
-			tmp = tmp->next->next;
+		if (tmp_check != 0)
+		{
+			if (tmp->next && tmp->next->next)
+				tmp = tmp->next->next;
+			else
+				return (NULL);
+		}
 		else if (tmp_check != 0 && tmp->next->next == NULL)
 			tmp = NULL;
 		else if (tmp->token == DELETE && tmp->next != NULL)
