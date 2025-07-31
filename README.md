@@ -8,8 +8,8 @@
 
 ## 📖 About the Project
 
-**Minishell** is a project from the 42 core curriculum that consists of building a simplified, POSIX-compliant Unix shell written entirely in C.  
-The goal is to recreate the basic behavior of `bash`, deepening understanding of:
+**Minishell** is a project from the 42 core curriculum that consists of building a simplified, POSIX-compliant Unix shell written entirely in C, following the [42 Norm](https://github.com/42School/norminette).  
+The goal is to recreate the basic behavior of `bash`, deepening our understanding of:
 
 - Processes and forking
 - File descriptors and redirections
