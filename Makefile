@@ -18,7 +18,7 @@ MAKEFLAGS += --no-print-directory
 
 CC			=	cc
 RM			=	rm -rf
-CFLAGS		=	-Wall -Wextra -Werror -pthread -g
+CFLAGS		=	-Wall -Wextra -Werror -g
 LDFLAGS		=	-lreadline -lncurses
 #LEAK		=	-fsanitize=leak,address,undefined
 
