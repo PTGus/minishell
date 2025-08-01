@@ -6,11 +6,17 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 15:52:08 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/28 17:19:34 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 15:40:29 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	norm_lines(t_central *central)
+{
+	clean_all(central);
+	exit(0);
+}
 
 static void	cmd_remainder_cleanup(char **envp,
 	char **exec_flags, t_central *central)

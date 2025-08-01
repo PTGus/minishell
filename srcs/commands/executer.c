@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/31 12:47:12 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/08/01 13:16:14 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ int	commander(t_central *central, t_input *cmd)
 
 	tmp_cmd = find_cmd(cmd);
 	if (!tmp_cmd || !tmp_cmd->value)
-	{
-		clean_all(central);
-		exit(0);
-	}
+		norm_lines(central);
 	initial_checks(tmp_cmd);
 	path = ft_getenv(&central->dupenv, "PATH");
 	if (!path)
@@ -104,7 +101,7 @@ char	*pather(t_envp *path, char *cmd)
 	if (!path || !cmd)
 		return (NULL);
 	if (access(cmd, F_OK) == 0)
-		return (cmd);
+		return (ft_strdup(cmd));
 	all_paths = ft_split(path->value, ':');
 	i = -1;
 	while (all_paths[++i])
@@ -120,7 +117,7 @@ char	*pather(t_envp *path, char *cmd)
 		free(exec);
 	}
 	ft_freesplit(all_paths);
-	return (cmd);
+	return (ft_strdup(cmd));
 }
 
 static void	check_exec_error(char *cmd, int type, t_central *central)

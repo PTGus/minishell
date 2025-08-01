@@ -6,7 +6,7 @@
 /*   By: gumendes <gumendes@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:52:09 by gumendes          #+#    #+#             */
-/*   Updated: 2025/07/31 12:41:15 by gumendes         ###   ########.fr       */
+/*   Updated: 2025/07/31 15:40:37 by gumendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_envp	*ft_getenv(t_envp **dupenv, char *to_find);
 void	init_empty_env(t_envp **dupenv);
 char	*segment_env(char *envp, int idx);
 
-// exec_utils\2 //
+// exec_utils\2\3 //
 char	*get_line(t_envp *dupenv);
 char	**get_exec_env(t_envp **dupenv);
 int		is_relative(char *cmd);
@@ -44,6 +44,7 @@ int		is_built_in(t_input *cmd);
 int		is_cmd_valid(char *cmd);
 char	**get_exec_flags(t_input *cmd);
 int		do_absolute(t_central *central, t_input *cmd);
+void	norm_lines(t_central *central);
 
 // exit_utils //
 int		is_all_signs(char *str);
